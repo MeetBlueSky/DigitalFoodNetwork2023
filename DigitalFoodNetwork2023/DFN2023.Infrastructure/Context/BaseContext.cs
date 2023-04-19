@@ -11,7 +11,6 @@ namespace DFN2023.Infrastructure.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
 
-
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<CategoryProductBase> CategoryProductBase { get; set; }
         public virtual DbSet<City> City { get; set; }
@@ -37,15 +36,33 @@ namespace DFN2023.Infrastructure.Context
         {
             modelBuilder.HasDefaultSchema("dbo");
 
-            //modelBuilder.Entity<Category>(entity =>
-            //{
 
-            //    entity.HasOne(d => d.ParentCategory)
-            //        .WithMany(p => p.ChildCategory)
-            //        .HasForeignKey(d => d.ParentId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_Category_Category");
-            //});
+
+            modelBuilder.Entity<Category>(entity =>
+            {
+
+                entity.HasOne(d => d.ParentCategory)
+                    .WithMany(p => p.ChildCategory)
+                    .HasForeignKey(d => d.ParentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Category_Category");
+            });
+
+            modelBuilder.Entity<CategoryProductBase>(entity =>
+            {
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.CategoryProductBase)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Category_CategoryProductBase");
+
+                entity.HasOne(d => d.ProductBase)
+                    .WithMany(p => p.CategoryProductBase)
+                    .HasForeignKey(d => d.ProductBaseId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ProductBase_CategoryProductBase");
+            });
 
             modelBuilder.Entity<City>(entity =>
             {
@@ -54,7 +71,7 @@ namespace DFN2023.Infrastructure.Context
                     .WithMany(p => p.City)
                     .HasForeignKey(d => d.CountryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_City_Country");
+                    .HasConstraintName("FK_Country_City");
             });
 
             modelBuilder.Entity<County>(entity =>
@@ -64,33 +81,95 @@ namespace DFN2023.Infrastructure.Context
                     .WithMany(p => p.County)
                     .HasForeignKey(d => d.CityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_County_City");
+                    .HasConstraintName("FK_City_County");
             });
 
-            //modelBuilder.Entity<Boats>(entity =>
-            //{
+            modelBuilder.Entity<Company>(entity =>
+            {
 
-            //    entity.HasOne(d => d.Brands)
-            //        .WithMany(p => p.Boats)
-            //        .HasForeignKey(d => d.BrandId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_Boat_Brands");
+                entity.HasOne(d => d.CompanyType)
+                    .WithMany(p => p.Company)
+                    .HasForeignKey(d => d.CompanyTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CompanyType_Company");
 
-            //    entity.HasOne(d => d.ModelGroup)
-            //        .WithMany(p => p.Boats)
-            //        .HasForeignKey(d => d.ModelId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_Boat_ModelGroup");
+                entity.HasOne(d => d.OfficialCountry)
+                    .WithMany(p => p.OfficialCompany)
+                    .HasForeignKey(d => d.OfficialCountryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Country_CompanyOfficial");
 
-            //    entity.HasOne(d => d.StokTypes)
-            //        .WithMany(p => p.Boats)
-            //        .HasForeignKey(d => d.StokTypeId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_Boat_StockType");
-            //});
+                entity.HasOne(d => d.OfficialCity)
+                    .WithMany(p => p.OfficialCompany)
+                    .HasForeignKey(d => d.OfficialCityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_City_CompanyOfficial");
 
+                entity.HasOne(d => d.OfficialCounty)
+                    .WithMany(p => p.OfficialCompany)
+                    .HasForeignKey(d => d.OfficialCountyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_County_CompanyOfficial");
 
-            
+                entity.HasOne(d => d.MapCountry)
+                    .WithMany(p => p.MapCompany)
+                    .HasForeignKey(d => d.MapCountryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Country_CompanyMap");
+
+                entity.HasOne(d => d.MapCity)
+                    .WithMany(p => p.MapCompany)
+                    .HasForeignKey(d => d.MapCityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_City_CompanyMap");
+
+                entity.HasOne(d => d.MapCounty)
+                    .WithMany(p => p.MapCompany)
+                    .HasForeignKey(d => d.MapCountyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_County_CompanyMap");
+            });
+
+            modelBuilder.Entity<CompanyImage>(entity =>
+            {
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.CompanyImage)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Company_CompanyImage");
+            });
+
+            modelBuilder.Entity<Message>(entity =>
+            {
+
+                entity.HasOne(d => d.ParentMessage)
+                    .WithMany(p => p.ChildMessage)
+                    .HasForeignKey(d => d.ParentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Message_Message");
+            });
+
+            modelBuilder.Entity<ProductCompany>(entity =>
+            {
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.ProductCompany)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Category_ProductCompany");
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.ProductCompany)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Company_ProductCompany");
+
+                entity.HasOne(d => d.ProductBase)
+                    .WithMany(p => p.ProductCompany)
+                    .HasForeignKey(d => d.ProductBaseId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ProductBase_ProductCompany");
+            });
 
             modelBuilder.Entity<StaticContentPage>(entity =>
             {
@@ -125,7 +204,27 @@ namespace DFN2023.Infrastructure.Context
 
             });
 
+            modelBuilder.Entity<UserUrunler>(entity =>
+            {
+                entity.HasOne(d => d.Company)
+                   .WithMany(p => p.UserUrunler)
+                   .HasForeignKey(d => d.CompanyId)
+                   .OnDelete(DeleteBehavior.ClientSetNull)
+                   .HasConstraintName("FK_Company_UserUrunler");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserUrunler)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_User_UserUrunler");
+            });
+
+
+
 
         }
+
+
+
     }
 }

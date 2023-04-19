@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace DFN2023.Models
+namespace DFN2023.Entities.Models
 {
     ///This view model class has been referred from example created by Marien Monnier at Soft.it. All credits to Marien for this class
 

@@ -9,7 +9,8 @@ namespace DFN2023.Entities.EF
         public City()
         {
             County = new HashSet<County>();
-            Company = new HashSet<Company>();
+            OfficialCompany = new HashSet<Company>();
+            MapCompany = new HashSet<Company>();
         }
 
         public int Id { get; set; }
@@ -24,7 +25,8 @@ namespace DFN2023.Entities.EF
 
 
         public virtual ICollection<County> County { get; set; }
-        public virtual ICollection<Company> Company { get; set; }
+        public virtual ICollection<Company> OfficialCompany { get; set; }
+        public virtual ICollection<Company> MapCompany { get; set; }
 
     }
 

@@ -28,6 +28,7 @@ namespace DFN2023.Entities.DTO
         public int Status { get; set; }
 
 
+        public string Lang { get; set; }
 
     }
 }

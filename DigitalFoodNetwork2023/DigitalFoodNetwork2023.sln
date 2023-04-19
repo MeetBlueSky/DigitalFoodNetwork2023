@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFN2023.Entities", "DFN2023.Entities\DFN2023.Entities.csproj", "{B643816C-EAEA-472F-88AD-D16ACD10CE54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFN2023.Entities", "DFN2023.Entities\DFN2023.Entities.csproj", "{B643816C-EAEA-472F-88AD-D16ACD10CE54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFN2023.Infrastructure", "DFN2023.Infrastructure\DFN2023.Infrastructure.csproj", "{77053811-E431-497D-89B6-AD854CA4538D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFN2023.Infrastructure", "DFN2023.Infrastructure\DFN2023.Infrastructure.csproj", "{77053811-E431-497D-89B6-AD854CA4538D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFN2023.Common", "DFN2023.Common\DFN2023.Common.csproj", "{A01EFA80-4014-4CE5-89B6-68A771690519}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFN2023.Common", "DFN2023.Common\DFN2023.Common.csproj", "{A01EFA80-4014-4CE5-89B6-68A771690519}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFN2023.Contracts", "DFN2023.Contracts\DFN2023.Contracts.csproj", "{A814F0C9-A9C0-471B-AB61-54A7F4CC01E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFN2023.Contracts", "DFN2023.Contracts\DFN2023.Contracts.csproj", "{A814F0C9-A9C0-471B-AB61-54A7F4CC01E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFN2023.Business", "DFN2023.Business\DFN2023.Business.csproj", "{86DE0319-FCB3-47F2-A08C-B323038F5CF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFN2023.Business", "DFN2023.Business\DFN2023.Business.csproj", "{86DE0319-FCB3-47F2-A08C-B323038F5CF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFN2023.Admin", "DFN2023.Admin\DFN2023.Admin.csproj", "{2AE5054B-10A7-4187-9D29-8443170A5C2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{86DE0319-FCB3-47F2-A08C-B323038F5CF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86DE0319-FCB3-47F2-A08C-B323038F5CF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86DE0319-FCB3-47F2-A08C-B323038F5CF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AE5054B-10A7-4187-9D29-8443170A5C2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AE5054B-10A7-4187-9D29-8443170A5C2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AE5054B-10A7-4187-9D29-8443170A5C2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AE5054B-10A7-4187-9D29-8443170A5C2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
