@@ -1,0 +1,601 @@
+﻿@model DFN2023.Admin.Models.WepPageModel
+@{
+    ViewData["Title"] = "İçerikler";
+}
+
+<!--begin::Container-->
+<div class="container">
+    <div class="card card-custom">
+        <div class="card-header" onclick="divackapa()">
+
+            <div class="card-title">
+                <span class="card-icon">
+                    <i class="flaticon-search text-primary"></i>
+                </span>
+                <h3 class="card-label">
+                    İçerik Ara
+                </h3>
+                <i class="mr-2"></i>
+                </h3>
+            </div>
+        </div>
+
+        <div class="card-body" id="divgizle1">
+
+            <div class="form-group row justify-content-center">
+                <label class="col-lg-1 col-form-label text-lg-left ">Grup:</label>
+                <div class="col-lg-3">
+
+                    <select id="search_SCGT" class="form-control" onchange="dataTableRefresh()" asp-items="@ViewBag.staticContentGrupPage ">
+                        <option value="0" selected>Tüm Gruplar</option>
+                    </select>
+
+                </div>
+                <label class="col-lg-1 col-form-label text-lg-left">Şablon:</label>
+                <div class="col-lg-3">
+
+                    <select id="search_SCT" class="form-control" onchange="dataTableRefresh()" asp-items="@ViewBag.staticContentTemp">
+                        <option value="0" selected>Tüm Şablonlar</option>
+                    </select>
+
+
+
+                </div>
+            </div>
+
+           
+
+            <div class="form-group row justify-content-center">
+                <label class="col-lg-1 col-form-label text-lg-left">Metin:</label>
+                <div class="col-lg-3">
+                    <input id="search_Text" class="form-control" type="text" onchange="dataTableRefresh()" />
+
+
+                </div>
+                <label class="col-lg-1 col-form-label text-lg-left">Statü:</label>
+                <div class="col-lg-3">
+
+                    <select id="search_Status" class="form-control" onchange="dataTableRefresh()" asp-items="@ViewBag.StatusSelect">
+                        @*<option value="0">Resim Türü</option>*@
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center">
+                <label class="col-lg-1 col-form-label text-lg-left ">Yıl Min:</label>
+                <div class="col-lg-3">
+
+                    <input id="search_YearInputMin" class="form-control" type="date" data-date="" data-date-format="YYYY MM DD" onchange="dataTableRefresh()" />
+
+
+                </div>
+                <label class="col-lg-1 col-form-label text-lg-left">Yıl Max:</label>
+                <div class="col-lg-3">
+
+                    <input id="search_YearInputMax" class="form-control" type="date" data-date="" data-date-format="YYYY MMM DD" onchange="dataTableRefresh()" />
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center">
+                <label class="col-lg-1 col-form-label text-lg-left">Resim:</label>
+                <div class="col-lg-3">
+                    <select id="search_Image" class="form-control" onchange="dataTableRefresh()" asp-items="@ViewBag.ImageSelect">
+                    </select>
+
+                </div>
+                <label class="col-lg-1 col-form-label text-lg-left">Ek:</label>
+                <div class="col-lg-3">
+                    <select id="search_Attachment" class="form-control" onchange="dataTableRefresh()" asp-items="@ViewBag.AttachmentSelect">
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center">
+                <label class="col-lg-1 col-form-label text-lg-left">Video:</label>
+                <div class="col-lg-3">
+                    <select id="search_Video" class="form-control" onchange="dataTableRefresh()" asp-items="@ViewBag.VideoSelect">
+                    </select>
+
+                </div>
+                <label class="col-lg-1 col-form-label text-lg-left "></label>
+
+                <div class="col-lg-3">
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <div class="card-header">
+            <div class="card-title">
+                <span class="card-icon">
+
+                </span>
+                <h3 class="card-label"> </h3>
+            </div>
+            <div class="card-toolbar">
+                <!--begin::Button-->
+                <a href="#" onclick="kayitModalOpen()" class="btn btn-primary font-weight-bolder">
+                    <span class="svg-icon svg-icon-md">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24" />
+                                <circle fill="#000000" cx="9" cy="15" r="6" />
+                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>Yeni Kayıt
+                </a>
+                <!--end::Button-->
+            </div>
+        </div>
+        <div class="card-body">
+            <!--begin: Datatable-->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-checkable" id="kt_datatable" style="margin-top: 13px !important">
+                    <thead>
+                        <tr>
+                            <th>Ayarlar</th>
+                            <th>ID</th>
+                            <th>Grup</th>
+                            <th>Şablon</th>
+                            <th>Başlık</th>
+                            @*<th>Özet</th>
+                            <th>Html</th>*@
+                            <th>Sıra No</th>
+                            <th>Resim 1</th>
+                            @* <th>Resim 2</th>
+                            <th>Resim 3</th>
+                            <th>Resim 4</th>
+                            <th>Resim 5</th>*@
+                            <th>Ek 1</th>
+                            @* <th>Ek 2</th>
+                            <th>Ek 3</th>
+                            <th>Video</th>
+                            <th>Seo Anahtar Kelimeler</th>
+                            <th>Seo Açıklama</th>
+                            <th>Link</th>
+                            <th>Dil</th>*@
+                            <th>Aktif/Pasif</th>
+                            <th>Tarih</th>
+                            <th>GrupId</th>
+                            <th>TempId</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <!--end: Datatable-->
+        </div>
+    </div>
+    <!--end::Card-->
+</div>
+
+
+<div class="modal fade" id="exampleModalSizeLg" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">İçerik Ekle/Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label class="control-label"> Grup Seçiniz</label>
+                    <select id="p_GrupId" class="form-control" asp-items="@ViewBag.staticContentGrupPage">
+                        <option value="" selected disabled hidden>....</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label"> Şablon Seçiniz</label>
+                    <select id="p_TempId" class="form-control" asp-items="@ViewBag.staticContentTemp">
+                        <option value="" selected disabled hidden>....</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Başlık
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="...." id="p_Title">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Özet
+                    </label>
+
+                </div>
+                <div class="form-group">
+                    <div class="card card-custom">
+                        <div class="card-body">
+
+
+                            <div id="p_Summary" class="richtexteditor" style="width: 100%">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Html
+                    </label>
+                </div>
+                <div class="form-group">
+                    <div class="card card-custom">
+                        <div class="card-body">
+
+                            <input name="htmlcode" id="inp_htmlcode" type="hidden" />
+                            @*<textarea id="p_Html"></textarea>*@
+
+                            <div id="p_Html" class="richtexteditor" style="width: 100%">
+                            </div>
+                            @*<div> <button type="button" id="kaynakkod" onclick="kaynakgoster()" class="btn btn-light-primary font-weight-bold">Source Code</button></div>
+                            *@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Sıralama
+                    </label>
+                    <input type="number" class="form-control" placeholder="...." id="p_OrderNo">
+                    <input type="hidden" id="Id" class="form-control">
+                </div>
+
+                @*<div class="form-group">
+                    <div class="card card-custom">
+                        <div class="card-body">
+                            <div id="kt-ckeditor-3-toolbar"></div>
+                            <div id="p_Html">
+                            </div>
+                            <div> <button type="button" id="kaynakkod" onclick="kaynakgoster()" class="btn btn-light-primary font-weight-bold">Kaynak Kodu</button></div>
+                        </div>
+                    </div>
+                </div>*@
+
+                <div class="form-group">
+                    <label>
+                        Resim 1 :
+                    </label>
+                    <div class="image-input image-input-outline" id="p_Foto1" style="  ">
+                        <div class="image-input-wrapper" style=""></div>
+                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="profile_avatar" id="p_Foto1x" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="profile_avatar_remove" />
+                        </label>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Resim 2 :
+                    </label>
+                    <div class="image-input image-input-outline" id="p_Foto2" style="  ">
+                        <div class="image-input-wrapper" style=""></div>
+                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="profile_avatar" id="p_Foto2x" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="profile_avatar_remove" />
+                        </label>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Resim 3 :
+                    </label>
+                    <div class="image-input image-input-outline" id="p_Foto3" style="  ">
+                        <div class="image-input-wrapper" style=""></div>
+                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="profile_avatar" id="p_Foto3x" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="profile_avatar_remove" />
+                        </label>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Resim 4 :
+                    </label>
+                    <div class="image-input image-input-outline" id="p_Foto4" style="  ">
+                        <div class="image-input-wrapper" style=""></div>
+                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="profile_avatar" id="p_Foto4x" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="profile_avatar_remove" />
+                        </label>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Resim 5 :
+                    </label>
+                    <div class="image-input image-input-outline" id="p_Foto5" style="  ">
+                        <div class="image-input-wrapper" style=""></div>
+                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="profile_avatar" id="p_Foto5x" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="profile_avatar_remove" />
+                        </label>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label>Ek 1</label>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="dropzone dropzone-default dropzone-success" id="kt_dropzone_4">
+                            <div class="dropzone-msg1 dz-message needsclick">
+                                <h3 class="dropzone-msg-title1">Dosyaları buraya sürükleyiniz ya da UPLOAD tıklayınız.</h3>
+                                <span class="dropzone-msg-desc1">Sadece PDF, PPTX, XLSX, DOCX, PPT, XLS, DOC yüklenebilir.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Dosya 1 Adı
+                    </label>
+                    <input class="form-control" rows="5" id="p_Attachment1"></input>
+                </div>
+                <div class="form-group ">
+                    <label>Ek 2</label>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="dropzone dropzone-default dropzone-success" id="kt_dropzone_5">
+                            <div class="dropzone-msg2 dz-message needsclick">
+                                <h3 class="dropzone-msg-title2">Dosyaları buraya sürükleyiniz ya da UPLOAD tıklayınız.</h3>
+                                <span class="dropzone-msg-desc2">Sadece PDF, PPTX, XLSX, DOCX, PPT, XLS, DOC yüklenebilir.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Dosya 2 Adı
+                    </label>
+                    <input class="form-control" rows="5" id="p_Attachment2"></input>
+                </div>
+                <div class="form-group ">
+                    <label>Ek 3</label>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="dropzone dropzone-default dropzone-success" id="kt_dropzone_6">
+                            <div class="dropzone-msg3 dz-message needsclick">
+                                <h3 class="dropzone-msg-title3">Dosyaları buraya sürükleyiniz ya da UPLOAD tıklayınız.</h3>
+                                <span class="dropzone-msg-desc3">Sadece PDF, PPTX, XLSX, DOCX, PPT, XLS, DOC yüklenebilir.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Dosya 3 Adı
+                    </label>
+                    <input class="form-control" rows="5" id="p_Attachment3"></input>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Video
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="...." id="p_Video">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Seo Anahtar Kelimeler
+                        <span class="text-danger">*</span>
+                    </label>
+                    <textarea class="form-control" placeholder="...." rows="5" id="p_SeoKeywords"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Seo Açıklama
+                        <span class="text-danger">*</span>
+                    </label>
+                    <textarea class="form-control" placeholder="...." rows="5" id="p_SeoDesc"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Link
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="...." id="p_Link">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Pasif/Aktif
+                    </label>
+                    <span class="switch">
+                        <label>
+                            <input type="checkbox" name="select" id="p_Status">
+                            <span></span>
+                        </label>
+                    </span>
+                </div>
+                <div class="form-group row">
+                    <label for="example-date-input" class="col-2 col-form-label">
+                        Tarih
+                    </label>
+                    <div class="col-10">
+                        <input class="form-control" type="date" id="p_Date">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                <button type="button" onclick=" staticContentPageKaydet()" class="btn btn-success font-weight-bold">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="sourcekodeModel" tabindex="-2" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content" style="background-color: azure;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kaynak Kod Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>
+                        Kaynak Kodu
+                        <span class="text-danger">*</span>
+                    </label>
+                    <textarea type="text" class="form-control" placeholder="...." id="sourceKode" rows="20"></textarea>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                <button type="button" onclick=" sourceKodeKaydet()" class="btn btn-success font-weight-bold">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="textEditorImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Resim Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="dropzone dropzone-default dropzone-success" id="kt_dropzone_7">
+                        <div class="dropzone-msg4 dz-message needsclick">
+                            <h3 class="dropzone-msg-title4">Dosyaları buraya sürükleyiniz ya da UPLOAD tıklayınız.</h3>
+                            <span class="dropzone-msg-desc4">Sadece JPG, JPEG, PNG yüklenebilir.</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                <button type="button" onclick="textEditorResimKaydet(editorSelect)" class="btn btn-success font-weight-bold">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="rowImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Resimleri Göster</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+
+            <div class="modal-header" style="display: flow-root !important;">
+            </div>
+
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <div id="imageListId">
+                    </div>
+
+                    <div id="outputDiv">
+                        @*<b>Output of ID's of images : </b>*@
+                        @*<input id="outputvalues" type="text" value="" />*@
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>@*
+                <button type="button" onclick=" urunSiraDegistir()" class="btn btn-success font-weight-bold">Kaydet</button>*@
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<link rel="stylesheet" href="~/assets/plugins/custom/richtexteditor2/rte_theme_default.css" />
+<script type="text/javascript" src="~/assets/plugins/custom/richtexteditor2/rte.js"></script>
+<script type="text/javascript" src='~/assets/plugins/custom/richtexteditor2/plugins/all_plugins.js'></script>
+@*<script type="text/javascript" src="~/assets/plugins/custom/richtexteditor2/rte-upload.js"></script>*@
+<script type="text/javascript" src="~/assets/plugins/custom/richtexteditor2/rte-upload2.js"></script>
+
+<!--end::Container-->
+@section Scripts{
+
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    @*<script src="~/assets/plugins/custom/ckeditor/ckeditor-document.bundle.js"></script>*@
+    <script>
+        var hst = "@Url.Action("getStaticContentPage", "StaticContentPage")";
+        var hst2 = "@Url.Action("DocUploadImage", "StaticContentPage")";
+        var hst3 = "@Url.Action("UploderDokuman", "StaticContentPage")";
+        var hst4 = "@Url.Action("UploderDokuman2", "StaticContentPage")";
+
+        var hst5 = "@Url.Action("getStaticContentImagesForGallery", "StaticContentPage")";
+    </script>
+    <script>
+        var website = "@ViewData["website"]";
+        var lngg = "@Model.language";
+        var lng = "@Model.lang";
+
+        var DocSizeMax = "@ViewData["uploadedDocMaxSize"]";
+        var anaDizin = "@ViewData["website"]";
+        var rootFolder = "@ViewData["rootFolder"]";
+        var staticFolder = "@ViewData["staticContentFolder"]";
+        var sunucuEntityDosyasi = "@ViewData["sunucuEntityStaticFolder"]";
+
+        var GrupPageId = "@ViewData["GrupPageId"]";
+    </script>
+    <script src="~/assets/custom/staticContentPage.js"></script>
+}

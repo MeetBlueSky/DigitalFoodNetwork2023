@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "DFN2023.Admin": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5004",
+      "dotnetRunMessages": true
+    }
+  }
+}

@@ -1,0 +1,166 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@*<div class="container">
+
+    
+
+    <div class="card card-custom">
+        <div class="card-header">
+
+            <div class="card-title">
+                <h3 class="card-label">
+                    Son Girişler
+                </h3>
+                <i class="mr-2"></i>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <!--begin: Datatable-->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-checkable" id="kt_datatable" style="margin-top: 13px !important">
+                    <thead>
+                        <tr>
+                            <th>Son Giriş</th>
+                            <th>Kullanıcı</th>
+                            <th>IP</th>
+                            
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <!--end: Datatable-->
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <div class="card-header">
+
+            <div class="card-title">
+                <h3 class="card-label">
+                    Son İçerikler
+                </h3>
+                <i class="mr-2"></i>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <!--begin: Datatable-->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-checkable" id="kt_datatableSCP" style="margin-top: 13px !important">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>ID</th>
+                            <th>Grup</th>
+                            <th>Template</th>
+                            <th>Başlık</th>
+                            @*<th>Özet</th>
+                            <th>Html</th>
+                            <th>Sıralama</th>
+                            <th>Resim 1</th>
+                            <th>Resim 2</th>
+                            <th>Resim 3</th>
+                            <th>Resim 4</th>
+                            <th>Resim 5</th>
+                            <th>Video</th>
+                            <th>Seo Anahtar Kelimeler</th>
+                            <th>Seo Açıklama</th>
+                            <th>Link</th>
+                            <th>Slug</th>
+                            <th>Dil</th>
+                            <th>Aktif/Pasif</th>
+                            <th>Tarih</th>
+                            <th>Anahtar Kelimeler</th>
+                            <th>GrupId</th>
+                            <th>TempId</th>
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <!--end: Datatable-->
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <div class="card-header">
+
+            <div class="card-title">
+                <h3 class="card-label">
+                    Son İçerik Grupları
+                </h3>
+                <i class="mr-2"></i>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <!--begin: Datatable-->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-checkable" id="kt_datatableSCGP" style="margin-top: 13px !important">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>ID</th>
+                            <th>Template</th>
+                            <th>Başlık</th>
+                            <th>Özet</th>
+                            <th>Html</th>
+                            <th>Sıralama</th>
+                            <th>Resim 1</th>
+                            <th>Resim 2</th>
+                            <th>Resim 3</th>
+                            <th>Resim 4</th>
+                            <th>Resim 5</th>
+                            <th>Video</th>
+                            <th>Seo Anahtar Kelimeler</th>
+                            <th>Seo Açıklama</th>
+                            <th>Link</th>
+                            <th>Slug</th>
+                            <th>Dil</th>
+                            <th>Aktif/Pasif</th>
+                            <th>Tarih</th>
+                            <th>Anahtar Kelimeler</th>
+                            <th>GrupId</th>
+                            <th>TempId</th>
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <!--end: Datatable-->
+        </div>
+    </div>
+
+    <!--end::Card-->
+</div>*@
+
+
+
+
+<!--end::Container-->
+@section Scripts{
+
+    @*<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>*@
+    <script src="~/assets/lib/jquery/ui/1.13.2/jquery-ui.js"></script>
+
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script>
+        var hst = "@Url.Action("getLogins", "Home")";
+        var hst2 = "@Url.Action("getStaticContents", "Home")";
+        var hst3 = "@Url.Action("getStaticContentGroups", "Home")";
+
+        var website = "@ViewData["website"]";
+
+        var DocSizeMax = "@ViewData["uploadedDocMaxSize"]";
+        var ImageSizeMax = "@ViewData["uploadedImageMaxSize"]";
+
+        var GrupPageId = "@ViewData["GrupPageId"]";
+    </script>
+
+    <script src="~/assets/custom/common.js"></script>
+    <script src="~/assets/custom/home.js"></script>
+
+}

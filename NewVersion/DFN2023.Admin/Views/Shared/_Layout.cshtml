@@ -1,0 +1,981 @@
+﻿@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
+
+<html lang="en">
+<!--begin::Head-->
+<head>
+    <base href="">
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <meta name="description" content="DeepBlue CMS by BlueSky" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="canonical" href="https://DFN2023.meetbluesky.com" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+
+    <link href="~/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/assets/css/themes/layout/header/base/light.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/themes/layout/header/menu/light.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/themes/layout/brand/dark.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        .k-grid-content {
+            overflow-x: scroll !important;
+        }
+
+        #ArtikelGrid table {
+            width: 9000px !important;
+        }
+    </style>
+
+    <!--end::Layout Themes-->
+    <link rel="shortcut icon" href="~/assets/media/logos/favicon.ico" />
+</head>
+<!--end::Head-->
+<!--begin::Body-->
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <!--begin::Main-->
+    <!--begin::Header Mobile-->
+    <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
+        <!--begin::Logo-->
+        <a href="@Url.Action("Index","Home")">
+            @*<img alt="Logo" src="~/assets/media/logos/logo-light.png" />*@
+            <svg width="101" height="92" viewBox="0 0 101 92" xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink">
+                <defs>
+                    <path id="p7lazh89ia" d="M.42.025h32.22v23.802H.42z" />
+                    <path id="m1sbv6ze8c" d="M.507.297h22.946V36H.507z" />
+                    <path id="1jvnevaaue" d="M.073.296h17v16.965h-17z" />
+                </defs>
+                <g fill="none" fill-rule="evenodd">
+                    <g transform="translate(68.135 10.904)">
+                        <path class="logo-red" d="M32.64.025S25.79 12.432.42 9.647l1.52 14.18s22.33 0 30.7-23.802"
+                              fill="#fff" />
+                    </g>
+                    <path class="logo-purple" d="M88.344 32.958s-4.06 5.57-18.268 4.305l3.553 10.635s12.43-7.344 14.715-14.94"
+                          fill="#fff" />
+                    <path class="logo-red" d="m69.822 46.632-5.835 4.558 10.15 12.913s-1.016-13.167-4.315-17.471"
+                          fill="#fff" />
+                    <g transform="translate(51.302 55.704)">
+                        <path class="logo-purple"
+                              d="M7.357.297S.507 6.627.507 7.893c0 0 20.297 13.674 20.804 28.107 0 0 3.807-13.42 1.27-21.523 0 0-4.568-10.635-15.224-14.18"
+                              fill="#fff" />
+                    </g>
+                    <g transform="translate(64.929 .504)">
+                        <path class="logo-purple"
+                              d="M17.073 8.779c0 4.685-3.805 8.482-8.5 8.482-4.694 0-8.5-3.797-8.5-8.482 0-4.685 3.806-8.483 8.5-8.483 4.695 0 8.5 3.798 8.5 8.483"
+                              fill="#fff" />
+                    </g>
+                    <path class="logo-black"
+                          d="m0 46.379 3.078-16.176h4.063l2.14 6.168a59.683 59.683 0 0 1 1.467 5.52h.073c.072-1.656.312-3.432.745-5.808l1.106-5.88h3.246L12.84 46.38H9.258l-2.26-6.456c-.722-2.184-1.155-3.672-1.588-5.64h-.072c-.169 1.584-.553 3.888-1.034 6.432l-1.082 5.664H0zM20.632 43.619c.409.048.914.072 1.515.072 1.876 0 3.535-.648 4.593-1.872 1.106-1.248 1.684-2.952 1.684-4.896 0-2.567-1.42-4.08-4.28-4.08-.602 0-1.107.048-1.468.12l-2.044 10.656zm-.986-13.176c1.395-.24 2.91-.36 4.497-.36 2.524 0 4.521.576 5.892 1.753 1.322 1.08 2.14 2.663 2.14 5.063 0 3.144-1.323 5.832-3.32 7.44-1.875 1.512-4.256 2.16-7.767 2.16-1.947 0-3.63-.168-4.448-.312l3.006-15.744zM42.227 39.539l-.337-3.48c-.047-.887-.144-2.183-.216-3.167h-.048c-.41.984-.866 2.23-1.298 3.167l-1.612 3.48h3.51zm-4.521 2.64-1.9 4.2h-3.703l7.888-16.175h4.449l1.898 16.175h-3.655l-.311-4.2h-4.666zM51.774 30.203h3.461l-2.5 13.152h6.228l-.578 3.023h-9.69z"
+                          fill="#fff" />
+                </g>
+            </svg>
+        </a>
+        <!--end::Logo-->
+        <!--begin::Toolbar-->
+        <div class="d-flex align-items-center">
+            <!--begin::Aside Mobile Toggle-->
+            @*<button class="btn p-0 burger-icon burger-icon-left" id="kt_header_mobile_toggle">
+            <span></span>
+            </button>*@
+            <!--end::Aside Mobile Toggle-->
+            <!--begin::Header Menu Mobile Toggle-->
+            <button class="btn p-0 burger-icon ml-4" id="kt_aside_mobile_toggle">
+
+                <span></span>
+            </button>
+            <!--end::Header Menu Mobile Toggle-->
+            <!--begin::Topbar Mobile Toggle-->
+            <button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle">
+                <span class="svg-icon svg-icon-xl">
+                    <!--begin::Svg Icon | path:~/assets/media/svg/icons/General/User.svg-->
+                    <svg width="101" height="92" viewBox="0 0 101 92" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <defs>
+                            <path id="p7lazh89ia" d="M.42.025h32.22v23.802H.42z" />
+                            <path id="m1sbv6ze8c" d="M.507.297h22.946V36H.507z" />
+                            <path id="1jvnevaaue" d="M.073.296h17v16.965h-17z" />
+                        </defs>
+                        <g fill="none" fill-rule="evenodd">
+                            <g transform="translate(68.135 10.904)">
+                                <path class="logo-red"
+                                      d="M32.64.025S25.79 12.432.42 9.647l1.52 14.18s22.33 0 30.7-23.802"
+                                      fill="#fff" />
+                            </g>
+                            <path class="logo-purple"
+                                  d="M88.344 32.958s-4.06 5.57-18.268 4.305l3.553 10.635s12.43-7.344 14.715-14.94"
+                                  fill="#fff" />
+                            <path class="logo-red"
+                                  d="m69.822 46.632-5.835 4.558 10.15 12.913s-1.016-13.167-4.315-17.471"
+                                  fill="#fff" />
+                            <g transform="translate(51.302 55.704)">
+                                <path class="logo-purple"
+                                      d="M7.357.297S.507 6.627.507 7.893c0 0 20.297 13.674 20.804 28.107 0 0 3.807-13.42 1.27-21.523 0 0-4.568-10.635-15.224-14.18"
+                                      fill="#fff" />
+                            </g>
+                            <g transform="translate(64.929 .504)">
+                                <path class="logo-purple"
+                                      d="M17.073 8.779c0 4.685-3.805 8.482-8.5 8.482-4.694 0-8.5-3.797-8.5-8.482 0-4.685 3.806-8.483 8.5-8.483 4.695 0 8.5 3.798 8.5 8.483"
+                                      fill="#fff" />
+                            </g>
+                            <path class="logo-black"
+                                  d="m0 46.379 3.078-16.176h4.063l2.14 6.168a59.683 59.683 0 0 1 1.467 5.52h.073c.072-1.656.312-3.432.745-5.808l1.106-5.88h3.246L12.84 46.38H9.258l-2.26-6.456c-.722-2.184-1.155-3.672-1.588-5.64h-.072c-.169 1.584-.553 3.888-1.034 6.432l-1.082 5.664H0zM20.632 43.619c.409.048.914.072 1.515.072 1.876 0 3.535-.648 4.593-1.872 1.106-1.248 1.684-2.952 1.684-4.896 0-2.567-1.42-4.08-4.28-4.08-.602 0-1.107.048-1.468.12l-2.044 10.656zm-.986-13.176c1.395-.24 2.91-.36 4.497-.36 2.524 0 4.521.576 5.892 1.753 1.322 1.08 2.14 2.663 2.14 5.063 0 3.144-1.323 5.832-3.32 7.44-1.875 1.512-4.256 2.16-7.767 2.16-1.947 0-3.63-.168-4.448-.312l3.006-15.744zM42.227 39.539l-.337-3.48c-.047-.887-.144-2.183-.216-3.167h-.048c-.41.984-.866 2.23-1.298 3.167l-1.612 3.48h3.51zm-4.521 2.64-1.9 4.2h-3.703l7.888-16.175h4.449l1.898 16.175h-3.655l-.311-4.2h-4.666zM51.774 30.203h3.461l-2.5 13.152h6.228l-.578 3.023h-9.69z"
+                                  fill="#fff" />
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+            </button>
+            <!--end::Topbar Mobile Toggle-->
+        </div>
+        <!--end::Toolbar-->
+    </div>
+    <!--end::Header Mobile-->
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="d-flex flex-row flex-column-fluid page">
+            <!--begin::Aside-->
+            <div class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" id="kt_aside">
+                <!--begin::Brand-->
+                <div class="brand flex-column-auto" id="kt_brand">
+                    <!--begin::Logo-->
+                    <a href="@Url.Action("Index","Home")" class="brand-logo">
+                        @*<img alt="Logo" src="~/assets/media/logos/logo-light.png" />*@
+
+                        <svg width="101" height="92" viewBox="0 0 101 92" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <defs>
+                                <path id="p7lazh89ia" d="M.42.025h32.22v23.802H.42z" />
+                                <path id="m1sbv6ze8c" d="M.507.297h22.946V36H.507z" />
+                                <path id="1jvnevaaue" d="M.073.296h17v16.965h-17z" />
+                            </defs>
+                            <g fill="none" fill-rule="evenodd">
+                                <g transform="translate(68.135 10.904)">
+                                    <path class="logo-red" d="M32.64.025S25.79 12.432.42 9.647l1.52 14.18s22.33 0 30.7-23.802"
+                                          fill="#fff" />
+                                </g>
+                                <path class="logo-purple" d="M88.344 32.958s-4.06 5.57-18.268 4.305l3.553 10.635s12.43-7.344 14.715-14.94"
+                                      fill="#fff" />
+                                <path class="logo-red" d="m69.822 46.632-5.835 4.558 10.15 12.913s-1.016-13.167-4.315-17.471"
+                                      fill="#fff" />
+                                <g transform="translate(51.302 55.704)">
+                                    <path class="logo-purple"
+                                          d="M7.357.297S.507 6.627.507 7.893c0 0 20.297 13.674 20.804 28.107 0 0 3.807-13.42 1.27-21.523 0 0-4.568-10.635-15.224-14.18"
+                                          fill="#fff" />
+                                </g>
+                                <g transform="translate(64.929 .504)">
+                                    <path class="logo-purple"
+                                          d="M17.073 8.779c0 4.685-3.805 8.482-8.5 8.482-4.694 0-8.5-3.797-8.5-8.482 0-4.685 3.806-8.483 8.5-8.483 4.695 0 8.5 3.798 8.5 8.483"
+                                          fill="#fff" />
+                                </g>
+                                <path class="logo-black"
+                                      d="m0 46.379 3.078-16.176h4.063l2.14 6.168a59.683 59.683 0 0 1 1.467 5.52h.073c.072-1.656.312-3.432.745-5.808l1.106-5.88h3.246L12.84 46.38H9.258l-2.26-6.456c-.722-2.184-1.155-3.672-1.588-5.64h-.072c-.169 1.584-.553 3.888-1.034 6.432l-1.082 5.664H0zM20.632 43.619c.409.048.914.072 1.515.072 1.876 0 3.535-.648 4.593-1.872 1.106-1.248 1.684-2.952 1.684-4.896 0-2.567-1.42-4.08-4.28-4.08-.602 0-1.107.048-1.468.12l-2.044 10.656zm-.986-13.176c1.395-.24 2.91-.36 4.497-.36 2.524 0 4.521.576 5.892 1.753 1.322 1.08 2.14 2.663 2.14 5.063 0 3.144-1.323 5.832-3.32 7.44-1.875 1.512-4.256 2.16-7.767 2.16-1.947 0-3.63-.168-4.448-.312l3.006-15.744zM42.227 39.539l-.337-3.48c-.047-.887-.144-2.183-.216-3.167h-.048c-.41.984-.866 2.23-1.298 3.167l-1.612 3.48h3.51zm-4.521 2.64-1.9 4.2h-3.703l7.888-16.175h4.449l1.898 16.175h-3.655l-.311-4.2h-4.666zM51.774 30.203h3.461l-2.5 13.152h6.228l-.578 3.023h-9.69z"
+                                      fill="#fff" />
+                            </g>
+                        </svg>
+
+                    </a>
+                    <!--end::Logo-->
+                    <!--begin::Toggle-->
+                    <button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
+                        <span class="svg-icon svg-icon svg-icon-xl">
+                            <!--begin::Svg Icon | path:~/assets/media/svg/icons/Navigation/Angle-double-left.svg-->
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                    <path d="M5.29288961,6.70710318 C4.90236532,6.31657888 4.90236532,5.68341391 5.29288961,5.29288961 C5.68341391,4.90236532 6.31657888,4.90236532 6.70710318,5.29288961 L12.7071032,11.2928896 C13.0856821,11.6714686 13.0989277,12.281055 12.7371505,12.675721 L7.23715054,18.675721 C6.86395813,19.08284 6.23139076,19.1103429 5.82427177,18.7371505 C5.41715278,18.3639581 5.38964985,17.7313908 5.76284226,17.3242718 L10.6158586,12.0300721 L5.29288961,6.70710318 Z" fill="#000000" fill-rule="nonzero" transform="translate(8.999997, 11.999999) scale(-1, 1) translate(-8.999997, -11.999999)" />
+                                    <path d="M10.7071009,15.7071068 C10.3165766,16.0976311 9.68341162,16.0976311 9.29288733,15.7071068 C8.90236304,15.3165825 8.90236304,14.6834175 9.29288733,14.2928932 L15.2928873,8.29289322 C15.6714663,7.91431428 16.2810527,7.90106866 16.6757187,8.26284586 L22.6757187,13.7628459 C23.0828377,14.1360383 23.1103407,14.7686056 22.7371482,15.1757246 C22.3639558,15.5828436 21.7313885,15.6103465 21.3242695,15.2371541 L16.0300699,10.3841378 L10.7071009,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(15.999997, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-15.999997, -11.999999)" />
+                                </g>
+                            </svg>
+                            <!--end::Svg Icon-->
+                        </span>
+                    </button>
+                    <!--end::Toolbar-->
+                </div>
+                <!--end::Brand-->
+                <!--begin::Aside Menu-->
+                <div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
+                    <!--begin::Menu Container-->
+                    <div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
+                        <!--begin::Menu Nav-->
+                        <ul class="menu-nav">
+                            <li class="menu-item  " aria-haspopup="true" id="mn188">
+                                <a href="@Url.Action("Index","Home")" class="menu-link">
+                                    <span class="svg-icon menu-icon">
+                                        <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                                <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-text">Dashboard</span>
+                                </a>
+                            </li>
+                            @*
+                            <li class="menu-item menu-item-submenu  " aria-haspopup="true" data-menu-toggle="hover" id="mn1">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                            <span class="svg-icon menu-icon">
+                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Bucket.svg-->
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5"></rect>
+                            <path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z" fill="#000000" opacity="0.3"></path>
+                            </g>
+                            </svg>
+                            <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-text">Ürünler</span>
+                            <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu" kt-hidden-height="80" style="">
+                            <i class="menu-arrow"></i>
+                            <ul class="menu-subnav">
+                            <li class="menu-item menu-item-parent" aria-haspopup="true">
+                            <span class="menu-link">
+                            <span class="menu-text">Ürünler</span>
+                            </span>
+                            </li>
+                            <li class="menu-item  " aria-haspopup="true" id="mn177">
+                            <a href="@Url.Action("Index","Urunler")" class="menu-link">
+                            <span class="svg-icon menu-icon">
+                            <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24" />
+                            <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                            <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                            </g>
+                            </svg>
+                            <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-text">Ürünler</span>
+                            </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="mn21">
+                            <a href="@Url.Action("Index","ProductType")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">Ürün Tipi</span>
+                            </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="mn16">
+                            <a href="@Url.Action("Index","BodyType")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">Gövde Tipi</span>
+                            </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="mn19">
+                            <a href="@Url.Action("Index","SurfaceType")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">Yüzey Tipi</span>
+                            </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="mn20">
+                            <a href="@Url.Action("Index","TextureType")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">Doku Tipi</span>
+                            </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="mn22">
+                            <a href="@Url.Action("Index","UnitType")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">Birim Tipi</span>
+                            </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="mn21">
+                            <a href="@Url.Action("Index","Size")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">Ebat Tipi</span>
+                            </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="mn14">
+                            <a href="@Url.Action("Index","Renkler")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">Renkler</span>
+                            </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="mn15">
+                            <a href="@Url.Action("Index","AnaRenk")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">Ana Renkler</span>
+                            </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true" id="mn17">
+                            <a href="@Url.Action("Index","KullanimAlani")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">Kulanım Alanı Tipi</span>
+                            </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="mn18">
+                            <a href="@Url.Action("Index","IliskiGrubu")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">İlişki Grupları</span>
+                            </a>
+                            </li>
+                            </ul>
+                            </div>
+                            </li>*@
+
+                            @*
+                            <li class="menu-item  " aria-haspopup="true" id="mn166">
+                            <a href="@Url.Action("Index","Seriler")" class="menu-link">
+                            <span class="svg-icon menu-icon">
+                            <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24" />
+                            <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                            <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                            </g>
+                            </svg>
+                            <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-text">Seriler</span>
+                            </a>
+                            </li>*@
+
+                            @*
+                            <li class="menu-item menu-item-submenu  " aria-haspopup="true" data-menu-toggle="hover" id="mn2">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                            <span class="svg-icon menu-icon">
+                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Bucket.svg-->
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5"></rect>
+                            <path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z" fill="#000000" opacity="0.3"></path>
+                            </g>
+                            </svg>
+                            <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-text">Referanslar</span>
+                            <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu" kt-hidden-height="80" style="">
+                            <i class="menu-arrow"></i>
+                            <ul class="menu-subnav">
+                            <li class="menu-item menu-item-parent" aria-haspopup="true">
+                            <span class="menu-link">
+                            <span class="menu-text">Referanslar</span>
+                            </span>
+                            </li>
+                            <li class="menu-item  " aria-haspopup="true" id="mn155">
+                            <a href="@Url.Action("Index","Referanslar")" class="menu-link">
+                            <span class="svg-icon menu-icon">
+                            <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24" />
+                            <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                            <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                            </g>
+                            </svg>
+                            <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-text">Referanslar</span>
+                            </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="mn11">
+                            <a href="@Url.Action("Index","Sehirler")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">Şehirler</span>
+                            </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="mn1311">
+                            <a href="@Url.Action("Index","Ulkeler")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">Ülkeler</span>
+                            </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true" id="mn23">
+                            <a href="@Url.Action("Index","Category")" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                            </i>
+                            <span class="menu-text">Kategoriler</span>
+                            </a>
+                            </li>
+
+                            </ul>
+                            </div>
+                            </li>*@
+
+                            @*
+                            <li class="menu-item  " aria-haspopup="true" id="mn144">
+                            <a href="@Url.Action("Index","SatisNoktasi")" class="menu-link">
+                            <span class="svg-icon menu-icon">
+                            <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24" />
+                            <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                            <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                            </g>
+                            </svg>
+                            <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-text">Satış Noktaları</span>
+                            </a>
+                            </li>*@
+
+                            @*
+                            <li class="menu-item  " aria-haspopup="true" id="mn133">
+                            <a href="@Url.Action("Index","Katalog")" class="menu-link">
+                            <span class="svg-icon menu-icon">
+                            <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24" />
+                            <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                            <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                            </g>
+                            </svg>
+                            <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-text">Kataloglar</span>
+                            </a>
+                            </li>*@
+
+                            @*
+                            <li class="menu-item  " aria-haspopup="true" id="mn122">
+                            <a href="@Url.Action("Index","Haberler")" class="menu-link">
+                            <span class="svg-icon menu-icon">
+                            <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24" />
+                            <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                            <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                            </g>
+                            </svg>
+                            <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-text">Haberler</span>
+                            </a>
+                            </li>*@
+
+                            <li class="menu-item  " aria-haspopup="true" id="mn123">
+                                <a href="@Url.Action("Index","Slayt")" class="menu-link">
+                                    <span class="svg-icon menu-icon">
+                                        <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                                <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-text">Anasayfa Slider</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item menu-item-submenu  " aria-haspopup="true" data-menu-toggle="hover" id="mn2">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <span class="svg-icon menu-icon">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Bucket.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5"></rect>
+                                                <path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z" fill="#000000" opacity="0.3"></path>
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-text">Referanslar</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu" kt-hidden-height="80" style="">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item menu-item-parent" aria-haspopup="true">
+                                            <span class="menu-link">
+                                                <span class="menu-text">Referanslar</span>
+                                            </span>
+                                        </li>
+                                        @*<li class="menu-item  " aria-haspopup="true" id="mn155">
+                                        <a href="@Url.Action("Index","Referanslar")" class="menu-link">
+                                        <span class="svg-icon menu-icon">
+                                        <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon points="0 0 24 0 24 24 0 24" />
+                                        <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                        <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                        </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                        </span>
+                                        <span class="menu-text">Referanslar</span>
+                                        </a>
+                                        </li>*@
+                                        <li class="menu-item" aria-haspopup="true" id="mn11">
+                                            <a href="@Url.Action("Index","Sehirler")" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Şehirler</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item" aria-haspopup="true" id="mn1311">
+                                            <a href="@Url.Action("Index","Ulkeler")" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Ülkeler</span>
+                                            </a>
+                                        </li>
+
+                                        @*<li class="menu-item" aria-haspopup="true" id="mn23">
+                                        <a href="@Url.Action("Index","Category")" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                        </i>
+                                        <span class="menu-text">Kategoriler</span>
+                                        </a>
+                                        </li>*@
+
+                                    </ul>
+                                </div>
+                            </li>
+
+
+                            <li class="menu-item menu-item-submenu  " aria-haspopup="true" data-menu-toggle="hover" id="mn13">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <span class="svg-icon menu-icon">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Bucket.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5"></rect>
+                                                <path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z" fill="#000000" opacity="0.3"></path>
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-text">İçerik Yönetimi</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu" kt-hidden-height="80" style="">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item menu-item-parent" aria-haspopup="true">
+                                            <span class="menu-link">
+                                                <span class="menu-text">İçerik Yönetimi</span>
+                                            </span>
+                                        </li>
+                                        <li class="menu-item  " aria-haspopup="true" id="mn3100">
+                                            <a href="@Url.Action("Index","StaticContentGrupPage")" class="menu-link">
+                                                <span class="svg-icon menu-icon">
+                                                    <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <polygon points="0 0 24 0 24 24 0 24" />
+                                                            <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                                            <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                                        </g>
+                                                    </svg>
+                                                    <!--end::Svg Icon-->
+                                                </span>
+                                                <span class="menu-text">İçerik Grupları</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item  " aria-haspopup="true" id="mn1255">
+                                            <a href="@Url.Action("Index","StaticContentPage")" class="menu-link">
+                                                <span class="svg-icon menu-icon">
+                                                    <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <polygon points="0 0 24 0 24 24 0 24" />
+                                                            <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                                            <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                                        </g>
+                                                    </svg>
+                                                    <!--end::Svg Icon-->
+                                                </span>
+                                                <span class="menu-text">İçerikler</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item  " aria-haspopup="true" id="mn2100">
+                                            <a href="@Url.Action("Index","StaticContentGrupTemp")" class="menu-link">
+                                                <span class="svg-icon menu-icon">
+                                                    <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <polygon points="0 0 24 0 24 24 0 24" />
+                                                            <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                                            <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                                        </g>
+                                                    </svg>
+                                                    <!--end::Svg Icon-->
+                                                </span>
+                                                <span class="menu-text">İçerik Grubu Şablonları</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item  " aria-haspopup="true" id="mn1100">
+                                            <a href="@Url.Action("Index","StaticContentTemp")" class="menu-link">
+                                                <span class="svg-icon menu-icon">
+                                                    <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <polygon points="0 0 24 0 24 24 0 24" />
+                                                            <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                                            <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                                        </g>
+                                                    </svg>
+                                                    <!--end::Svg Icon-->
+                                                </span>
+                                                <span class="menu-text">İçerik Şablonları</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </li>
+
+                            <li class="menu-item " aria-haspopup="true" id="mn19">
+                                <a href="@Url.Action("Index","Menu")" class="menu-link">
+                                    <span class="svg-icon menu-icon">
+                                        <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                                <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-text">Menü Yönetimi</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item menu-item-submenu  " aria-haspopup="true" data-menu-toggle="hover" id="mn23">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <span class="svg-icon menu-icon">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Bucket.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5"></rect>
+                                                <path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z" fill="#000000" opacity="0.3"></path>
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-text">Diğer Ayarlar</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu" kt-hidden-height="80" style="">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item menu-item-parent" aria-haspopup="true">
+                                            <span class="menu-link">
+                                                <span class="menu-text">Diğer Ayarlar</span>
+                                            </span>
+                                        </li>
+                                        <li class="menu-item  " aria-haspopup="true" id="mn255">
+                                            <a href="@Url.Action("Index","User")" class="menu-link">
+                                                <span class="svg-icon menu-icon">
+                                                    <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <polygon points="0 0 24 0 24 24 0 24" />
+                                                            <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                                            <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                                        </g>
+                                                    </svg>
+                                                    <!--end::Svg Icon-->
+                                                </span>
+                                                <span class="menu-text">Kullanıcılar</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item  " aria-haspopup="true" id="mn256">
+                                            <a class="menu-link" style="cursor: auto;">
+                                                <span class="svg-icon menu-icon">
+                                                    <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <polygon points="0 0 24 0 24 24 0 24" />
+                                                            <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                                            <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                                        </g>
+                                                    </svg>
+                                                    <!--end::Svg Icon-->
+                                                </span>
+                                                <span class="menu-text">DeepBlue - v1.01</span>
+                                            </a>
+                                        </li>
+                                        @*
+                                        <li class="menu-item  " aria-haspopup="true" id="mn100">
+                                        <a href="@Url.Action("Index","KontakFormlar")" class="menu-link">
+                                        <span class="svg-icon menu-icon">
+                                        <!--begin::Svg Icon | path:~/assets/media/svg/icons/Design/Layers.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon points="0 0 24 0 24 24 0 24" />
+                                        <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                        <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                        </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                        </span>
+
+                                        <span class="menu-text">İletişim</span>
+
+                                        </a>
+                                        </li>
+                                        *@
+                                    </ul>
+                                </div>
+                            </li>
+
+
+                        </ul>
+                        <!--end::Menu Nav-->
+                    </div>
+                    <!--end::Menu Container-->
+                </div>
+                <!--end::Aside Menu-->
+            </div>
+            <!--end::Aside-->
+            <!--begin::Wrapper-->
+            <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+                <!--begin::Header-->
+                <div id="kt_header" class="header header-fixed">
+                    <!--begin::Container-->
+                    <div class="container-fluid d-flex align-items-stretch justify-content-between">
+                        <!--begin::Header Menu Wrapper-->
+                        <div class="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
+                            <!--begin::Header Menu-->
+                            <div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
+                            </div>
+                            <!--end::Header Menu-->
+                        </div>
+                        <!--end::Header Menu Wrapper-->
+                        <!--begin::Topbar-->
+                        <div class="topbar">
+                            <!--begin::Languages-->
+                            <div class="topbar-item" style=" float: left; margin-right: 20px;">
+                                @*<span data-toggle="dropdown">
+                                    @System.Globalization.CultureInfo.CurrentCulture.Name.ToUpper()
+                                    @if (System.Globalization.CultureInfo.CurrentCulture.Name.ToUpper().Equals("TR"))
+                                    {
+                                        <img class="h-20px w-20px rounded-sm" src="~/assets/media/svg/flags/006-turkey.svg" alt="">
+                                    }
+                                    else
+                                    {
+                                        <img class="h-20px w-20px rounded-sm" src="~/assets/media/svg/flags/226-united-states.svg" alt="">
+
+                                    }
+                                </span>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="@Url.Action("SetLanguage","Home")?c=tr&r=@Context.Request.Path@Context.Request.QueryString">TR</a>
+                                    <a class="dropdown-item" href="@Url.Action("SetLanguage","Home")?c=en&r=@Context.Request.Path@Context.Request.QueryString">EN</a>
+
+                                </div>*@
+                            </div>
+
+                            <!--end::Languages-->
+                            <!--begin::User-->
+                            <div class="topbar-item">
+                                <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
+
+                                    <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">@Context.Session.GetString("username")</span>
+
+                                </div>
+                            </div>
+                            <!--end::User-->
+                        </div>
+                        <!--end::Topbar-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Header-->
+                <!--begin::Content-->
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <!--begin::Subheader-->
+                    <div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
+                        <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                            <!--begin::Info-->
+                            <div class="d-flex align-items-center flex-wrap mr-2">
+                                <!--begin::Page Title-->
+                                <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">@ViewData["Title"]</h5>
+                                <!--end::Page Title-->
+                            </div>
+                            <!--end::Info-->
+                        </div>
+                    </div>
+                    <!--end::Subheader-->
+                    <!--begin::Entry-->
+                    <div class="d-flex flex-column-fluid">
+                        @RenderBody()
+                    </div>
+                    <!--end::Entry-->
+                </div>
+                <!--end::Content-->
+                <!--begin::Footer-->
+                <div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer">
+                    <!--begin::Container-->
+                    <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+                        <!--begin::Copyright-->
+                        <div class="text-dark order-2 order-md-1">
+                            <span class="text-muted font-weight-bold mr-2">CMS©</span>
+                            <a href="#" target="_blank" class="text-dark-75 text-hover-primary">2023 BlueSky - DeepBlue CMS - v1.01</a>
+                        </div>
+                        <!--end::Copyright-->
+                        <!--begin::Nav-->
+                        <div class="nav nav-dark">
+                            @*<a href="http://keenthemes.com/metronic" target="_blank" class="nav-link pl-0 pr-5">About</a>
+                            <a href="http://keenthemes.com/metronic" target="_blank" class="nav-link pl-0 pr-5">Team</a>
+                            <a href="http://keenthemes.com/metronic" target="_blank" class="nav-link pl-0 pr-0">Contact</a>*@
+                        </div>
+                        <!--end::Nav-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Footer-->
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::Main-->
+    <!-- begin::User Panel-->
+    <div id="kt_quick_user" class="offcanvas offcanvas-right p-10">
+        <!--begin::Header-->
+
+    </div>
+    <!-- end::User Panel-->
+
+
+
+
+
+    <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
+    <script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1400 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#3699FF", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#E4E6EF", "dark": "#181C32" }, "light": { "white": "#ffffff", "primary": "#E1F0FF", "secondary": "#EBEDF3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#3F4254", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#EBEDF3", "gray-300": "#E4E6EF", "gray-400": "#D1D3E0", "gray-500": "#B5B5C3", "gray-600": "#7E8299", "gray-700": "#5E6278", "gray-800": "#3F4254", "gray-900": "#181C32" } }, "font-family": "Poppins" };</script>
+
+
+
+    <script src="~/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+    <script src="~/assets/js/scripts.bundle.js"></script>
+    <!--end::Global Theme Bundle-->
+    <!--begin::Page Vendors(used by this page)-->
+    <script src="~/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+    <!--end::Page Vendors-->
+    <!--begin::Page Scripts(used by this page)-->
+    <script src="~/assets/js/pages/widgets.js"></script>
+    <script src="~/assets/js/jquery.pleaseWait.js"></script>
+    <script src="~/assets/custom/common.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetUserProfile", "Home")',
+                success: function (data) {
+                    var result = data;
+                    $('#kt_quick_user').html(result);
+                }
+            });
+        });
+        $('#searchData2').on('keypress', function (e) {
+            if (e.which == 13) {
+                window.location.href = "@Url.Action("Serach", "Home")?w=" + $('#searchData2').val();
+            }
+        });
+        $('.menu-toggle').click(function () {
+            if ($(this).parent().hasClass("menu-item-open")) {
+                setSessionMe('slct2', 0);
+            }
+            else {
+                setSessionMe('slct2', $(this).parent().attr('id'));
+            }
+
+        });
+        $('.menu-link').click(function () {
+            setSessionMe('slct', $(this).parent().attr('id'));
+
+        });
+        jQuery(document).ready(function () {
+
+            var slct2 = getSessionMe('slct2');
+            var slct = getSessionMe('slct');
+            $('#' + slct).addClass('menu-item-active');
+            $('#' + slct2).addClass('menu-item-open');
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("getLanguages", "Home")',
+                success: function (data) {
+                    console.log(data);
+                    console.log("@System.Globalization.CultureInfo.CurrentCulture.Name.ToUpper()");
+
+                    var contentList = ' <span data-toggle="dropdown">';
+
+                    contentList += '<img class="h-20px w-20px rounded-sm" src="../../assets/media/svg/flags/' + data[0].Icon + ' " alt=""> ';
+                    
+                    contentList += ' </span>';
+                    contentList += ' <div class="dropdown-menu">';
+
+                    for (i = 0; i < data.length; i++) {
+                        contentList += '<a class="dropdown-item" href="' + "@Url.Action("SetLanguage","Home")?c=" + data[i].ShortName.toLowerCase() + "&r=@Context.Request.Path@Context.Request.QueryString" + '"><img class="h-20px w-20px rounded-sm" src="../../assets/media/svg/flags/' + data[i].Icon + ' " alt="">&nbsp;' + data[i].ShortName + '</a>';
+                    }
+
+                    contentList += ' </div>';
+
+                    $('.topbar-item').first().append(contentList);
+
+                }
+            });
+        });
+
+
+
+    </script>
+    @RenderSection("Scripts", required: false)
+    <!--end::Page Scripts-->
+</body>
+<!--end::Body-->
+</html>
+
