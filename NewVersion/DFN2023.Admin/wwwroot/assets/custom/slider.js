@@ -44,10 +44,10 @@ var KTDatatablesDataSourceAjaxServer = function () {
 					title: 'Actions',
 					orderable: false,
 					render: function (data, type, full, meta) {
-						return   '\<a onclick = "updateSlayt(\'' + data + '\')" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
+						return   '\<a onclick = "updateSlider(\'' + data + '\')" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
 								<i class="la la-edit"></i>\
 							</a>\
-							<a onclick = "slaytSil(\'' + data + '\')" class="btn btn-sm btn-clean btn-icon" title="Delete">\
+							<a onclick = "sliderSil(\'' + data + '\')" class="btn btn-sm btn-clean btn-icon" title="Delete">\
 								<i class="la la-trash"></i>\
 							</a>\ ';
 					},
@@ -159,7 +159,7 @@ function yeniKayit() {
 
 
 
-function updateSlayt(pid) {
+function updateSlider(pid) {
 
 
 	secilenDeger = $('#kt_datatable').DataTable().data().filter(x => x.Id == pid)[0];
@@ -193,7 +193,7 @@ function updateSlayt(pid) {
 
 					
 
-function slaytKaydet(pid) {
+function sliderKaydet(pid) {
 	$('#exampleModalSizeLg').pleaseWait();
 	var slider = {
 		'Id': 0,
@@ -219,9 +219,9 @@ function slaytKaydet(pid) {
 		secilenDeger.Status = slider.Status;
 	
 
-		dtt = { slayt: secilenDeger };
+		dtt = { selectedSlider: secilenDeger };
 	} else {
-		dtt = { slayt: slider };
+		dtt = { selectedSlider: slider };
 	}
 	console.log(dtt);
 	$.ajax({
@@ -229,7 +229,7 @@ function slaytKaydet(pid) {
 		dataType: 'json',
 		cache: false,
 		type: "POST",
-		url: '/' + lngg + '/Slayt/createSlayt',
+		url: '/' + lngg + '/Slider/createSlider',
 		success: function (data) {
 			console.log(data.hata);
 			if (data == 'true') {
@@ -261,10 +261,10 @@ function slaytKaydet(pid) {
 }
 
 
-function slaytSil(pid) {
+function sliderSil(pid) {
 
 	swal.fire({
-		text: "Id= " + pid + "  Slaytı Silmek istiyor musunuz?",
+		text: "Id= " + pid + "  Sliderı Silmek istiyor musunuz?",
 		icon: "warning",
 		buttonsStyling: false,
 		confirmButtonText: "Ok",
@@ -280,11 +280,11 @@ function slaytSil(pid) {
 
 			$('#kt_datatable').pleaseWait();
 			$.ajax({
-				data: { slayt: { Id: pid } },
+				data: { selectedSlider: { Id: pid } },
 				dataType: 'json',
 				cache: false,
 				type: "POST",
-				url: '/' + lngg + '/Slayt/deleteSlayt',
+				url: '/' + lngg + '/Slider/deleteSlider',
 				success: function (data) {
 
 					if (!data.hata) {
@@ -401,7 +401,7 @@ function resimYukle(hng, imageInput, ths) {
 		data: formData,
 		processData: false,
 		contentType: false,
-		url: '/' + lngg + '/Slayt/UploderImage',
+		url: '/' + lngg + '/Slider/UploderImage',
 		type: 'POST',
 		success: function (data) {
 			if (data != 'false') {

@@ -12,24 +12,28 @@ namespace DFN2023.Contracts
         List<UserDTO> CheckUser(string uname, string pass);
 
 
-
-
         public DtResult<UserDT> getUsers(DtParameters dtParameters);
         public User createUser(User usr);
         public bool deleteUser(User usr);
 
 
-        //City - Country
+        //City - Country - County
         DtResult<CountryDT> getCountry(DtParameters dtParameters, int lang);
         DtResult<CityDT> getCity(DtParameters dtParameters, int lang);
+        DtResult<CountyDT> getCounty(DtParameters dtParameters, int lang);
         List<City> listCities(int cityId);
+        List<City> listCities();
         List<Country> listCountries();
+        List<County> listCounties(int countyId);
         bool addCountry(Country country);
         bool updateCountry(Country country);
         bool deleteCountry(Country country);
         bool addCity(City city);
         bool updateCity(City city);
         bool deleteCity(City city);
+        bool addCounty(County county);
+        bool updateCounty(County county);
+        bool deleteCounty(County county);
 
 
         //StaticContentGrupPage
@@ -58,6 +62,12 @@ namespace DFN2023.Contracts
         List<StaticContentTemp> listStaticContentTemp();
         List<StaticContentGrupTemp> listStaticContentGrupTemp();
         List<StaticContentGrupPage> listStaticContentGrupPage(int lang);
+
+
+        //Slider
+        Slider createSlider(Slider pro);
+        DtResult<SliderDT> getSlider(DtParameters dtParameters, int lang);
+        bool deleteSlider(Slider slider);
 
 
 

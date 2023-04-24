@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Şehirler";
+    ViewData["Title"] = "İlçeler";
 }
 
 <!--begin::Container-->
@@ -8,12 +8,12 @@
         <div class="card-header">
             <div class="card-title">
                 <span class="card-icon">
-                     
+
                 </span>
                 <h3 class="card-label"> </h3>
             </div>
             <div class="card-toolbar">
-            
+
                 <!--begin::Button-->
                 <a href="#" onclick="yeniKayit()" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
@@ -39,8 +39,8 @@
                         <tr>
                             <th>Ayarlar</th>
                             <th>ID</th>
+                            <th>İlçe</th>
                             <th>Şehir</th>
-                            <th>Ülke</th>
                             <th>Dil</th>
                             <th>Durum</th>
                             <th>Sıralama</th>
@@ -65,40 +65,40 @@
             </div>
             <div class="modal-body">
 
-               <label  class="control-label"> Ülke Seçiniz</label>
-               @Html.DropDownList("Country", null, "....",  new { @class = "form-control" })
+                <label class="control-label"> Şehir Seçiniz</label>
+                @Html.DropDownList("City", null, "....",  new { @class = "form-control" })
 
-                  
-                 <div class="form-group">
+
+                <div class="form-group">
                     <label>
                         Adı
                     </label>
-                    <input type="text" class="form-control" placeholder="...." id="Name" >
-                     <input type="hidden" id="Id" class="form-control">
-                </div>     
-                 <div class="form-group">
-                     <label>
-                         Pasif/Aktif
-                     </label>
-                            <span class="switch">
-                                <label>
-                                    <input type="checkbox" name="Status" id="status">
-                                    <span></span>
-                                </label>
-                            </span>
-                        </div>        
-                        <br />
+                    <input type="text" class="form-control" placeholder="...." id="Name">
+                    <input type="hidden" id="Id" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Pasif/Aktif
+                    </label>
+                    <span class="switch">
+                        <label>
+                            <input type="checkbox" name="Status" id="status">
+                            <span></span>
+                        </label>
+                    </span>
+                </div>
+                <br />
 
                 <div class="form-group">
                     <label>
                         Sıralama
                     </label>
-                    <input type="number" class="form-control" placeholder="...." id="RowNum" >
+                    <input type="number" class="form-control" placeholder="...." id="RowNum">
                 </div>
 
-               <br />
+                <br />
             </div>
-            <div class="modal-footer"> 
+            <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
                 <button type="button" onclick=" sehirEkleGuncelle()" class="btn btn-success font-weight-bold">Kaydet</button>
             </div>
@@ -109,11 +109,14 @@
 
 <!--end::Container-->
 @section Scripts{
-    
-   
+
+
     <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script>var hst = "@Url.Action("getSehir", "Sehirler")"; var hst2 = "@Url.Action("addSehir", "Sehirler")";
-     var hst3 = "@Url.Action("updateSehir", "Sehirler")";  var hst4 = "@Url.Action("deleteSehir", "Sehirler")";
+    <script>
+        var hst = "@Url.Action("getIlce", "Ilceler")";
+        var hst2 = "@Url.Action("addIlce", "Ilceler")";
+        var hst3 = "@Url.Action("updateIlce", "Ilceler")";
+        var hst4 = "@Url.Action("deleteIlce", "Ilceler")";
     </script>
-    <script src="~/assets/custom/sehirler.js"></script>
+    <script src="~/assets/custom/ilceler.js"></script>
 }

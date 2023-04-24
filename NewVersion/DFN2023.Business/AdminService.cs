@@ -80,7 +80,6 @@ namespace DFN2023.Business
         }
 
 
-
         public DtResult<UserDT> getUsers(DtParameters dtParameters)
         {
             try
@@ -185,7 +184,7 @@ namespace DFN2023.Business
 
 
 
-        /*Country - City*/
+        /*Country - City - County*/
 
         public List<City> listCities(int id)
         {
@@ -399,6 +398,121 @@ namespace DFN2023.Business
         {
             var getCountryList = _fkRepositoryCountry.GetList().ToList();
             return getCountryList;
+        }
+
+        public List<City> listCities()
+        {
+            var getCityList = _fkRepositoryCity.GetList().ToList();
+            return getCityList;
+        }
+
+        public List<County> listCounties(int id)
+        {
+            var getCountyList = _fkRepositoryCounty.GetList(p => p.CityId == id).ToList();
+            return getCountyList;
+        }
+
+        public DtResult<CountyDT> getCounty(DtParameters dtParameters, int lang)
+        {
+            try
+            {
+
+                Expression<Func<County, bool>> expProducts = c => true;
+                expProducts = expProducts.And(p => p.LangId == lang);
+                // expProducts = expProducts.And(p => p.Status == 1);
+
+                var searchBy = dtParameters.Search?.Value;
+                if (!string.IsNullOrEmpty(searchBy))
+                {
+                    expProducts = expProducts.And(r => r.Name != null && r.Name.ToUpper().Contains(searchBy.ToUpper()));
+                }
+
+                var sql = _fkRepositoryCounty.Include(p => p.City)
+                .Where(expProducts)
+                .Select(p => new CountyDT
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Status = p.Status,
+                    LangId = p.LangId,
+                    RowNum = p.RowNum,
+                    CityId = p.CityId,
+                    City = p.City.Name,
+
+                    /**/
+
+                }).AsQueryable();
+
+                var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                sql = orderAscendingDirection ? sql.OrderByDynamic(orderCriteria, DtOrderDir.Asc) : sql.OrderByDynamic(orderCriteria, DtOrderDir.Desc);
+
+
+                var count = sql.Count();
+
+                var sonuc = sql.Skip(dtParameters.Start).Take(dtParameters.Length).ToList();
+
+                return new DtResult<CountyDT>
+                {
+                    Draw = dtParameters.Draw,
+                    RecordsTotal = count,
+                    RecordsFiltered = count,
+                    Data = sonuc
+                };
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+
+        public bool addCounty(County county)
+        {
+            try
+            {
+                _fkRepositoryCounty.Add(county);
+                _unitOfWork.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
+        }
+
+        public bool updateCounty(County county)
+        {
+            try
+            {
+                _fkRepositoryCounty.Update(county);
+                _unitOfWork.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
+        }
+
+        public bool deleteCounty(County County)
+        {
+            try
+            {
+                _fkRepositoryCounty.Delete(County);
+                _unitOfWork.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
         }
 
 
@@ -1166,7 +1280,107 @@ namespace DFN2023.Business
         }
 
 
+        //Slider
 
+        public DtResult<SliderDT> getSlider(DtParameters dtParameters, int lang)
+        {
+            try
+            {
+
+                Expression<Func<Slider, bool>> expProducts = c => true;
+                expProducts = expProducts.And(p => p.LangId == lang);
+                // expProducts = expProducts.And(p => p.Status == 1);
+
+                var searchBy = dtParameters.Search?.Value;
+                if (!string.IsNullOrEmpty(searchBy))
+                {
+                    expProducts = expProducts.And(r => r.Link != null && r.Link.ToUpper().Contains(searchBy.ToUpper()) ||
+                                               r.Name != null && r.Name.ToUpper().Contains(searchBy.ToUpper()) ||
+                                               r.Target != null && r.Target.ToUpper().Contains(searchBy.ToUpper()));
+                }
+
+                var sql = _fkRepositorySlider.Include()
+                .Where(expProducts)
+                .Select(p => new SliderDT
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Image1 = p.Image1,
+                    Image2 = p.Image2,
+                    Link = p.Link,
+                    Target = p.Target,
+                    Type = p.Type,
+                    RowNum = p.RowNum,
+                    Status = p.Status,
+                    LangId = p.LangId,
+
+                    /**/
+
+                }).AsQueryable();
+
+                var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                sql = orderAscendingDirection ? sql.OrderByDynamic(orderCriteria, DtOrderDir.Asc) : sql.OrderByDynamic(orderCriteria, DtOrderDir.Desc);
+
+
+                var count = sql.Count();
+
+                var sonuc = sql.Skip(dtParameters.Start).Take(dtParameters.Length).ToList();
+
+                return new DtResult<SliderDT>
+                {
+                    Draw = dtParameters.Draw,
+                    RecordsTotal = count,
+                    RecordsFiltered = count,
+                    Data = sonuc
+                };
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+
+        public Slider createSlider(Slider pro)
+        {
+            try
+            {
+
+                if (pro.Id > 0)
+                {
+                    var result = _fkRepositorySlider.Update(pro);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    var result = _fkRepositorySlider.Add(pro);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public bool deleteSlider(Slider slayt)
+        {
+            try
+            {
+                _fkRepositorySlider.Delete(slayt);
+                _unitOfWork.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
+        }
 
 
     }
