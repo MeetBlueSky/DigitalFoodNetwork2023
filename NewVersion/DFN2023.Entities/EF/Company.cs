@@ -25,42 +25,14 @@ namespace DFN2023.Entities.EF
         public string TaxNo { get; set; }
         public int CompanyTypeId { get; set; }
         public string OfficialAddress { get; set; }
-
-
-        //[ForeignKey("OfficialCountry")]
-        //public int? OfficialCountryId { get; set; }
-        //public virtual Country OfficialCountry { get; set; }
-
-
-        //[ForeignKey("OfficialCity")]
-        //public int? OfficialCityId { get; set; }
-        //public virtual City OfficialCity { get; set; }
-
-
-        //[ForeignKey("OfficialCounty")]
-        //public int? OfficialCountyId { get; set; }
-        //public virtual County OfficialCounty { get; set; }
+         
         public int? OfficialCountryId { get; set; }
         public int? OfficialCityId { get; set; }
         public int? OfficialCountyId { get; set; }
 
 
         public string MapAddress { get; set; }
-
-
-        //[ForeignKey("MapCountry")]
-        //public int? MapCountryId { get; set; }
-        //public virtual Country MapCountry { get; set; }
-
-
-        //[ForeignKey("MapCity")]
-        //public int? MapCityId { get; set; }
-        //public virtual City MapCity { get; set; }
-
-
-        //[ForeignKey("MapCounty")]
-        //public int? MapCountyId { get; set; }
-        //public virtual County MapCounty { get; set; }
+         
         public int? MapCountryId { get; set; }
         public int? MapCityId { get; set; }
         public int? MapCountyId { get; set; }
@@ -90,15 +62,6 @@ namespace DFN2023.Entities.EF
 
 
 
-        //public virtual Country OfficialCountry { get; set; }
-
-        //public virtual City OfficialCity { get; set; }
-        //public virtual County OfficialCounty { get; set; }
-
-        //public virtual County MapCountry { get; set; }
-        //public virtual City MapCity { get; set; }
-
-        //public virtual County MapCounty { get; set; }
 
         public virtual CompanyType CompanyType { get; set; }
 
