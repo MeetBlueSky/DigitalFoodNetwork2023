@@ -90,11 +90,11 @@ namespace DFN2023.Infrastructure.Context
             modelBuilder.Entity<Company>(entity =>
             {
 
-                entity.HasOne(d => d.CompanyType)
-                    .WithMany(p => p.Company)
-                    .HasForeignKey(d => d.CompanyTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CompanyType_Company");
+                //entity.HasOne(d => d.CompanyType)
+                //    .WithMany(p => p.Company)
+                //    .HasForeignKey(d => d.CompanyTypeId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_CompanyType_Company");
 
                 //entity.HasOne(d => d.OfficialCountry)
                 //    .WithMany(p => p.OfficialCompany)
@@ -143,15 +143,15 @@ namespace DFN2023.Infrastructure.Context
                     .HasConstraintName("FK_Company_CompanyImage");
             });
 
-            modelBuilder.Entity<Message>(entity =>
-            {
+            //modelBuilder.Entity<Message>(entity =>
+            //{
 
-                entity.HasOne(d => d.ParentMessage)
-                    .WithMany(p => p.ChildMessage)
-                    .HasForeignKey(d => d.ParentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Message_Message");
-            });
+            //    entity.HasOne(d => d.ParentMessage)
+            //        .WithMany(p => p.ChildMessage)
+            //        .HasForeignKey(d => d.ParentId)
+            //        .OnDelete(DeleteBehavior.ClientSetNull)
+            //        .HasConstraintName("FK_Message_Message");
+            //});
 
             modelBuilder.Entity<ProductCompany>(entity =>
             {

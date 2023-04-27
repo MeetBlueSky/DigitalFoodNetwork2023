@@ -90,15 +90,15 @@ namespace DFN2023.Entities.EF
 
 
 
-        public virtual Country OfficialCountry { get; set; }
+        //public virtual Country OfficialCountry { get; set; }
 
-        public virtual City OfficialCity { get; set; }
-        public virtual County OfficialCounty { get; set; }
+        //public virtual City OfficialCity { get; set; }
+        //public virtual County OfficialCounty { get; set; }
 
-        public virtual County MapCountry { get; set; }
-        public virtual City MapCity { get; set; }
+        //public virtual County MapCountry { get; set; }
+        //public virtual City MapCity { get; set; }
 
-        public virtual County MapCounty { get; set; }
+        //public virtual County MapCounty { get; set; }
 
         public virtual CompanyType CompanyType { get; set; }
 

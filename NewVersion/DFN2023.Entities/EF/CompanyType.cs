@@ -9,10 +9,10 @@ namespace DFN2023.Entities.EF
 {
     public class CompanyType
     {
-        public CompanyType()
-        {
-            Company = new HashSet<Company>();
-        }
+        //public CompanyType()
+        //{
+        //    Company = new HashSet<Company>();
+        //}
         public int Id { get; set; }
         public string TypeName { get; set; }
         public string? Icon { get; set; }
@@ -24,7 +24,7 @@ namespace DFN2023.Entities.EF
         public int Status { get; set; }
 
 
-        public virtual ICollection<Company> Company { get; set; }
+        //public virtual ICollection<Company> Company { get; set; }
 
     }
 }

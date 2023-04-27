@@ -9,11 +9,11 @@ namespace DFN2023.Entities.EF
 {
     public class County
     {
-        public County()
-        {
-            //OfficialCompany = new HashSet<Company>();
-            //MapCompany = new HashSet<Company>();
-        }
+        //public County()
+        //{
+        //    //OfficialCompany = new HashSet<Company>();
+        //    //MapCompany = new HashSet<Company>();
+        //}
 
         public int Id { get; set; }
         public int? CityId { get; set; }

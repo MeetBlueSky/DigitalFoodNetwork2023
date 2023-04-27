@@ -4,6 +4,7 @@ using DFN2023.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DFN2023.Infrastructure.Migrations.Sql
 {
     [DbContext(typeof(SqlContext))]
-    partial class SqlContextModelSnapshot : ModelSnapshot
+    [Migration("20230426122813_26042023.1")]
+    partial class _260420231
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -423,16 +425,10 @@ namespace DFN2023.Infrastructure.Migrations.Sql
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool?>("CompanyShow")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("FromRolId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FromUser")
+                    b.Property<int?>("FromUser")
                         .HasColumnType("int");
 
                     b.Property<int?>("LastIP")
@@ -441,16 +437,22 @@ namespace DFN2023.Infrastructure.Migrations.Sql
                     b.Property<string>("MessageContent")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MessageType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("ToUser")
+                    b.Property<int?>("ToUser")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("UserShow")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Message", "dbo");
                 });
@@ -923,12 +925,17 @@ namespace DFN2023.Infrastructure.Migrations.Sql
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Productd")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("Productd");
 
                     b.HasIndex("UserId");
 
@@ -976,13 +983,11 @@ namespace DFN2023.Infrastructure.Migrations.Sql
 
             modelBuilder.Entity("DFN2023.Entities.EF.Company", b =>
                 {
-                    b.HasOne("DFN2023.Entities.EF.CompanyType", "CompanyType")
-                        .WithMany()
+                    b.HasOne("DFN2023.Entities.EF.CompanyType", null)
+                        .WithMany("Company")
                         .HasForeignKey("CompanyTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("CompanyType");
                 });
 
             modelBuilder.Entity("DFN2023.Entities.EF.CompanyImage", b =>
@@ -1004,6 +1009,16 @@ namespace DFN2023.Infrastructure.Migrations.Sql
                         .HasConstraintName("FK_City_County");
 
                     b.Navigation("City");
+                });
+
+            modelBuilder.Entity("DFN2023.Entities.EF.Message", b =>
+                {
+                    b.HasOne("DFN2023.Entities.EF.Message", "ParentMessage")
+                        .WithMany("ChildMessage")
+                        .HasForeignKey("ParentId")
+                        .HasConstraintName("FK_Message_Message");
+
+                    b.Navigation("ParentMessage");
                 });
 
             modelBuilder.Entity("DFN2023.Entities.EF.ProductCompany", b =>
@@ -1065,11 +1080,17 @@ namespace DFN2023.Infrastructure.Migrations.Sql
 
             modelBuilder.Entity("DFN2023.Entities.EF.UserUrunler", b =>
                 {
-                    b.HasOne("DFN2023.Entities.EF.Company", "Company")
+                    b.HasOne("DFN2023.Entities.EF.Company", null)
                         .WithMany("UserUrunler")
                         .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DFN2023.Entities.EF.ProductCompany", "ProductCompany")
+                        .WithMany("UserUrunler")
+                        .HasForeignKey("Productd")
                         .IsRequired()
-                        .HasConstraintName("FK_Company_UserUrunler");
+                        .HasConstraintName("FK_ProductCompany_UserUrunler");
 
                     b.HasOne("DFN2023.Entities.EF.User", "User")
                         .WithMany("UserUrunler")
@@ -1077,7 +1098,7 @@ namespace DFN2023.Infrastructure.Migrations.Sql
                         .IsRequired()
                         .HasConstraintName("FK_User_UserUrunler");
 
-                    b.Navigation("Company");
+                    b.Navigation("ProductCompany");
 
                     b.Navigation("User");
                 });
@@ -1105,9 +1126,19 @@ namespace DFN2023.Infrastructure.Migrations.Sql
                     b.Navigation("UserUrunler");
                 });
 
+            modelBuilder.Entity("DFN2023.Entities.EF.CompanyType", b =>
+                {
+                    b.Navigation("Company");
+                });
+
             modelBuilder.Entity("DFN2023.Entities.EF.Country", b =>
                 {
                     b.Navigation("City");
+                });
+
+            modelBuilder.Entity("DFN2023.Entities.EF.Message", b =>
+                {
+                    b.Navigation("ChildMessage");
                 });
 
             modelBuilder.Entity("DFN2023.Entities.EF.ProductBase", b =>
@@ -1115,6 +1146,11 @@ namespace DFN2023.Infrastructure.Migrations.Sql
                     b.Navigation("CategoryProductBase");
 
                     b.Navigation("ProductCompany");
+                });
+
+            modelBuilder.Entity("DFN2023.Entities.EF.ProductCompany", b =>
+                {
+                    b.Navigation("UserUrunler");
                 });
 
             modelBuilder.Entity("DFN2023.Entities.EF.StaticContentGrupPage", b =>
