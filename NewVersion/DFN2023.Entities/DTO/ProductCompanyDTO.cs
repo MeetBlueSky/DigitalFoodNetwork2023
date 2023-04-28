@@ -9,6 +9,7 @@ namespace DFN2023.Entities.DTO
     public class ProductCompanyDTO
     {
         public int Id { get; set; }
+        public int CompanyId { get; set; }
         public int CategoryId { get; set; }
         public int ProductBaseId { get; set; }
         public string? Name { get; set; }
@@ -22,6 +23,12 @@ namespace DFN2023.Entities.DTO
         public DateTime? LastUpdateDate { get; set; }
         public string? LastIP { get; set; }
         public int Status { get; set; }
+
+
+
+        public string? CompanyName { get; set; }
+        public string? CategoryName { get; set; }
+        public string? ProductBaseName { get; set; }
 
     }
 }

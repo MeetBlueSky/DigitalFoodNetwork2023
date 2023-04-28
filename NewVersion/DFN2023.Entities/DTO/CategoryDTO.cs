@@ -24,7 +24,7 @@ namespace DFN2023.Entities.DTO
         public int LangId { get; set; }
 
 
-
+        public string? ParentName { get; set; }
 
     }
 }

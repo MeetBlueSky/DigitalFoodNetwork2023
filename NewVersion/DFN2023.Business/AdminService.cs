@@ -183,6 +183,334 @@ namespace DFN2023.Business
         }
 
 
+        //Category 
+
+        public DtResult<CategoryDTO> getCategory(DtParameters dtParameters, int lang)
+        {
+            try
+            {
+
+                Expression<Func<Category, bool>> expProducts = c => true;
+                expProducts = expProducts.And(p => p.LangId == lang);
+                // expProducts = expProducts.And(p => p.Status == 1);
+
+                var searchBy = dtParameters.Search?.Value;
+                if (!string.IsNullOrEmpty(searchBy))
+                {
+                    expProducts = expProducts.And(r => r.Name != null && r.Name.ToUpper().Contains(searchBy.ToUpper()));
+                }
+
+                var sql = _fkRepositoryCategory.Include()
+                .Where(expProducts)
+                .Select(p => new CategoryDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Code = p.Code,
+                    Image = p.Image,
+                    ParentId = p.ParentCategory.Id,
+                    ParentName = p.ParentCategory.Name,
+                    RowNum = p.RowNum,
+                    CreatedBy  = p.CreatedBy,
+                    LastUpdatedBy = p.LastUpdatedBy,
+                    CreateDate = p.CreateDate,
+                    LastUpdateDate = p.LastUpdateDate,
+                    LastIP = p.LastIP,
+                    Status = p.Status,
+                    LangId = p.LangId,
+                    /**/
+
+                }).AsQueryable();
+
+                var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                sql = orderAscendingDirection ? sql.OrderByDynamic(orderCriteria, DtOrderDir.Asc) : sql.OrderByDynamic(orderCriteria, DtOrderDir.Desc);
+
+
+                var count = sql.Count();
+
+                var sonuc = sql.Skip(dtParameters.Start).Take(dtParameters.Length).ToList();
+
+                return new DtResult<CategoryDTO>
+                {
+                    Draw = dtParameters.Draw,
+                    RecordsTotal = count,
+                    RecordsFiltered = count,
+                    Data = sonuc
+                };
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public Category createKategori(Category cat)
+        {
+            try
+            {
+
+                if (cat.Id > 0)
+                {
+                    var result = _fkRepositoryCategory.Update(cat);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    var result = _fkRepositoryCategory.Add(cat);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public bool deleteKategori(Category cat)
+        {
+            try
+            {
+                _fkRepositoryCategory.Delete(cat.Id);
+                _unitOfWork.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+
+            }
+        }
+
+
+        // Company - CompanyType - CompanyImage 
+
+        public DtResult<CompanyDTO> getCompany(DtParameters dtParameters, int lang)
+        {
+            try
+            {
+
+                Expression<Func<Company, bool>> expProducts = c => true;
+                //expProducts = expProducts.And(p => p.LangId == lang);
+                // expProducts = expProducts.And(p => p.Status == 1);
+
+                var searchBy = dtParameters.Search?.Value;
+                if (!string.IsNullOrEmpty(searchBy))
+                {
+                    expProducts = expProducts.And(r => r.OfficialName != null && r.OfficialName.ToUpper().Contains(searchBy.ToUpper()));
+                }
+
+                var sql = _fkRepositoryCompany.Include()
+                .Where(expProducts)
+                .Select(p => new CompanyDTO
+                {
+                    Id = p.Id,
+                    BrandName = p.BrandName,
+                    OfficialName = p.OfficialName,
+                    ShortDescription = p.ShortDescription,
+                    DetailDescription = p.DetailDescription,
+                    TaxOffice = p.TaxOffice,
+                    TaxNo = p.TaxNo,
+                    CompanyTypeId = p.CompanyTypeId,
+                    CompanyTypeName = p.CompanyType.TypeName, 
+                    OfficialAddress = p.OfficialAddress,
+                    OfficialCityId = p.OfficialCityId,
+                    OfficialCountryId = p.OfficialCountryId,
+                    OfficialCountyId = p.OfficialCountyId,
+                    MapAddress = p.MapAddress,
+                    MapCountryId = p.MapCountryId,
+                    MapCityId = p.MapCityId,
+                    MapCountyId = p.MapCountyId,
+                    MapX = p.MapX,
+                    MapY = p.MapY,
+                    Email = p.Email,
+                    Phone = p.Phone,
+                    Mobile = p.Mobile,
+                    YearFounded = p.YearFounded,
+                    Logo = p.Logo,
+                    Attachment = p.Attachment,
+                    Facebook = p.Facebook,
+                    Instagram = p.Instagram,
+                    Tiktok = p.Tiktok,
+                    Youtube = p.Youtube,
+                    Whatsapp = p.Whatsapp,
+                    Website = p.Website,
+                    AdminNotes = p.AdminNotes,
+                    CreatedBy = p.CreatedBy,
+                    LastUpdatedBy = p.LastUpdatedBy,
+                    CreateDate = p.CreateDate,
+                    LastUpdateDate = p.LastUpdateDate,
+                    LastIP = p.LastIP,
+                    Status = p.Status,
+                    /**/
+
+                }).AsQueryable();
+
+                var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                sql = orderAscendingDirection ? sql.OrderByDynamic(orderCriteria, DtOrderDir.Asc) : sql.OrderByDynamic(orderCriteria, DtOrderDir.Desc);
+
+
+                var count = sql.Count();
+
+                var sonuc = sql.Skip(dtParameters.Start).Take(dtParameters.Length).ToList();
+
+                return new DtResult<CompanyDTO>
+                {
+                    Draw = dtParameters.Draw,
+                    RecordsTotal = count,
+                    RecordsFiltered = count,
+                    Data = sonuc
+                };
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public Company createCompany(Company com)
+        {
+            try
+            {
+
+                if (com.Id > 0)
+                {
+                    var result = _fkRepositoryCompany.Update(com);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    var result = _fkRepositoryCompany.Add(com);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public bool deleteCompany(Company com)
+        {
+            try
+            {
+                _fkRepositoryCompany.Delete(com.Id);
+                _unitOfWork.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+
+            }
+        }
+
+        public DtResult<CompanyTypeDTO> getCompanyType(DtParameters dtParameters, int lang)
+        {
+            try
+            {
+
+                Expression<Func<CompanyType, bool>> expProducts = c => true;
+                //expProducts = expProducts.And(p => p.LangId == lang);
+                // expProducts = expProducts.And(p => p.Status == 1);
+
+                var searchBy = dtParameters.Search?.Value;
+                if (!string.IsNullOrEmpty(searchBy))
+                {
+                    expProducts = expProducts.And(r => r.TypeName!= null && r.TypeName.ToUpper().Contains(searchBy.ToUpper()));
+                }
+
+                var sql = _fkRepositoryCompanyType.Include()
+                .Where(expProducts)
+                .Select(p => new CompanyTypeDTO
+                {
+                    Id = p.Id,
+                    TypeName = p.TypeName,
+                    Icon = p.Icon,
+                    RowNum = p.RowNum,
+                    CreatedBy = p.CreatedBy,
+                    LastUpdatedBy = p.LastUpdatedBy,
+                    CreateDate = p.CreateDate,
+                    LastUpdateDate = p.LastUpdateDate,
+                    Status = p.Status,
+                    /**/
+
+                }).AsQueryable();
+
+                var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                sql = orderAscendingDirection ? sql.OrderByDynamic(orderCriteria, DtOrderDir.Asc) : sql.OrderByDynamic(orderCriteria, DtOrderDir.Desc);
+
+
+                var count = sql.Count();
+
+                var sonuc = sql.Skip(dtParameters.Start).Take(dtParameters.Length).ToList();
+
+                return new DtResult<CompanyTypeDTO>
+                {
+                    Draw = dtParameters.Draw,
+                    RecordsTotal = count,
+                    RecordsFiltered = count,
+                    Data = sonuc
+                };
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public CompanyType createCompanyType(CompanyType cat)
+        {
+            try
+            {
+
+                if (cat.Id > 0)
+                {
+                    var result = _fkRepositoryCompanyType.Update(cat);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    var result = _fkRepositoryCompanyType.Add(cat);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public bool deleteCompanyType(CompanyType cat)
+        {
+            try
+            {
+                _fkRepositoryCompanyType.Delete(cat.Id);
+                _unitOfWork.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+
+            }
+        }
+
+
 
         /*Country - City - County*/
 
@@ -515,6 +843,322 @@ namespace DFN2023.Business
             return true;
         }
 
+
+        //Message
+
+        public bool deleteIletisim(Message cf)
+        {
+            try
+            {
+                _fkRepositoryMessage.Delete(cf.Id);
+                _unitOfWork.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
+        public bool guncelleIletisim(Message cf)
+        {
+            try
+            {
+                var a = _fkRepositoryMessage.Entities.FirstOrDefault(p => p.Id == cf.Id);
+                a.Status = cf.Status;
+                _fkRepositoryMessage.Update(a);
+                _unitOfWork.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
+
+        public DtResult<MessageDTO> getContactForms(DtParameters dtParameters, int lang)
+        {
+            try
+            {
+
+                Expression<Func<Message, bool>> expProducts = c => true;
+                // expProducts = expProducts.And(p => p.LangId == lang);
+                // expProducts = expProducts.And(p => p.Status == 1);
+
+                var searchBy = dtParameters.Search?.Value;
+                if (!string.IsNullOrEmpty(searchBy))
+                {
+                    //expProducts = expProducts.And(r => r.Name != null && r.Name.ToUpper().Contains(searchBy.ToUpper()) ||
+                    //                           r.Email != null && r.Email.ToUpper().Contains(searchBy.ToUpper()) ||
+                    //                           r.Phone != null && r.Phone.ToUpper().Contains(searchBy.ToUpper()) ||
+                    //                            r.Message != null && r.Message.ToUpper().Contains(searchBy.ToUpper()) ||
+                    //                           r.Date != null && r.Date.ToString().ToUpper().Contains(searchBy.ToUpper()));
+                    expProducts = expProducts.And(r => r.MessageContent != null && r.MessageContent.ToUpper().Contains(searchBy.ToUpper())
+                            //r.Name != null && r.Name.ToUpper().Contains(searchBy.ToUpper()) ||
+                            //r.Email != null && r.Email.ToUpper().Contains(searchBy.ToUpper()) ||
+                            //r.Phone != null && r.Phone.ToUpper().Contains(searchBy.ToUpper()) ||
+                            // r.MessageContent != null && r.MessageContent.ToUpper().Contains(searchBy.ToUpper())
+                            );
+                }
+
+                var sql = _fkRepositoryMessage.Include()
+                .Where(expProducts)
+                .Select(p => new MessageDTO
+                {
+                    Id = p.Id,
+
+
+
+                    FromUser = p.FromUser,
+                    ToUser = p.ToUser,
+                    FromRolId = p.FromRolId,
+                    MessageContent = p.MessageContent,
+                    CreateDate = p.CreateDate,
+                    LastIP = p.LastIP,
+                    Status = p.Status,
+                    UserShow = p.UserShow,
+                    CompanyShow = p.CompanyShow,
+
+
+
+                }).AsQueryable();
+
+                var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                sql = orderAscendingDirection ? sql.OrderByDynamic(orderCriteria, DtOrderDir.Asc) : sql.OrderByDynamic(orderCriteria, DtOrderDir.Desc);
+
+
+                var count = sql.Count();
+
+                var sonuc = sql.Skip(dtParameters.Start).Take(dtParameters.Length).ToList();
+
+                return new DtResult<MessageDTO>
+                {
+                    Draw = dtParameters.Draw,
+                    RecordsTotal = count,
+                    RecordsFiltered = count,
+                    Data = sonuc
+                };
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+
+
+        // ProductBase - ProductCompany 
+
+        public DtResult<ProductBaseDTO> getProductBase(DtParameters dtParameters, int lang)
+        {
+            try
+            {
+
+                Expression<Func<ProductBase, bool>> expProducts = c => true;
+                //expProducts = expProducts.And(p => p.LangId == lang);
+                // expProducts = expProducts.And(p => p.Status == 1);
+
+                var searchBy = dtParameters.Search?.Value;
+                if (!string.IsNullOrEmpty(searchBy))
+                {
+                    expProducts = expProducts.And(r => r.Name != null && r.Name.ToUpper().Contains(searchBy.ToUpper()));
+                }
+
+                var sql = _fkRepositoryProductBase.Include()
+                .Where(expProducts)
+                .Select(p => new ProductBaseDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Code = p.Code,
+                    Image = p.Image,
+                    RowNum = p.RowNum,
+                    CreatedBy = p.CreatedBy,
+                    LastUpdatedBy = p.LastUpdatedBy,
+                    CreateDate = p.CreateDate,
+                    LastUpdateDate = p.LastUpdateDate,
+                    LastIP = p.LastIP,
+                    Status = p.Status,
+                    LangId = p.LangId,
+                    
+                    /**/
+
+                }).AsQueryable();
+
+                var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                sql = orderAscendingDirection ? sql.OrderByDynamic(orderCriteria, DtOrderDir.Asc) : sql.OrderByDynamic(orderCriteria, DtOrderDir.Desc);
+
+
+                var count = sql.Count();
+
+                var sonuc = sql.Skip(dtParameters.Start).Take(dtParameters.Length).ToList();
+
+                return new DtResult<ProductBaseDTO>
+                {
+                    Draw = dtParameters.Draw,
+                    RecordsTotal = count,
+                    RecordsFiltered = count,
+                    Data = sonuc
+                };
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public ProductBase createProductBase(ProductBase pb)
+        {
+            try
+            {
+
+                if (pb.Id > 0)
+                {
+                    var result = _fkRepositoryProductBase.Update(pb);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    var result = _fkRepositoryProductBase.Add(pb);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public bool deleteProductBase(ProductBase pb)
+        {
+            try
+            {
+                _fkRepositoryProductBase.Delete(pb.Id);
+                _unitOfWork.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+
+            }
+        }
+
+        public DtResult<ProductCompanyDTO> getProductCompany(DtParameters dtParameters, int lang)
+        {
+            try
+            {
+
+                Expression<Func<ProductCompany, bool>> expProducts = c => true;
+                //expProducts = expProducts.And(p => p.LangId == lang);
+                // expProducts = expProducts.And(p => p.Status == 1);
+
+                var searchBy = dtParameters.Search?.Value;
+                if (!string.IsNullOrEmpty(searchBy))
+                {
+                    expProducts = expProducts.And(r => r.Name != null && r.Name.ToUpper().Contains(searchBy.ToUpper()));
+                }
+
+                var sql = _fkRepositoryProductCompany.Include()
+                .Where(expProducts)
+                .Select(p => new ProductCompanyDTO
+                {
+                    Id = p.Id,
+                    CompanyId = p.CompanyId,
+                    CompanyName = p.Company.BrandName,
+                    ProductBaseId = p.ProductBaseId,
+                    ProductBaseName = p.ProductBase.Name,
+                    CategoryId = p.CategoryId,
+                    CategoryName = p.Category.Name,
+                    Name = p.Name,
+                    Code = p.Code,
+                    Price = p.Price,
+                    Currency = p.Currency,
+                    RowNum = p.RowNum,
+                    CreatedBy = p.CreatedBy,
+                    LastUpdatedBy = p.LastUpdatedBy,
+                    CreateDate = p.CreateDate,
+                    LastUpdateDate = p.LastUpdateDate,
+                    LastIP = p.LastIP,
+                    Status = p.Status,
+                    /**/
+
+                }).AsQueryable();
+
+                var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                sql = orderAscendingDirection ? sql.OrderByDynamic(orderCriteria, DtOrderDir.Asc) : sql.OrderByDynamic(orderCriteria, DtOrderDir.Desc);
+
+
+                var count = sql.Count();
+
+                var sonuc = sql.Skip(dtParameters.Start).Take(dtParameters.Length).ToList();
+
+                return new DtResult<ProductCompanyDTO>
+                {
+                    Draw = dtParameters.Draw,
+                    RecordsTotal = count,
+                    RecordsFiltered = count,
+                    Data = sonuc
+                };
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public ProductCompany createProductCompany(ProductCompany pc)
+        {
+            try
+            {
+
+                if (pc.Id > 0)
+                {
+                    var result = _fkRepositoryProductCompany.Update(pc);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    var result = _fkRepositoryProductCompany.Add(pc);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public bool deleteProductCompany(ProductCompany pc)
+        {
+            try
+            {
+                _fkRepositoryProductCompany.Delete(pc.Id);
+                _unitOfWork.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+
+            }
+        }
 
 
 

@@ -47,5 +47,8 @@ namespace DFN2023.Entities.DTO
         public int Status { get; set; }
 
 
+
+        public string? CompanyTypeName { get; set; }
+
     }
 }

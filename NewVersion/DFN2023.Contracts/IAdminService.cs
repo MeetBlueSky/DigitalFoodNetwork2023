@@ -16,6 +16,19 @@ namespace DFN2023.Contracts
         public User createUser(User usr);
         public bool deleteUser(User usr);
 
+        //Category
+        Category createKategori(Category cat);
+        bool deleteKategori(Category cat);
+        DtResult<CategoryDTO> getCategory(DtParameters dtParameters, int lang);
+
+        // Company - CompanyType - CompanyImage
+        Company createCompany(Company cat);
+        bool deleteCompany(Company cat);
+        DtResult<CompanyDTO> getCompany(DtParameters dtParameters, int lang);
+        CompanyType createCompanyType(CompanyType cat);
+        bool deleteCompanyType(CompanyType cat);
+        DtResult<CompanyTypeDTO> getCompanyType(DtParameters dtParameters, int lang);
+
 
         //City - Country - County
         DtResult<CountryDT> getCountry(DtParameters dtParameters, int lang);
@@ -34,6 +47,22 @@ namespace DFN2023.Contracts
         bool addCounty(County county);
         bool updateCounty(County county);
         bool deleteCounty(County county);
+
+        //Message
+
+        DtResult<MessageDTO> getContactForms(DtParameters dtParameters, int lang);
+        bool guncelleIletisim(Message cf);
+        bool deleteIletisim(Message cf);
+
+
+        // ProductBase - ProductCompany
+        ProductBase createProductBase(ProductBase cat);
+        bool deleteProductBase(ProductBase cat);
+        DtResult<ProductBaseDTO> getProductBase(DtParameters dtParameters, int lang);
+        ProductCompany createProductCompany(ProductCompany cat);
+        bool deleteProductCompany(ProductCompany cat);
+        DtResult<ProductCompanyDTO> getProductCompany(DtParameters dtParameters, int lang);
+
 
 
         //StaticContentGrupPage
