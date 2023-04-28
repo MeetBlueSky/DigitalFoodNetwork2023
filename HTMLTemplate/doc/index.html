@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Quickeat - Restaurant & Food Delivery HTML5 Template</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="assets/style.css">
+	<link rel="stylesheet" href="assets/table.css">
+</head>
+<body>
+	<header class="dt-header dt-header_blue">
+		<span class="dt-logo">Quickeat - Restaurant & Food Delivery HTML5 Template</span>
+	</header>
+	<div class="dt-container dt-container_flex">
+		<aside class="dt-navbar">
+			<nav class="dt-navbar__nav">
+				<div class="dt-navbar__section">
+					<ul class="dt-navbar__list">
+						<li><a href="#files_structure" class="dt-navbar__link">File structure</a></li>
+						<li>
+							<a href="#settings" class="dt-navbar__link">Settings</a>
+							<ul class="dt-navbar__list">
+								<li><a href="#include_fonts" class="dt-navbar__link dt-navbar__link_nested">Include Fonts</a></li>
+								<li><a href="#include_icons" class="dt-navbar__link dt-navbar__link_nested">Edit Icons</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#html_structure" class="dt-navbar__link">HTML structure</a>
+							<ul class="dt-navbar__list">
+								<li><a href="#html_structure_header" class="dt-navbar__link dt-navbar__link_nested">"Header" Section</a></li>
+								<li><a href="#html_structure_footer" class="dt-navbar__link dt-navbar__link_nested">"Footer" Section</a></li>
+								<li><a href="#html_structure_home" class="dt-navbar__link dt-navbar__link_nested">"Home" Page</a></li>
+								<li><a href="#html_structure_inner" class="dt-navbar__link dt-navbar__link_nested">"Inner" Pages</a></li>
+							</ul>
+						</li>
+						<li><a href="#icons" class="dt-navbar__link">Icons</a></li>
+						<li><a href="#credits" class="dt-navbar__link">Credits</a></li>
+					</ul>
+				</div>
+			</nav>
+		</aside>
+		<div class="dt-content dt-content_scroll-bar-yes">
+			<div class="dt-section">
+				<h2 class="dt-title">Quickeat - Restaurant & Food Delivery HTML5 Template</h2>
+				<p>by: bslthemes</p>
+				<p>Thank you for your purchase. If you have any questions, mail me to - <a href="mailto:beshleyua@gmail.com">beshleyua@gmail.com</a></p>
+			</div>
+			<article id="files_structure" class="dt-section">
+				<h2 class="dt-title">File structure</h2>
+				<p>After unpacking archive, you'll see this structure:</p>
+				<div class="dt-info-block">
+					<pre class="code language-html">
+						<code>
+html/
+│
+├──doc/
+├──template/
+│──│──css/
+│──│──img/
+│──│──js/
+│──│──│──aos.js
+│──│──│──beforeafter.js
+│──│──│──custom.js
+│──│──│──jquery-3.6.0.min.js
+│──│──│──jquery-weekdays.min.js
+│──│──│──jquery.fancybox.min.js
+│──│──│──jquery.nice-select.min.js
+│──│──│──jquery.quinn.min.js
+│──│──│──jquery.slim.min.js
+│──│──│──owl.carousel.min.js
+│──│──│──range-slider.js
+│──│──│──underscore-1.3.1.js
+│──│──404.html
+│──│──about.html
+│──│──become-partner.html
+│──│──blog.html
+│──│──checkout.html
+│──│──contacts.html
+│──│──faq.html
+│──│──index.html
+│──│──pricing-table.html
+│──│──restaurant-card.html
+│──│──restaurants.html
+│──│──services.html
+│──│──single-blog.html
+						</code>
+					</pre>
+				</div>
+				<ul class="dt-list dt-list_nested dt-info-block">
+					<li>
+						<span class="dt-label dt-label_bold">assets/css/</span> - all CSS styles for template
+					</li>
+					<li>
+						<span class="dt-label dt-label_bold">assets/css/style.css</span> - main CSS styles for template
+					</li>
+					<li>
+						<span class="dt-label dt-label_bold">assets/js/</span> - all JS library for template
+						<ul class="dt-list dt-list_nested">
+							<li><span class="dt-label dt-label_bold">assets/js/custom.js</span> - main JS for template</li>
+						</ul>
+					</li>
+				</ul>
+			</article>
+			<article id="settings" class="dt-section">
+				<h2 class="dt-title">Settings</h2>
+			</article>
+			<article id="include_fonts" class="dt-section">
+				<h2 class="dt-title">Include of fonts</h2>
+				<p>To use fonts, you must add @import in '/css/style.css' file:</p>
+				<pre class="code language-html">
+					<code>
+						@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+					</code>
+				</pre>
+				<p>
+					Next step is to replace "font-family: '...';" to your fonts names.
+				</p>
+			</article>
+			<article id="include_icons" class="dt-section">
+				<h2 class="dt-title">Edit Icons</h2>
+				<p>In this template are defined some of classes for icons, see all icons here - <a href="https://fontawesome.com/icons?d=gallery&s=brands,solid&m=free">https://fontawesome.com/icons?d=gallery&s=brands,solid&m=free</a>, use search and select icons.</p>
+				<p>Copy icon class (for example "fas fa-code") and add to tag in html file like this:</p>
+				<pre class="code language-html">
+					<code>
+&lt;i class="fas fa-pencil-ruler"&gt;&lt;/i&gt;
+					</code>
+				</pre>
+			</article>
+			<article id="html_structure" class="dt-section">
+				<h2 class="dt-title">HTML structure</h2>
+				<pre class="code language-html">
+					<code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="zxx"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Quickeat - index&lt;/title&gt;
+  &lt;link rel="icon" href="assets/img/fav-icon.png"&gt;
+	&lt;!-- CSS only --&gt;
+	&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"&gt;
+	&lt;!-- owl carousel --&gt;
+  &lt;link rel="stylesheet" href="assets/css/owl.carousel.min.css"&gt;
+  &lt;link rel="stylesheet" href="assets/css/owl.theme.default.min.css"&gt;
+  &lt;!-- nice-select --&gt;
+  &lt;link rel="stylesheet" href="assets/css/nice-select.css"&gt;
+  &lt;!-- aos --&gt;
+  &lt;link rel="stylesheet" href="assets/css/aos.css"&gt;
+  &lt;!-- style --&gt;
+  &lt;link rel="stylesheet" href="assets/css/style.css"&gt;
+  &lt;!-- responsive --&gt;
+  &lt;link rel="stylesheet" href="assets/css/responsive.css"&gt;
+	&lt;!-- color --&gt;
+  &lt;link rel="stylesheet" href="assets/css/color.css"&gt;
+
+	&lt;!-- Font Awesome 5 --&gt;
+	&lt;script src="https://kit.fontawesome.com/27a041baf1.js" crossorigin="anonymous"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="menu-layer"&gt;
+
+	&lt;!-- loader start--&gt;
+	&lt;div class="page-loader"&gt;
+		&lt;div class="wrapper"&gt;
+	        &lt;div class="circle"&gt;&lt;/div&gt;
+	        &lt;div class="circle"&gt;&lt;/div&gt;
+	        &lt;div class="circle"&gt;&lt;/div&gt;
+	        &lt;div class="shadow"&gt;&lt;/div&gt;
+	        &lt;div class="shadow"&gt;&lt;/div&gt;
+	        &lt;div class="shadow"&gt;&lt;/div&gt;
+	        &lt;span&gt;Loading&lt;/span&gt;
+	    &lt;/div&gt;
+	&lt;/div&gt;
+	&lt;!-- loader end--&gt;
+
+	&lt;!-- header --&gt;
+	&lt;header&gt;
+		...
+  &lt;/header&gt;
+
+  &lt;!-- hero-section --&gt;
+	&lt;section class="hero-section gap" style="background-image: url(assets/img/background-1.png);"&gt;
+		...
+	&lt;/section&gt;
+
+	&lt;!-- works-section --&gt;
+	&lt;section class="works-section gap no-top"&gt;
+		...
+	&lt;/section&gt;
+
+	&lt;!-- best-restaurants --&gt;
+	&lt;section class="best-restaurants gap" style="background:#fcfcfc"&gt;
+		...
+	&lt;/section&gt;
+
+	&lt;!-- your-favorite-food --&gt;
+	&lt;section class="your-favorite-food gap" style="background-image: url(assets/img/background-1.png);"&gt;
+		...
+	&lt;/section&gt;
+
+	&lt;!-- counters-section --&gt;
+	&lt;section class="counters-section"&gt;
+		...
+	&lt;/section&gt;
+
+	&lt;!-- reviews-sections --&gt;
+	&lt;section class="reviews-sections gap"&gt;
+		...
+	&lt;/section&gt;
+
+	&lt;!-- join-partnership --&gt;
+	&lt;section class="join-partnership gap" style="background-color: #363636;"&gt;
+		...
+	&lt;/section&gt;
+
+	&lt;!-- news-section --&gt;
+	&lt;section class="news-section gap"&gt;
+		...
+	&lt;/section&gt;
+
+	&lt;!-- subscribe-section --&gt;
+	&lt;section class="subscribe-section gap" style="background:#fcfcfc"&gt;
+		...
+	&lt;/section&gt;
+
+	&lt;!-- footer --&gt;
+	&lt;footer class="gap no-bottom" style="background-color: #363636;"&gt;
+		...
+	&lt;/footer&gt;
+
+	&lt;!-- bootstrap --&gt;
+	&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"&gt;&lt;/script&gt;
+	&lt;!-- jQuery --&gt;
+	&lt;script src="assets/js/jquery-3.6.0.min.js"&gt;&lt;/script&gt;
+	&lt;script src="assets/js/jquery.nice-select.min.js"&gt;&lt;/script&gt;
+	&lt;!-- owl.carousel --&gt;
+	&lt;script src="assets/js/owl.carousel.min.js"&gt;&lt;/script&gt;
+	&lt;!-- aos --&gt;
+	&lt;script src="assets/js/aos.js"&gt;&lt;/script&gt;
+	&lt;!-- custom --&gt;
+	&lt;script src="assets/js/custom.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+					</code>
+				</pre>
+			</article>
+			<article id="html_structure_header" class="dt-section">
+				<h2 class="dt-title">HTML structure of "Header"</h2>
+				<pre class="code language-html">
+					<code>
+&lt;!-- header --&gt;
+&lt;header&gt;
+  &lt;div class="container"&gt;
+    &lt;div class="row align-items-center"&gt;
+      &lt;div class="col-xl-2"&gt;
+        &lt;div class="header-style"&gt;
+          &lt;a href="index.html"&gt;
+            &lt;svg xmlns="http://www.w3.org/2000/svg" width="163" height="38" viewBox="0 0 163 38"&gt;
+              &lt;g id="Logo" transform="translate(-260 -51)"&gt;
+                &lt;g id="Logo-2" data-name="Logo" transform="translate(260 51)"&gt;
+                  &lt;g id="Elements"&gt;
+                    &lt;path id="Path_1429" data-name="Path 1429" d="M315.086,140.507H275.222v-.894c0-11.325,8.941-20.538,19.933-20.538s19.931,9.213,19.931,20.538Z" transform="translate(-270.155 -115.396)" fill="#f29f05" /&gt;
+                    &lt;path id="Path_1430" data-name="Path 1430" d="M301.13,133.517a1.488,1.488,0,0,1-1.394-.994,11.361,11.361,0,0,0-10.583-7.54,1.528,1.528,0,0,1,0-3.055,14.353,14.353,0,0,1,13.37,9.527,1.541,1.541,0,0,1-.875,1.966A1.444,1.444,0,0,1,301.13,133.517Z" transform="translate(-264.176 -113.935)" fill="#fff" /&gt;
+                    &lt;path id="Path_1431" data-name="Path 1431" d="M297.343,146.544a14.043,14.043,0,0,1-13.837-14.211h2.975a10.865,10.865,0,1,0,21.723,0h2.975A14.043,14.043,0,0,1,297.343,146.544Z" transform="translate(-266.247 -108.544)" fill="#363636" /&gt;
+                    &lt;path id="Path_1432" data-name="Path 1432" d="M302.183,132.519a7.064,7.064,0,1,1-14.122,0Z" transform="translate(-264.027 -108.446)" fill="#363636" /&gt;
+                    &lt;path id="Path_1433" data-name="Path 1433" d="M320.332,134.575H273.3a1.528,1.528,0,0,1,0-3.055h47.033a1.528,1.528,0,0,1,0,3.055Z" transform="translate(-271.815 -108.923)" fill="#f29f05" /&gt;
+                    &lt;path id="Path_1434" data-name="Path 1434" d="M289.154,123.4a1.507,1.507,0,0,1-1.487-1.528v-3.678a1.488,1.488,0,1,1,2.975,0v3.678A1.508,1.508,0,0,1,289.154,123.4Z" transform="translate(-264.154 -116.667)" fill="#f29f05" /&gt;
+                    &lt;path id="Path_1435" data-name="Path 1435" d="M284.777,138.133H275.3a1.528,1.528,0,0,1,0-3.055h9.474a1.528,1.528,0,0,1,0,3.055Z" transform="translate(-270.84 -107.068)" fill="#363636" /&gt;
+                    &lt;path id="Path_1436" data-name="Path 1436" d="M284.8,141.691h-6.5a1.528,1.528,0,0,1,0-3.055h6.5a1.528,1.528,0,0,1,0,3.055Z" transform="translate(-269.379 -105.218)" fill="#363636" /&gt;
+                  &lt;/g&gt;
+                &lt;/g&gt;
+                &lt;text id="Quickeat" transform="translate(320 77)" fill="#363636" font-size="20" font-family="Poppins" font-weight="700"&gt;
+                  &lt;tspan x="0" y="0"&gt;QUICK&lt;/tspan&gt;
+                  &lt;tspan y="0" fill="#f29f05"&gt;EAT&lt;/tspan&gt;
+                &lt;/text&gt;
+              &lt;/g&gt;
+            &lt;/svg&gt;
+          &lt;/a&gt;
+          &lt;div class="extras bag"&gt;
+            &lt;a href="javascript:void(0)" class="menu-btn"&gt;
+              &lt;i class="fa-solid fa-bag-shopping"&gt;&lt;/i&gt;
+            &lt;/a&gt;
+            &lt;div class="bar-menu"&gt;
+              &lt;i class="fa-solid fa-bars"&gt;&lt;/i&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="col-lg-7"&gt;
+        &lt;nav class="navbar"&gt;
+          &lt;ul class="navbar-links"&gt;
+            &lt;li class="navbar-dropdown active"&gt;
+              &lt;a href="index.html"&gt;Home&lt;/a&gt;
+            &lt;/li&gt;
+            &lt;li class="navbar-dropdown"&gt;
+              &lt;a href="about.html"&gt;About Us&lt;/a&gt;
+            &lt;/li&gt;
+            &lt;li class="navbar-dropdown"&gt;
+              &lt;a href="#"&gt;Restaurants&lt;/a&gt;
+              &lt;div class="dropdown"&gt;
+                &lt;a href="restaurants.html"&gt;Restaurants&lt;/a&gt;
+                &lt;a href="restaurant-card.html"&gt;Restaurant Card&lt;/a&gt;
+                &lt;a href="checkout.html"&gt;Checkout&lt;/a&gt;
+              &lt;/div&gt;
+            &lt;/li&gt;
+            &lt;li class="navbar-dropdown"&gt;
+              &lt;a href="#"&gt;Pages&lt;/a&gt;
+              &lt;div class="dropdown"&gt;
+                &lt;a href="blog.html"&gt;Blog&lt;/a&gt;
+                &lt;a href="single-blog.html"&gt;Single Blog&lt;/a&gt;
+                &lt;a href="services.html"&gt;Services&lt;/a&gt;
+                &lt;a href="faq.html"&gt;FAQ&lt;/a&gt;
+                &lt;a href="pricing-table.html"&gt;Pricing Table&lt;/a&gt;
+                &lt;a href="become-partner.html"&gt;Become A Partner&lt;/a&gt;
+                &lt;a href="404.html"&gt;404&lt;/a&gt;
+              &lt;/div&gt;
+            &lt;/li&gt;
+            &lt;li class="navbar-dropdown"&gt;
+              &lt;a href="contacts.html"&gt;Contacts&lt;/a&gt;
+            &lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/nav&gt;
+      &lt;/div&gt;
+      &lt;div class="col-lg-3"&gt;
+        &lt;div class="extras bag"&gt;
+          &lt;a href="javascript:void(0)" id="desktop-menu" class="menu-btn"&gt;
+            &lt;i class="fa-solid fa-bag-shopping"&gt;&lt;/i&gt;
+          &lt;/a&gt;
+          &lt;a href="#" class="button button-2"&gt;Order Now&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="menu-wrap"&gt;
+        &lt;div class="menu-inner ps ps--active-x ps--active-y"&gt;
+          &lt;span class="menu-cls-btn"&gt;
+            &lt;i class="cls-leftright"&gt;&lt;/i&gt;
+            &lt;i class="cls-rightleft"&gt;&lt;/i&gt;
+          &lt;/span&gt;
+          &lt;div class="checkout-order"&gt;
+            &lt;div class="title-checkout"&gt;
+              &lt;h2&gt;My Orders&lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div class="banner-wilmington"&gt;
+              &lt;img alt="logo" src="https://via.placeholder.com/50x50"&gt;
+              &lt;h6&gt;Kennington Lane Cafe&lt;/h6&gt;
+            &lt;/div&gt;
+            &lt;ul&gt;
+              &lt;li class="price-list"&gt;
+                &lt;i class="closeButton fa-solid fa-xmark"&gt;&lt;/i&gt;
+                &lt;div class="counter-container"&gt;
+                  &lt;div class="counter-food"&gt;
+                    &lt;img alt="food" src="https://via.placeholder.com/100x67"&gt;
+                    &lt;h4&gt;Pasta, kiwi and sauce chilli&lt;/h4&gt;
+                  &lt;/div&gt;
+                  &lt;h3&gt;$39&lt;/h3&gt;
+                &lt;/div&gt;
+                &lt;div class="price"&gt;
+                  &lt;div&gt;
+                    &lt;h2&gt;$39&lt;/h2&gt;
+                    &lt;span&gt;Sum&lt;/span&gt;
+                  &lt;/div&gt;
+                  &lt;div&gt;
+                    &lt;div class="qty-input"&gt;
+                      &lt;button class="qty-count qty-count--minus" data-action="minus" type="button"&gt;-&lt;/button&gt;
+                      &lt;input class="product-qty" type="number" name="product-qty" min="0" value="1"&gt;
+                      &lt;button class="qty-count qty-count--add" data-action="add" type="button"&gt;+&lt;/button&gt;
+                    &lt;/div&gt;
+                    &lt;span&gt;Quantity&lt;/span&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/li&gt;
+              &lt;li class="price-list"&gt;
+                &lt;i class="closeButton fa-solid fa-xmark"&gt;&lt;/i&gt;
+                &lt;div class="counter-container"&gt;
+                  &lt;div class="counter-food"&gt;
+                    &lt;img alt="food" src="https://via.placeholder.com/100x67"&gt;
+                    &lt;h4&gt;Rice with shrimps and kiwi&lt;/h4&gt;
+                  &lt;/div&gt;
+                  &lt;h3&gt;$49&lt;/h3&gt;
+                &lt;/div&gt;
+                &lt;div class="price"&gt;
+                  &lt;div&gt;
+                    &lt;h2&gt;$49&lt;/h2&gt;
+                    &lt;span&gt;Sum&lt;/span&gt;
+                  &lt;/div&gt;
+                  &lt;div&gt;
+                    &lt;div class="qty-input"&gt;
+                      &lt;button class="qty-count qty-count--minus" data-action="minus" type="button"&gt;-&lt;/button&gt;
+                      &lt;input class="product-qty" type="number" name="product-qty" min="0" value="1"&gt;
+                      &lt;button class="qty-count qty-count--add" data-action="add" type="button"&gt;+&lt;/button&gt;
+                    &lt;/div&gt;
+                    &lt;span&gt;Quantity&lt;/span&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;div class="totel-price"&gt;
+              &lt;span&gt;Total order:&lt;/span&gt;
+              &lt;h5&gt;$137&lt;/h5&gt;
+            &lt;/div&gt;
+            &lt;div class="totel-price"&gt;
+              &lt;span&gt;To pay:&lt;/span&gt;
+              &lt;h2&gt;$137&lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;button class="button-price"&gt;Checkout&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="mobile-nav hmburger-menu" id="mobile-nav" style="display:block;"&gt;
+        &lt;div class="res-log"&gt;
+          &lt;a href="index.html"&gt;
+            &lt;svg xmlns="http://www.w3.org/2000/svg" width="163" height="38" viewBox="0 0 163 38"&gt;
+              &lt;g id="Logo" transform="translate(-260 -51)"&gt;
+                &lt;g id="Logo-2" data-name="Logo" transform="translate(260 51)"&gt;
+                  &lt;g id="Elements"&gt;
+                    &lt;path id="Path_1429" data-name="Path 1429" d="M315.086,140.507H275.222v-.894c0-11.325,8.941-20.538,19.933-20.538s19.931,9.213,19.931,20.538Z" transform="translate(-270.155 -115.396)" fill="#f29f05" /&gt;
+                    &lt;path id="Path_1430" data-name="Path 1430" d="M301.13,133.517a1.488,1.488,0,0,1-1.394-.994,11.361,11.361,0,0,0-10.583-7.54,1.528,1.528,0,0,1,0-3.055,14.353,14.353,0,0,1,13.37,9.527,1.541,1.541,0,0,1-.875,1.966A1.444,1.444,0,0,1,301.13,133.517Z" transform="translate(-264.176 -113.935)" fill="#fff" /&gt;
+                    &lt;path id="Path_1431" data-name="Path 1431" d="M297.343,146.544a14.043,14.043,0,0,1-13.837-14.211h2.975a10.865,10.865,0,1,0,21.723,0h2.975A14.043,14.043,0,0,1,297.343,146.544Z" transform="translate(-266.247 -108.544)" fill="#363636" /&gt;
+                    &lt;path id="Path_1432" data-name="Path 1432" d="M302.183,132.519a7.064,7.064,0,1,1-14.122,0Z" transform="translate(-264.027 -108.446)" fill="#363636" /&gt;
+                    &lt;path id="Path_1433" data-name="Path 1433" d="M320.332,134.575H273.3a1.528,1.528,0,0,1,0-3.055h47.033a1.528,1.528,0,0,1,0,3.055Z" transform="translate(-271.815 -108.923)" fill="#f29f05" /&gt;
+                    &lt;path id="Path_1434" data-name="Path 1434" d="M289.154,123.4a1.507,1.507,0,0,1-1.487-1.528v-3.678a1.488,1.488,0,1,1,2.975,0v3.678A1.508,1.508,0,0,1,289.154,123.4Z" transform="translate(-264.154 -116.667)" fill="#f29f05" /&gt;
+                    &lt;path id="Path_1435" data-name="Path 1435" d="M284.777,138.133H275.3a1.528,1.528,0,0,1,0-3.055h9.474a1.528,1.528,0,0,1,0,3.055Z" transform="translate(-270.84 -107.068)" fill="#363636" /&gt;
+                    &lt;path id="Path_1436" data-name="Path 1436" d="M284.8,141.691h-6.5a1.528,1.528,0,0,1,0-3.055h6.5a1.528,1.528,0,0,1,0,3.055Z" transform="translate(-269.379 -105.218)" fill="#363636" /&gt;
+                  &lt;/g&gt;
+                &lt;/g&gt;
+                &lt;text id="Quickeat" transform="translate(320 77)" fill="#363636" font-size="20" font-family="Poppins" font-weight="700"&gt;
+                  &lt;tspan x="0" y="0"&gt;QUICK&lt;/tspan&gt;
+                  &lt;tspan y="0" fill="#f29f05"&gt;EAT&lt;/tspan&gt;
+                &lt;/text&gt;
+              &lt;/g&gt;
+            &lt;/svg&gt;
+          &lt;/a&gt;
+        &lt;/div&gt;
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;a href="index.html"&gt;Home&lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;a href="about.html"&gt;About Us&lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li class="menu-item-has-children"&gt;
+            &lt;a href="JavaScript:void(0)"&gt;Restaurants&lt;/a&gt;
+            &lt;ul class="sub-menu"&gt;
+              &lt;li&gt;
+                &lt;a href="restaurants.html"&gt;Restaurants&lt;/a&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;a href="restaurant-card.html"&gt;Restaurant Card&lt;/a&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;a href="checkout.html"&gt;Checkout&lt;/a&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li class="menu-item-has-children"&gt;
+            &lt;a href="JavaScript:void(0)"&gt;Pages&lt;/a&gt;
+            &lt;ul class="sub-menu"&gt;
+              &lt;li&gt;
+                &lt;a href="blog.html"&gt;Blog&lt;/a&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;a href="single-blog.html"&gt;Single Blog&lt;/a&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;a href="services.html"&gt;Services&lt;/a&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;a href="faq.html"&gt;FAQ&lt;/a&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;a href="pricing-table.html"&gt;Pricing Table&lt;/a&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;a href="become-partner.html"&gt;Become A Partner&lt;/a&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;a href="404.html"&gt;404&lt;/a&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;a href="contact.html"&gt;contacts&lt;/a&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;a href="JavaScript:void(0)" id="res-cross"&gt;&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+					</code>
+				</pre>
+			</article>
+			<article id="html_structure_footer" class="dt-section">
+				<h2 class="dt-title">HTML structure of "Footer"</h2>
+				<pre class="code language-html">
+					<code>
+&lt;!-- footer --&gt;
+&lt;footer class="gap no-bottom" style="background-color: #363636;"&gt;
+  &lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+      &lt;div class="col-lg-5 col-md-6 col-sm-12"&gt;
+        &lt;div class="footer-description"&gt;
+          &lt;a href="index.html"&gt;
+            &lt;svg xmlns="http://www.w3.org/2000/svg" width="163" height="38" viewBox="0 0 163 38"&gt;
+              &lt;g id="Logo" transform="translate(-260 -51)"&gt;
+                &lt;g id="Logo-2" data-name="Logo" transform="translate(260 51)"&gt;
+                  &lt;g id="Elements"&gt;
+                    &lt;path id="Path_1429" data-name="Path 1429" d="M315.086,140.507H275.222v-.894c0-11.325,8.941-20.538,19.933-20.538s19.931,9.213,19.931,20.538Z" transform="translate(-270.155 -115.396)" fill="#f29f05" /&gt;
+                    &lt;path id="Path_1430" data-name="Path 1430" d="M301.13,133.517a1.488,1.488,0,0,1-1.394-.994,11.361,11.361,0,0,0-10.583-7.54,1.528,1.528,0,0,1,0-3.055,14.353,14.353,0,0,1,13.37,9.527,1.541,1.541,0,0,1-.875,1.966A1.444,1.444,0,0,1,301.13,133.517Z" transform="translate(-264.176 -113.935)" fill="#fff" /&gt;
+                    &lt;path id="Path_1431" data-name="Path 1431" d="M297.343,146.544a14.043,14.043,0,0,1-13.837-14.211h2.975a10.865,10.865,0,1,0,21.723,0h2.975A14.043,14.043,0,0,1,297.343,146.544Z" transform="translate(-266.247 -108.544)" fill="#fff" /&gt;
+                    &lt;path id="Path_1432" data-name="Path 1432" d="M302.183,132.519a7.064,7.064,0,1,1-14.122,0Z" transform="translate(-264.027 -108.446)" fill="#fff" /&gt;
+                    &lt;path id="Path_1433" data-name="Path 1433" d="M320.332,134.575H273.3a1.528,1.528,0,0,1,0-3.055h47.033a1.528,1.528,0,0,1,0,3.055Z" transform="translate(-271.815 -108.923)" fill="#f29f05" /&gt;
+                    &lt;path id="Path_1434" data-name="Path 1434" d="M289.154,123.4a1.507,1.507,0,0,1-1.487-1.528v-3.678a1.488,1.488,0,1,1,2.975,0v3.678A1.508,1.508,0,0,1,289.154,123.4Z" transform="translate(-264.154 -116.667)" fill="#f29f05" /&gt;
+                    &lt;path id="Path_1435" data-name="Path 1435" d="M284.777,138.133H275.3a1.528,1.528,0,0,1,0-3.055h9.474a1.528,1.528,0,0,1,0,3.055Z" transform="translate(-270.84 -107.068)" fill="#fff" /&gt;
+                    &lt;path id="Path_1436" data-name="Path 1436" d="M284.8,141.691h-6.5a1.528,1.528,0,0,1,0-3.055h6.5a1.528,1.528,0,0,1,0,3.055Z" transform="translate(-269.379 -105.218)" fill="#fff" /&gt;
+                  &lt;/g&gt;
+                &lt;/g&gt;
+                &lt;text id="Quickeat" transform="translate(320 77)" fill="#fff" font-size="20" font-family="Poppins" font-weight="700"&gt;
+                  &lt;tspan x="0" y="0"&gt;QUICK&lt;/tspan&gt;
+                  &lt;tspan y="0" fill="#f29f05"&gt;EAT&lt;/tspan&gt;
+                &lt;/text&gt;
+              &lt;/g&gt;
+            &lt;/svg&gt;
+          &lt;/a&gt;
+          &lt;h2&gt;The Best Restaurants in Your Home&lt;/h2&gt;
+          &lt;p&gt;Vitae congue mauris rhoncus aenean. Enim nulla aliquet porttitor lacus luctus accumsan tortor posuere. Tempus egestas sed sed risus pretium quam.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="col-lg-3 col-md-6 col-sm-12"&gt;
+        &lt;div class="menu"&gt;
+          &lt;h4&gt;Menu&lt;/h4&gt;
+          &lt;ul class="footer-menu"&gt;
+            &lt;li&gt;
+              &lt;a href="index.html"&gt;home &lt;i class="fa-solid fa-arrow-right"&gt;&lt;/i&gt;
+              &lt;/a&gt;
+            &lt;/li&gt;
+            &lt;li&gt;
+              &lt;a href="about.html"&gt;about us &lt;i class="fa-solid fa-arrow-right"&gt;&lt;/i&gt;
+              &lt;/a&gt;
+            &lt;/li&gt;
+            &lt;li&gt;
+              &lt;a href="restaurants.html"&gt;Restaurants &lt;i class="fa-solid fa-arrow-right"&gt;&lt;/i&gt;
+              &lt;/a&gt;
+            &lt;/li&gt;
+            &lt;li&gt;
+              &lt;a href="contacts.html"&gt;Contacts &lt;i class="fa-solid fa-arrow-right"&gt;&lt;/i&gt;
+              &lt;/a&gt;
+            &lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="col-lg-4 col-md-6 col-sm-12"&gt;
+        &lt;div class="menu contacts"&gt;
+          &lt;h4&gt;Contacts&lt;/h4&gt;
+          &lt;div class="footer-location"&gt;
+            &lt;i class="fa-solid fa-location-dot"&gt;&lt;/i&gt;
+            &lt;p&gt;1717 Harrison St, San Francisco, CA 94103, United States&lt;/p&gt;
+          &lt;/div&gt;
+          &lt;a href="mailto:quickeat@mail.net"&gt;
+            &lt;i class="fa-solid fa-envelope"&gt;&lt;/i&gt;quickeat@mail.net &lt;/a&gt;
+          &lt;a href="callto:+14253261627"&gt;
+            &lt;i class="fa-solid fa-phone"&gt;&lt;/i&gt;+1 425 326 16 27 &lt;/a&gt;
+        &lt;/div&gt;
+        &lt;ul class="social-media"&gt;
+          &lt;li&gt;
+            &lt;a href="#"&gt;
+              &lt;i class="fa-brands fa-facebook-f"&gt;&lt;/i&gt;
+            &lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;a href="#"&gt;
+              &lt;i class="fa-brands fa-instagram"&gt;&lt;/i&gt;
+            &lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;a href="#"&gt;
+              &lt;i class="fa-brands fa-twitter"&gt;&lt;/i&gt;
+            &lt;/a&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="footer-two gap no-bottom"&gt;
+      &lt;p&gt;Copyright © 2022. Quickeat. All rights reserved.&lt;/p&gt;
+      &lt;div class="privacy"&gt;
+        &lt;a href="#"&gt;Privacy Policy&lt;/a&gt;
+        &lt;a href="#"&gt;Terms & Services&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+					</code>
+				</pre>
+			</article>
+			<article id="html_structure_home" class="dt-section">
+				<h2 class="dt-title">HTML structure of "Home" pages</h2>
+				<pre class="code language-html">
+					<code>
+&lt;!-- hero-section --&gt;
+&lt;section class="hero-section gap" style="background-image: url(assets/img/background-1.png);"&gt;
+  ...
+&lt;/section&gt;
+
+&lt;!-- works-section --&gt;
+&lt;section class="works-section gap no-top"&gt;
+  ...
+&lt;/section&gt;
+
+&lt;!-- best-restaurants --&gt;
+&lt;section class="best-restaurants gap" style="background:#fcfcfc"&gt;
+  ...
+&lt;/section&gt;
+
+&lt;!-- your-favorite-food --&gt;
+&lt;section class="your-favorite-food gap" style="background-image: url(assets/img/background-1.png);"&gt;
+  ...
+&lt;/section&gt;
+
+&lt;!-- counters-section --&gt;
+&lt;section class="counters-section"&gt;
+  ...
+&lt;/section&gt;
+
+&lt;!-- reviews-sections --&gt;
+&lt;section class="reviews-sections gap"&gt;
+  ...
+&lt;/section&gt;
+
+&lt;!-- join-partnership --&gt;
+&lt;section class="join-partnership gap" style="background-color: #363636;"&gt;
+  ...
+&lt;/section&gt;
+
+&lt;!-- news-section --&gt;
+&lt;section class="news-section gap"&gt;
+  ...
+&lt;/section&gt;
+
+&lt;!-- subscribe-section --&gt;
+&lt;section class="subscribe-section gap" style="background:#fcfcfc"&gt;
+  ...
+&lt;/section&gt;
+					</code>
+				</pre>
+			</article>
+			<article id="html_structure_inner" class="dt-section">
+				<h2 class="dt-title">HTML structure of "Inner" pages</h2>
+				<pre class="code language-html">
+					<code>
+&lt;!-- hero-section --&gt;
+&lt;section class="hero-section about gap" style="background-image: url(assets/img/background.png);"&gt;
+	...
+&lt;/section&gt;
+
+&lt;!-- our-mission-section --&gt;
+&lt;section class="our-mission-section gap"&gt;
+	...
+&lt;/section&gt;
+
+&lt;!-- cards-section --&gt;
+&lt;section class="cards-section gap no-top"&gt;
+	...
+&lt;/section&gt;
+
+&lt;!-- video-section --&gt;
+&lt;section class="video-section gap"&gt;
+	...
+&lt;/section&gt;
+
+&lt;!-- about-counters-section --&gt;
+&lt;section class="about-counters-section gap" style="background-image: url(assets/img/background-1.png);"&gt;
+	...
+&lt;/section&gt;
+
+&lt;!-- Our Team Section --&gt;
+&lt;section class="our-team-section gap"&gt;
+	...
+&lt;/section&gt;
+
+&lt;!-- Our partners Section --&gt;
+&lt;section class="our-partners-section gap" style="background:#fcfcfc" data-aos="fade-up"  data-aos-delay="200" data-aos-duration="300"&gt;
+	...
+&lt;/section&gt;
+
+&lt;!-- Our partners Section --&gt;
+&lt;section class="service-shows gap" data-aos="fade-up"  data-aos-delay="200" data-aos-duration="300"&gt;
+	...
+&lt;/section&gt;
+
+&lt;!-- subscribe-section --&gt;
+&lt;section class="subscribe-section about gap" style="background-image: url(https://via.placeholder.com/1920x423);" &gt;
+	...
+&lt;/section&gt;
+					</code>
+				</pre>
+			</article>
+			<article id="icons" class="dt-section">
+				<h2 class="dt-title">Icons</h2>
+				<p>
+					In this template are defined some of classes for icons, your can see all icons here - https://fontawesome.com/icons?d=gallery&s=brands,solid&m=free
+				</p>
+			</article>
+			<article id="credits" class="dt-section">
+				<h2 class="dt-title">Sourse & Credits</h2>
+				<h3>Scripts</h3>
+				<ul class="dt-list dt-list_nested dt-info-block">
+					<li>
+						<span class="dt-label dt-label_bold">jQuery</span> <a target="_blank" href="https://jquery.com/">https://jquery.com/</a>
+					</li>
+					<li>
+						<span class="dt-label dt-label_bold">Nice Select</span> <a target="_blank" href="https://github.com/hernansartorio/jquery-nice-select">https://github.com/hernansartorio/jquery-nice-select</a>
+					</li>
+					<li>
+						<span class="dt-label dt-label_bold">Fancybox</span> <a target="_blank" href="http://fancyapps.com/fancybox/">http://fancyapps.com/fancybox/</a>
+					</li>
+					<li>
+						<span class="dt-label dt-label_bold">Bootstrap</span> <a target="_blank" href="https://getbootstrap.com/">https://getbootstrap.com/</a>
+					</li>
+				</ul>
+				<h3>Fonts</h3>
+				<ul class="dt-list dt-list_nested dt-info-block">
+					<li>
+						<span class="dt-label dt-label_bold">Poppins</span>
+					</li>
+          <li>
+						<span class="dt-label dt-label_bold">FontAwesome - </span> <a target="_blank" href="https://fontawesome.com/icons?d=gallery&s=brands,solid&m=free">https://fontawesome.com/icons?d=gallery&s=brands,solid&m=free</a>
+					</li>
+				</ul>
+				<h3>Images</h3>
+				<p>Any Images or logos used in previews are not included in this item or final purchase.</p>
+				<ul class="dt-list dt-list_nested dt-info-block">
+					<li>
+						<span class="dt-label dt-label_bold">Freepik, Flaticon</span>
+					</li>
+				</ul>
+			</article>
+		</div>
+	</div>
+<script src="assets/rainbow-custom.min.js"></script>
+</body>
+</html>
