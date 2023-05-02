@@ -191,7 +191,7 @@ namespace DFN2023.Business
             {
 
                 Expression<Func<Category, bool>> expProducts = c => true;
-                expProducts = expProducts.And(p => p.LangId == lang);
+                //expProducts = expProducts.And(p => p.LangId == lang);
                 // expProducts = expProducts.And(p => p.Status == 1);
 
                 var searchBy = dtParameters.Search?.Value;
@@ -252,12 +252,16 @@ namespace DFN2023.Business
 
                 if (cat.Id > 0)
                 {
+                    cat.LastUpdateDate = DateTime.Now;
+                    cat.LastUpdatedBy = 1;
                     var result = _fkRepositoryCategory.Update(cat);
                     _unitOfWork.SaveChanges();
                     return result;
                 }
                 else
                 {
+                    cat.CreateDate = DateTime.Now;
+                    cat.CreatedBy = 1;
                     var result = _fkRepositoryCategory.Add(cat);
                     _unitOfWork.SaveChanges();
                     return result;
@@ -284,6 +288,11 @@ namespace DFN2023.Business
                 return false;
 
             }
+        }
+
+        public List<CategoryDTO> getcategoryList(int lang)
+        {
+            return _mapper.Map<List<CategoryDTO>>(_fkRepositoryCategory.Entities.Where(p => p.Status == 1).ToList());
         }
 
 
@@ -476,12 +485,16 @@ namespace DFN2023.Business
 
                 if (cat.Id > 0)
                 {
+                    cat.LastUpdateDate = DateTime.Now;
+                    cat.LastUpdatedBy = 1;
                     var result = _fkRepositoryCompanyType.Update(cat);
                     _unitOfWork.SaveChanges();
                     return result;
                 }
                 else
                 {
+                    cat.CreateDate = DateTime.Now;
+                    cat.CreatedBy = 1;
                     var result = _fkRepositoryCompanyType.Add(cat);
                     _unitOfWork.SaveChanges();
                     return result;
@@ -912,10 +925,9 @@ namespace DFN2023.Business
                 {
                     Id = p.Id,
 
-
-
                     FromUser = p.FromUser,
                     ToUser = p.ToUser,
+
                     FromRolId = p.FromRolId,
                     MessageContent = p.MessageContent,
                     CreateDate = p.CreateDate,
@@ -927,6 +939,16 @@ namespace DFN2023.Business
 
 
                 }).AsQueryable();
+
+                //var sql = from fu in _fkRepositoryUser.Entities
+                //          join m in _fkRepositoryMessage.Entities
+                //               on fu.Id equals m.FromUser into messageGroup
+                //          from message in messageGroup.DefaultIfEmpty()
+                //          join tu in _fkRepositoryUser.Entities
+                //               on message.ToUser equals tu.Id into usergroup
+                //          from p in usergroup.DefaultIfEmpty()
+                //          .Where(expProducts)
+                // ... other joins here
 
                 var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
                 var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";

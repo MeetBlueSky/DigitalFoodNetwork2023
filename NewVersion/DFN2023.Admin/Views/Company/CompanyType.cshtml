@@ -39,7 +39,7 @@
                         <tr>
                             <th>Ayarlar</th>
                             <th>ID</th>
-                            <th>Adı</th>
+                            <th>Tip Adı</th>
                             <th>İkon</th>
                             <th>Sıra Numarası</th>
                             <th>Durum</th>
@@ -68,12 +68,41 @@
 
                 <div class="form-group">
                     <label>
-                        Adı
+                        Tip Adı
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="text"  class="form-control"  id="p_Name"> 
+                    <input type="text"  class="form-control"  id="p_typeName"> 
                 </div>
 
+                <div class="form-group">
+                    <label>
+                        İkon :
+                    </label>
+                    <br />
+                    <div class="image-input image-input-outline" id="p_Foto1" style="  ">
+
+                        <div class="image-input-wrapper" style=""></div>
+                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="profile_avatar" id="p_Foto1x" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="profile_avatar_remove" />
+                        </label>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Sıralama
+
+                    </label>
+                    <input type="number" class="form-control" id="p_RowNum">
+                </div>
 
                 <div class="form-group">
                     <label>
@@ -82,7 +111,7 @@
 
                     <span class="switch">
                         <label>
-                            <input type="checkbox" name="select" id="p_durum">
+                            <input type="checkbox" name="select" id="p_Status">
                             <span></span>
                         </label>
                     </span>
@@ -92,7 +121,7 @@
             </div>
             <div class="modal-footer"> 
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-                <button type="button" onclick=" seriKaydet()" class="btn btn-success font-weight-bold">Kaydet</button>
+                <button type="button" onclick=" companyTypeKaydet()" class="btn btn-success font-weight-bold">Kaydet</button>
             </div>
             </div>
         </div>

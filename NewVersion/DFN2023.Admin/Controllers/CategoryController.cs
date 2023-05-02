@@ -13,6 +13,7 @@ using DFN2023.Admin.Validators;
 using DFN2023.Contracts;
 using DFN2023.Entities.EF;
 using DFN2023.Entities.Models;
+using System.Net.Http.Headers;
 
 namespace DFN2023.Admin.Controllers
 {
@@ -33,10 +34,11 @@ namespace DFN2023.Admin.Controllers
 
             ViewData["website"] = anadizin;
             int lang = getLang(CultureInfo.CurrentCulture.Name);
-            WepPageModel spm = new WepPageModel();
-            spm.lang = lang;
-            spm.language = CultureInfo.CurrentCulture.Name.ToLower();
-            return View(spm);
+            CategoryPageModel cpm = new CategoryPageModel();
+            cpm.lang = lang;
+            cpm.language = CultureInfo.CurrentCulture.Name.ToLower();
+            cpm.categoryList = _adminService.getcategoryList(lang);
+            return View(cpm);
         }
     
     [HttpPost]
@@ -143,6 +145,51 @@ namespace DFN2023.Admin.Controllers
             return Task.FromResult(Json(sonuc));
 
         }
+
+
+        [HttpPost]
+        public async Task<JsonResult> UploderImage(IList<IFormFile> files)
+        {
+            try
+            {
+
+                var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                var webRootPath = config["AppSettings:urunResimPath"].ToString();
+                long maxImageSize = Convert.ToInt64(config["AppSettings:ImageUploadMaxStaticContent"]) * (1000);
+
+                var filelist = files;
+                var yeniisim = Guid.NewGuid().ToString();
+
+                if (filelist.Count > 0)
+                {
+                    foreach (var item in filelist)
+                    {
+                        if (item.Length <= maxImageSize)
+                        {
+                            string[] sn = item.FileName.Split('.');
+                            yeniisim = yeniisim + "." + sn[sn.Length - 1];
+                            var fileName = "category\\" + yeniisim;
+                            var fileContent = ContentDispositionHeaderValue.Parse(item.ContentDisposition);
+                            using (var fileStream = new FileStream(webRootPath + "\\" + fileName, FileMode.Create))
+                            {
+                                await item.CopyToAsync(fileStream);
+                            }
+                        }
+                        else
+                        {
+                            return Json("false");
+                        }
+                    }
+                }
+                return Json(yeniisim);
+            }
+            catch (Exception)
+            {
+
+                return Json("false");
+            }
+        }
+
 
     }
 

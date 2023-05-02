@@ -13,6 +13,8 @@ using DFN2023.Admin.Validators;
 using DFN2023.Contracts;
 using DFN2023.Entities.EF;
 using DFN2023.Entities.Models;
+using System.Net.Http.Headers;
+using DFN2023.Admin.Helpers;
 
 namespace DFN2023.Admin.Controllers
 {
@@ -171,6 +173,7 @@ namespace DFN2023.Admin.Controllers
             var sonuc = new { hata = true, mesaj = "Error", res = "" };
             try
             {
+                // HttpContext.Session.GetObjectFromJson("AktifKullanici");
 
                 if (ct != null)
                 {
@@ -247,6 +250,49 @@ namespace DFN2023.Admin.Controllers
 
             return Task.FromResult(Json(sonuc));
 
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UploderImage(IList<IFormFile> files)
+        {
+            try
+            {
+
+                var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                var webRootPath = config["AppSettings:urunResimPath"].ToString();
+                long maxImageSize = Convert.ToInt64(config["AppSettings:ImageUploadMaxStaticContent"]) * (1000);
+
+                var filelist = files;
+                var yeniisim = Guid.NewGuid().ToString();
+
+                if (filelist.Count > 0)
+                {
+                    foreach (var item in filelist)
+                    {
+                        if (item.Length <= maxImageSize)
+                        {
+                            string[] sn = item.FileName.Split('.');
+                            yeniisim = yeniisim + "." + sn[sn.Length - 1];
+                            var fileName = "static\\" + yeniisim;
+                            var fileContent = ContentDispositionHeaderValue.Parse(item.ContentDisposition);
+                            using (var fileStream = new FileStream(webRootPath + "\\" + fileName, FileMode.Create))
+                            {
+                                await item.CopyToAsync(fileStream);
+                            }
+                        }
+                        else
+                        {
+                            return Json("false");
+                        }
+                    }
+                }
+                return Json(yeniisim);
+            }
+            catch (Exception)
+            {
+
+                return Json("false");
+            }
         }
 
 

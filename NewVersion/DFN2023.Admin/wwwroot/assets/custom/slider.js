@@ -210,7 +210,7 @@ function sliderKaydet(pid) {
 	if (update) {
 
 		secilenDeger.Name = slider.Name;
-		secilenDeger.Description = slider.Link;
+		secilenDeger.Link = slider.Link;
 		secilenDeger.Target = slider.Target;
 		secilenDeger.Image1 = slider.Image1;
 		secilenDeger.Image2 = slider.Image2;

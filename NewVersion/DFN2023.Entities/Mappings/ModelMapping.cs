@@ -14,6 +14,9 @@ namespace DFN2023.Entities.Mappings
         public ModelMapping()
         {
             CreateMap<User, UserDTO>();
+
+            CreateMap<Category, CategoryDTO>();
+            CreateMap<CategoryDTO, Category>();
             //CreateMap<UserAccount, UserAccountDTO>();
             //CreateMap<Slayt, SlaytDTO>();
 

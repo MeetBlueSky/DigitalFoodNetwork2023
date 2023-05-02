@@ -20,6 +20,7 @@ namespace DFN2023.Contracts
         Category createKategori(Category cat);
         bool deleteKategori(Category cat);
         DtResult<CategoryDTO> getCategory(DtParameters dtParameters, int lang);
+        public List<CategoryDTO> getcategoryList(int lang);
 
         // Company - CompanyType - CompanyImage
         Company createCompany(Company cat);
