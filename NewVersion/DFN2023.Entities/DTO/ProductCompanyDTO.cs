@@ -24,7 +24,8 @@ namespace DFN2023.Entities.DTO
         public string? LastIP { get; set; }
         public int Status { get; set; }
 
-
+        public string? ShortDesc { get; set; }
+        
 
         public string? CompanyName { get; set; }
         public string? CategoryName { get; set; }

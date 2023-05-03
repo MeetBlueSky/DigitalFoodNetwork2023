@@ -24,11 +24,10 @@ namespace DFN2023.Business
 
         private readonly IUnitOfWork _unitOfWork;
 
-        //IRepository<Slayt> _fkRepositorySlayt;
-        ////IRepository<ContactForm> _fkRepositoryContactForm;
-        //IRepository<StaticContentPage> _fkRepositoryStaticContentPage;
-        //IRepository<StaticContentGrupPage> _fkRepositoryStaticContentGrupPage;
-        //IRepository<UserAccount> _fkRepositoryUserAccount;
+        IRepository<User> _fkRepositoryUser;
+        IRepository<Category> _fkRepositoryCategory;
+        IRepository<ProductCompany> _fkRepositoryProductCompany;
+        IRepository<Company> _fkRepositoryCompany;
 
         IMapper _mapper;
 
@@ -38,7 +37,10 @@ namespace DFN2023.Business
             _mapper = mapper;
 
 
-            //_fkRepositorySlayt = _unitOfWork.GetRepostory<Slayt>();
+            _fkRepositoryUser = _unitOfWork.GetRepostory<User>();
+            _fkRepositoryCategory = _unitOfWork.GetRepostory<Category>();
+            _fkRepositoryProductCompany = _unitOfWork.GetRepostory<ProductCompany>();
+            _fkRepositoryCompany = _unitOfWork.GetRepostory<Company>();
 
             //_fkRepositoryStaticContentPage = _unitOfWork.GetRepostory<StaticContentPage>();
             //_fkRepositoryStaticContentGrupPage = _unitOfWork.GetRepostory<StaticContentGrupPage>();
@@ -46,11 +48,70 @@ namespace DFN2023.Business
 
         }
 
-        //public List<SlaytDTO> getSlaytForHome(int langId)
-        //{
-        //    return _mapper.Map<List<SlaytDTO>>(_fkRepositorySlayt.Entities.Where(p => p.LangId == langId && p.Status == 1 && p.Type == 1).OrderBy(p => p.RowNum).ToList());
-        //}
 
+        public List<UserDTO> CheckUser(string uname, string pass)
+        {
+            var a = _mapper.Map<List<UserDTO>>(_fkRepositoryUser.Entities.Where(p => p.UserName == uname && p.Status == 1).ToList());
+            return a;
+
+        }
+
+
+
+        public List<CategoryDTO> getCategoryList()
+        {
+            return _mapper.Map<List<CategoryDTO>>(_fkRepositoryCategory.Entities.Where(p => p.Status == 1).OrderBy(p => p.RowNum).ToList());
+        }
+        public List<ProductCompanyDTO> getTedarik(int kid, string ürün)
+        {
+            try
+            {
+                var data = _fkRepositoryProductCompany.Entities
+                .Where(x=>x.CategoryId==kid && x.Name.ToUpper().Contains(ürün.ToUpper()))
+                .Select(p => new ProductCompanyDTO
+                {
+                    Id = p.Id,
+                    Name=p.Name,
+                    CategoryId=p.CategoryId,
+                    CategoryName=p.Category.Name,
+                    Code=p.Code,
+                    CompanyId=p.CompanyId,
+                    CompanyName=p.Company.OfficialName,
+                    CreateDate=p.CreateDate,
+                    LastUpdateDate=p.LastUpdateDate,
+                    CreatedBy=p.CreatedBy,
+                    LastUpdatedBy=p.LastUpdatedBy,
+                    LastIP=p.LastIP,
+                     Currency=p.Currency,
+                     Price=p.Price,
+                    RowNum=p.RowNum,
+                    Status=p.Status,
+                    ShortDesc=p.Company.ShortDescription,
+
+                }).ToList();
+                return data;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+
+        public List<CompanyDTO> getCompanyList()
+        {
+            List < CompanyDTO> a = new();
+            try
+            {
+                return _mapper.Map<List<CompanyDTO>>(_fkRepositoryCompany.Entities.Where(p => p.Status == 1).ToList());//.OrderByDescending(p => p.CreateDate).Take(4)
+            }
+            catch (Exception)
+            {
+
+                return a;
+            }
+            
+        }
         //public StaticContentGrupPageDTO getStaticGrup(int pid, int lang)
         //{
 
