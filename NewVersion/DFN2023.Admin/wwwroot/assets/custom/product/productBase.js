@@ -26,6 +26,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
 				{ data: 'Name' },
 				{ data: 'Code' },
 				{ data: 'Image' },
+				{ data: 'RowNum' },
 				{ data: 'Status' },
 				//{ data: 'LangId' },
 			],
@@ -35,17 +36,24 @@ var KTDatatablesDataSourceAjaxServer = function () {
 					title: 'Actions',
 					orderable: false,
 					render: function (data, type, full, meta) {
-						return   '\<a onclick = "kategoriDuzenle(\'' + data + '\')" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
+						return   '\<a onclick = "productBaseDuzenle(\'' + data + '\')" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
 								<i class="la la-edit"></i>\
 							</a>\
-							<a onclick = "kategoriSil(\'' + data + '\')" class="btn btn-sm btn-clean btn-icon" title="Delete">\
+							<a onclick = "productBaseSil(\'' + data + '\')" class="btn btn-sm btn-clean btn-icon" title="Delete">\
 								<i class="la la-trash"></i>\
 							</a>\ ';
 					},
 				},
-
 				{
-					targets: 5,
+					targets: 4,
+					render: function (data, type, full, meta) {
+						if (data != null && data.length > 0)
+							return '<img class="h-100px rounded-sm" src="' + website + '/assets/static/' + data + '" alt="....">';
+						else { return ''; }
+					},
+				},
+				{
+					targets: 6,
 						render: function (data, type, full, meta) {
 						if (data)
 							return '<i class="flaticon2-checkmark text-success"></i>';
@@ -80,51 +88,60 @@ jQuery(document).ready(function () {
 
 
 var update = false;
-
+var resim1 = "";
 function kayitModalOpen() {
 
 	$('#exampleModalSizeLg').modal('show');
 	$(':input').val('');
-	$('#p_dil').val(lng).trigger('change');
+	$("#p_Status").prop('checked', true);
+
+	$('#p_Foto1 > .image-input-wrapper').css('background-image', 'url( )').trigger('change');
+	resim1 = "";
 
 	update = false;
 }
 
 var secilendeger;
-function kategoriDuzenle(pid) {
+function productBaseDuzenle(pid) {
 	update = true;
 	$('#exampleModalSizeLg').modal('show');
 	secilendeger = $('#kt_datatable').DataTable().data().filter(x => x.Id == pid)[0];
 
 	$('#p_Name').val(secilendeger.Name); 
+	$('#p_Code').val(secilendeger.Code); 
+	$('#p_RowNum').val(secilendeger.RowNum);
+	$("#p_Status").prop('checked', secilendeger.Status == 1 ? true : false);
 
-	$("#p_durum").prop('checked', secilendeger.Status == 1 ? true : false);
+	$('#p_Foto1 > .image-input-wrapper').css('background-image', 'url(' + website + '/assets/static/' + secilendeger.Image + ')').trigger('change');
+	resim1 = secilendeger.Image;
 
 }
 
 
-
-function seriKaydet() {
+function productBaseKaydet() {
 
 	$('#exampleModalSizeLg').pleaseWait();
 	var product = {
 		'Name': $('#p_Name').val(), 
-
+		'Code': $('#p_Code').val(), 
+		'RowNum': $('#p_RowNum').val(), 
 		'Status': $('#p_durum').is(':checked') == true ? 1 : 0,
 
+		'Image': resim1,
 
 	};
 	var dtt;
 	if (update) {
 
 		secilendeger.Name = product.Name; 
-
+		secilendeger.Code = product.Code; 
+		secilendeger.RowNum = product.RowNum;
 		secilendeger.Status = product.Status;
+		secilendeger.Image = product.Image;
 
-
-		dtt = { cat: secilendeger };
+		dtt = { ct: secilendeger };
 	} else {
-		dtt = { cat: product };
+		dtt = { ct: product };
 	}
 
 
@@ -133,7 +150,7 @@ function seriKaydet() {
 		dataType: 'json',
 		cache: false,
 		type: "POST",
-		url: '/' + lngg + '/Category/CreatedKategori',
+		url: '/' + lngg + '/Product/CreatedProductBase',
 		success: function (data) {
 			console.log(data.hata);
 			if (!data.hata) {
@@ -180,7 +197,7 @@ function seriKaydet() {
 
 
 
-function kategoriSil(pid) {
+function productBaseSil(pid) {
 
 	swal.fire({
 		text: "Id= " + pid + "  seriyi Silmek istiyor musunuz?",
@@ -199,11 +216,11 @@ function kategoriSil(pid) {
 
 			$('#kt_datatable').pleaseWait();
 			$.ajax({
-				data: { cat: { Id: pid } },
+				data: { ct: { Id: pid } },
 				dataType: 'json',
 				cache: false,
 				type: "POST",
-				url: '/' + lngg + '/Category/DeleteKategori',
+				url: '/' + lngg + '/Product/DeleteProductBase',
 				success: function (data) {
 
 					if (!data.hata) {
@@ -250,3 +267,92 @@ function kategoriSil(pid) {
 }
 
 
+
+var avatar1 = new KTImageInput('p_Foto1');
+
+avatar1.on('cancel', function (imageInput) {
+	resim1 = "";
+	swal.fire({
+		title: 'Resim İptal',
+		type: 'success',
+		buttonsStyling: false,
+		confirmButtonText: 'OK',
+		confirmButtonClass: 'btn btn-primary font-weight-bold'
+	});
+});
+
+avatar1.on('change', function (imageInput) {
+	resimYukle(1, imageInput, "p_Foto1");
+});
+
+avatar1.on('remove', function (imageInput) {
+	resim1 = "";
+	swal.fire({
+		title: 'Resim Silindi',
+		type: 'error',
+		buttonsStyling: false,
+		confirmButtonText: 'OK',
+		confirmButtonClass: 'btn btn-primary font-weight-bold'
+	});
+});
+
+
+function resimYukle(hng, imageInput, ths) {
+
+	$('#' + ths).pleaseWait();
+	var data = imageInput.input.files[0];
+	var formData = new FormData();
+	formData.append("files", data);
+
+	$.ajax({
+		data: formData,
+		processData: false,
+		contentType: false,
+		url: '/' + lngg + '/Product/UploderImage',
+		type: 'POST',
+		success: function (data) {
+			if (data != 'false') {
+				if (hng == 1) {
+					resim1 = data;
+				}
+				//if (hng == 2) {
+				//	resim2 = data;
+				//} if (hng == 3) {
+				//	resim3 = data;
+				//} if (hng == 4) {
+				//	resim4 = data;
+				//} if (hng == 5) {
+				//	resim5 = data;
+				//}
+
+				swal.fire({
+					title: 'Resim Yükleme Başarılı',
+					type: 'success',
+					buttonsStyling: false,
+					confirmButtonText: 'OK',
+					confirmButtonClass: 'btn btn-primary font-weight-bold'
+				});
+			} else {
+				resim1 = "";
+				//resim2 = "";
+				//resim3 = "";
+				//resim4 = "";
+				//resim5 = "";
+				swal.fire({
+					title: 'Resim Yüklenemedi',
+					type: 'error',
+					buttonsStyling: false,
+					confirmButtonText: 'OK',
+					confirmButtonClass: 'btn btn-primary font-weight-bold'
+				});
+			}
+		},
+		complete: function (data2) {
+			$('#' + ths).pleaseWait('stop');
+		},
+		error: function (data2) {
+
+		}
+	});
+
+}

@@ -13,7 +13,7 @@ namespace DFN2023.Entities.DTO
         public string? Name { get; set; }
         public string? Code { get; set; }
         public string? Image { get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
         public int RowNum { get; set; }
         public int? CreatedBy { get; set; }
         public int? LastUpdatedBy { get; set; }

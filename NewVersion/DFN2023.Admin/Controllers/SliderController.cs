@@ -107,6 +107,8 @@ namespace DFN2023.Admin.Controllers
 
             if (result.Errors.Count == 0)
             {
+                selectedSlider.LangId = lang;
+                selectedSlider.LastIP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
                 var sonuc = _adminService.createSlider(selectedSlider);
                 return Task.FromResult(Json("true"));
             }

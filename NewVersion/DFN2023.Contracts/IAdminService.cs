@@ -63,6 +63,9 @@ namespace DFN2023.Contracts
         ProductCompany createProductCompany(ProductCompany cat);
         bool deleteProductCompany(ProductCompany cat);
         DtResult<ProductCompanyDTO> getProductCompany(DtParameters dtParameters, int lang);
+        public List<CompanyDTO> getCompanyList(int lang);
+        public List<ProductBaseDTO> getProductBaseList(int lang);
+        public List<CategoryDTO> getCategoryList(int lang);
 
 
 

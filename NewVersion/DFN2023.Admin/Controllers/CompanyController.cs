@@ -167,13 +167,16 @@ namespace DFN2023.Admin.Controllers
 
         public Task<JsonResult> CreatedCompanyType(CompanyType ct)
         {
+            //User usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
+
+
             int lang = getLang(CultureInfo.CurrentCulture.Name);
             //ct.LangId = lang;
 
             var sonuc = new { hata = true, mesaj = "Error", res = "" };
             try
             {
-                // HttpContext.Session.GetObjectFromJson("AktifKullanici");
+                
 
                 if (ct != null)
                 {

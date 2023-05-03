@@ -40,10 +40,11 @@
                             <th>Ayarlar</th>
                             <th>ID</th>
                             <th>Adı</th>
-                            <th>Kod</th>
-                            <th>Resim</th>
-                            <th>Üst Kateg.</th>
-                            <th>Sıra No</th>
+                            <th>İsmi</th>
+                            <th>Kodu</th>
+                            <th>Resmi</th>
+                            <th>Üst Kategori</th>
+                            <th>Sıra Numarası</th>
                             <th>Durum</th>
                         </tr>
                     </thead>
@@ -73,7 +74,7 @@
                         Adı
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="text"  class="form-control"  id="p_Name"> 
+                    <input type="text" class="form-control" id="p_Name">
                 </div>
 
                 <div class="form-group">
@@ -106,20 +107,24 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                @*<div class="form-group">
                     <label>
-                        Üst Kategori
+                        Temel Ürün
                         <span class="text-danger">*</span>
                     </label>
-                    <select id="p_ParentId" class="form-control" >
-                        <option value="0">Kategori Seçiniz..</option>
+                    <select id="p_ProductBaseId" class="form-control">
+                        <option value="0">Ana Ürün Seçiniz..</option>
 
-                        @for (int i = 0; i < Model.categoryList.Count; i++)
+                        @for (int i = 0; i < Model.ProductBase.Count; i++)
                         {
-                            <option value="@Model.categoryList[i].Id">@Model.categoryList[i].Name</option>
+                            <option value="@Model.ProductBase[i].Id">@Model.ProductBase[i].Name</option>
                         }
                     </select>
-                </div>
+                </div>*@
+                
+
+                
+
 
                 <div class="form-group">
                     <label>
@@ -144,13 +149,13 @@
 
 
             </div>
-            <div class="modal-footer"> 
+            <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
                 <button type="button" onclick="categoryKaydet()" class="btn btn-success font-weight-bold">Kaydet</button>
             </div>
-            </div>
         </div>
-    </div> 
+    </div>
+</div>
 <!--end::Container-->
 @section Scripts{
 

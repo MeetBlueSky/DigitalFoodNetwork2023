@@ -18,6 +18,7 @@ using System.Linq.Expressions;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Data;
 using System.Diagnostics.Metrics;
+using System.Net.Http;
 
 namespace DFN2023.Business
 {
@@ -191,7 +192,7 @@ namespace DFN2023.Business
             {
 
                 Expression<Func<Category, bool>> expProducts = c => true;
-                //expProducts = expProducts.And(p => p.LangId == lang);
+                expProducts = expProducts.And(p => p.LangId == lang);
                 // expProducts = expProducts.And(p => p.Status == 1);
 
                 var searchBy = dtParameters.Search?.Value;
@@ -208,7 +209,7 @@ namespace DFN2023.Business
                     Name = p.Name,
                     Code = p.Code,
                     Image = p.Image,
-                    ParentId = p.ParentCategory.Id,
+                    ParentId = p.ParentId,
                     ParentName = p.ParentCategory.Name,
                     RowNum = p.RowNum,
                     CreatedBy  = p.CreatedBy,
@@ -482,6 +483,8 @@ namespace DFN2023.Business
         {
             try
             {
+                //User usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
+
 
                 if (cat.Id > 0)
                 {
@@ -1043,12 +1046,16 @@ namespace DFN2023.Business
 
                 if (pb.Id > 0)
                 {
+                    pb.LastUpdateDate = DateTime.Now;
+                    pb.LastUpdatedBy = 1;
                     var result = _fkRepositoryProductBase.Update(pb);
                     _unitOfWork.SaveChanges();
                     return result;
                 }
                 else
                 {
+                    pb.LastUpdateDate = DateTime.Now;
+                    pb.LastUpdatedBy = 1;
                     var result = _fkRepositoryProductBase.Add(pb);
                     _unitOfWork.SaveChanges();
                     return result;
@@ -1098,7 +1105,7 @@ namespace DFN2023.Business
                 {
                     Id = p.Id,
                     CompanyId = p.CompanyId,
-                    CompanyName = p.Company.BrandName,
+                    CompanyName = p.Company.OfficialName,
                     ProductBaseId = p.ProductBaseId,
                     ProductBaseName = p.ProductBase.Name,
                     CategoryId = p.CategoryId,
@@ -1148,12 +1155,16 @@ namespace DFN2023.Business
 
                 if (pc.Id > 0)
                 {
+                    pc.LastUpdateDate = DateTime.Now;
+                    pc.LastUpdatedBy = 1;
                     var result = _fkRepositoryProductCompany.Update(pc);
                     _unitOfWork.SaveChanges();
                     return result;
                 }
                 else
                 {
+                    pc.CreateDate = DateTime.Now;
+                    pc.CreatedBy = 1;
                     var result = _fkRepositoryProductCompany.Add(pc);
                     _unitOfWork.SaveChanges();
                     return result;
@@ -1180,6 +1191,22 @@ namespace DFN2023.Business
                 return false;
 
             }
+        }
+
+        public List<CompanyDTO> getCompanyList(int lang)
+        {
+            var list = _mapper.Map<List<CompanyDTO>>(_fkRepositoryCompany.Entities.Where(p => p.Status == 1).ToList());
+            return list;
+        }
+
+
+        public List<ProductBaseDTO> getProductBaseList(int lang)
+        {
+            return _mapper.Map<List<ProductBaseDTO>>(_fkRepositoryProductBase.Entities.Where(p => p.Status == 1).ToList());
+        }
+        public List<CategoryDTO> getCategoryList(int lang)
+        {
+            return _mapper.Map<List<CategoryDTO>>(_fkRepositoryCategory.Entities.Where(p => p.Status == 1).ToList());
         }
 
 
@@ -2015,12 +2042,16 @@ namespace DFN2023.Business
 
                 if (pro.Id > 0)
                 {
+                    pro.LastUpdatedBy = 1;
+                    pro.LastUpdateDate = DateTime.Now;
                     var result = _fkRepositorySlider.Update(pro);
                     _unitOfWork.SaveChanges();
                     return result;
                 }
                 else
                 {
+                    pro.CreateDate = DateTime.Now;
+                    pro.CreatedBy = 1;
                     var result = _fkRepositorySlider.Add(pro);
                     _unitOfWork.SaveChanges();
                     return result;
