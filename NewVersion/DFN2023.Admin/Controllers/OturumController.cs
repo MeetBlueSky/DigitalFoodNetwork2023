@@ -63,11 +63,11 @@ namespace DFN2023.Admin.Controllers
                             //};
                             ////_adminService.createLogin(ldto);
 
-                            sonuc = new { hata = false, mesaj = "Giriş İşleminiz Başarılı. Lütfen Bekleyiniz", res = user.Lang + "/Home/Index" };
+                            sonuc = new { hata = false, mesaj = "Giriş İşleminiz Başarılı. Lütfen Bekleyiniz", res = "tr" + "/Home/Index" };
                         }
                         else
                         {
-                            sonuc = new { hata = true, mesaj = "Yanlış Şifre", res = user.Lang + "/" };
+                            sonuc = new { hata = true, mesaj = "Yanlış Şifre", res = "tr" + "/" };
                             TempData["girisdurum"] = "Şifrenizi Yanlış Girdiniz";
 
                             HttpContext.Session.SetObjectAsJson("AktifKullanici", null);
@@ -76,7 +76,7 @@ namespace DFN2023.Admin.Controllers
                     }
                     else
                     {
-                        sonuc = new { hata = true, mesaj = "Böyle bir kullanıcı Bulunamadı", res = user.Lang + "/" };
+                        sonuc = new { hata = true, mesaj = "Böyle bir kullanıcı Bulunamadı", res = "tr" + "/" };
                         TempData["girisdurum"] = "Böyle bir kullanıcı Bulunamadı";
 
                         HttpContext.Session.SetObjectAsJson("AktifKullanici", null);
@@ -86,7 +86,7 @@ namespace DFN2023.Admin.Controllers
                 }
                 else
                 {
-                    sonuc = new { hata = true, mesaj = "Böyle bir kullanıcı Bulunamadı", res = user.Lang + "/" };
+                    sonuc = new { hata = true, mesaj = "Böyle bir kullanıcı Bulunamadı", res = "tr" + "/" };
                     TempData["girisdurum"] = "Böyle bir kullanıcı Bulunamadı";
 
                     HttpContext.Session.SetObjectAsJson("AktifKullanici", null);
