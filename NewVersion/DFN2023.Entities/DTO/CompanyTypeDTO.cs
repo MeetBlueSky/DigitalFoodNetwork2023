@@ -21,5 +21,6 @@ namespace DFN2023.Entities.DTO
 
 
 
+        public int UserId { get; set; }
     }
 }

@@ -15,6 +15,7 @@ using DFN2023.Entities.EF;
 using DFN2023.Entities.Models;
 using System.Net.Http.Headers;
 using DFN2023.Admin.Helpers;
+using DFN2023.Entities.DTO;
 
 namespace DFN2023.Admin.Controllers
 {
@@ -167,7 +168,7 @@ namespace DFN2023.Admin.Controllers
 
         public Task<JsonResult> CreatedCompanyType(CompanyType ct)
         {
-            //User usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
+            User usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
 
 
             int lang = getLang(CultureInfo.CurrentCulture.Name);
@@ -296,6 +297,103 @@ namespace DFN2023.Admin.Controllers
 
                 return Json("false");
             }
+        }
+
+        
+        [HttpPost]
+        public Task<JsonResult> getCompanyImages([FromBody] DtParameters pi)
+        {
+            int lang = getLang(CultureInfo.CurrentCulture.Name);
+            var sonuc = _adminService.getCompanyImage(pi);
+
+            return Task.FromResult(Json(sonuc));
+
+        }
+
+        [HttpPost]
+        public Task<JsonResult> CreatedCompanyImage(CompanyImageDTO img)
+        {
+
+
+
+            var sonuc = new { hata = true, mesaj = "Error", res = "" };
+            try
+            {
+
+                if (img != null)
+                {
+                    var result = _adminService.createCompanyImage(img);
+                    if (result != null)
+                    {
+
+                        sonuc = new { hata = false, mesaj = "Başarılı", res = "" };
+                    }
+                    else
+                    {
+                        sonuc = new { hata = true, mesaj = "Hata", res = "" };
+
+                    }
+
+                }
+                else
+                {
+                    sonuc = new { hata = true, mesaj = "Hata", res = "" };
+
+                }
+
+
+
+            }
+            catch (Exception e)
+            {
+                sonuc = new { hata = true, mesaj = "Error", res = "" };
+            }
+
+            return Task.FromResult(Json(sonuc));
+
+        }
+
+        [HttpPost]
+        public Task<JsonResult> DeleteCompanyImage(CompanyImageDTO img)
+        {
+
+
+
+            var sonuc = new { hata = true, mesaj = "Error", res = "" };
+            try
+            {
+
+                if (img != null)
+                {
+                    var result = _adminService.deleteCompanyImage(img);
+                    if (result)
+                    {
+
+                        sonuc = new { hata = false, mesaj = "Başarılı", res = "" };
+                    }
+                    else
+                    {
+                        sonuc = new { hata = true, mesaj = "Hata tespit edildi", res = "" };
+
+                    }
+
+                }
+                else
+                {
+                    sonuc = new { hata = true, mesaj = "Hata tespit edildi", res = "" };
+
+                }
+
+
+
+            }
+            catch (Exception e)
+            {
+                sonuc = new { hata = true, mesaj = "Hata tespit edildi", res = "" };
+            }
+
+            return Task.FromResult(Json(sonuc));
+
         }
 
 

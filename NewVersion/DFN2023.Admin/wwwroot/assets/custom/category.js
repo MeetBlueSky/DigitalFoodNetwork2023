@@ -130,6 +130,8 @@ function categoryKaydet() {
 	var product = {
 		'Name': $('#p_Name').val(), 
 		'Code': $('#p_Code').val(),
+		'ParentId': $('#p_ParentId').val(),
+		'RowNum': $('#p_RowNum').val(),
 		'Status': $('#p_Status').is(':checked') == true ? 1 : 0,
 
 		'Image': resim1,
@@ -139,7 +141,9 @@ function categoryKaydet() {
 	if (update) {
 
 		secilendeger.Name = product.Name; 
+		secilendeger.Code = product.Code; 
 		secilendeger.Image = product.Image;
+		secilendeger.ParentId = product.ParentId;
 		secilendeger.RowNum = product.RowNum;
 		secilendeger.Status = product.Status;
 		

@@ -17,6 +17,8 @@ namespace DFN2023.Entities.DTO
         public int RowNum { get; set; }
         public string? Desc { get; set; }
 
+        public string Company { get; set; }
+
 
     }
 }

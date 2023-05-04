@@ -28,7 +28,11 @@ namespace DFN2023.Contracts
         DtResult<CompanyDTO> getCompany(DtParameters dtParameters, int lang);
         CompanyType createCompanyType(CompanyType cat);
         bool deleteCompanyType(CompanyType cat);
+        public DtResult<CompanyImageDTO> getCompanyImage(DtParameters dtParameters);
         DtResult<CompanyTypeDTO> getCompanyType(DtParameters dtParameters, int lang);
+        public CompanyImage createCompanyImage(CompanyImageDTO companyImage);
+        public CompanyImage createCompanyImageNonDTO(CompanyImage companyImage);
+        public bool deleteCompanyImage(CompanyImageDTO companyImage);
 
 
         //City - Country - County

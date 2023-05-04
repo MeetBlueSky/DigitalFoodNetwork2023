@@ -11,6 +11,7 @@ using DFN2023.Infrastructure.Repositories;
 using DFN2023.Infrastructure.UnitOfWork;
 using DFN2023.Entities.Models;
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -483,8 +484,8 @@ namespace DFN2023.Business
         {
             try
             {
-                //User usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
-
+                //User usr =  HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
+                //TempData
 
                 if (cat.Id > 0)
                 {
@@ -523,6 +524,135 @@ namespace DFN2023.Business
 
                 return false;
 
+            }
+        }
+
+        public DtResult<CompanyImageDTO> getCompanyImage(DtParameters dtParameters)
+        {
+            try
+            {
+                Expression<Func<CompanyImage, bool>> expCompanyImage = c => true;
+                expCompanyImage = expCompanyImage.And(p => p.CompanyId == dtParameters.FilterId);
+                expCompanyImage = expCompanyImage.And(p => p.Status == 1 || p.Status == 2);
+                int boatSelectListValue = Convert.ToInt32(dtParameters.AdditionalValues.ElementAt(0));
+                //if (boatSelectListValue != 0)
+                //{
+                //    expBoatImage = expBoatImage.And(p => p.ImageType == boatSelectListValue);
+                //}
+
+                var searchBy = dtParameters.Search?.Value;
+                //if (!string.IsNullOrEmpty(searchBy))
+                //{
+                //    expBoatImage = expBoatImage.And(r => rç != null && r.Name.ToUpper().Contains(searchBy.ToUpper()));
+                //}
+
+                var sql = _fkRepositoryCompanyImage.Entities
+                .Where(expCompanyImage)
+                .Select(p => new CompanyImageDTO
+                {
+                    Id = p.Id,
+                    CompanyId = p.CompanyId,
+                    Company = p.Company.OfficialName,
+                    CreateDate = p.CreateDate,
+                    //ImageType = p.ImageType,
+                    Desc = p.Desc,
+                    Path = p.Path,
+                    LastUpdateDate = p.LastUpdateDate,
+                    RowNum = p.RowNum,
+                    Status = p.Status,
+                    /**/
+
+                }).AsQueryable();
+
+                var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                sql = orderAscendingDirection ? sql.OrderByDynamic(orderCriteria, DtOrderDir.Asc) : sql.OrderByDynamic(orderCriteria, DtOrderDir.Desc);
+
+
+                var count = sql.Count();
+
+                var sonuc = sql.Skip(dtParameters.Start).Take(dtParameters.Length).ToList();
+
+                return new DtResult<CompanyImageDTO>
+                {
+                    Draw = dtParameters.Draw,
+                    RecordsTotal = count,
+                    RecordsFiltered = count,
+                    Data = sonuc
+                };
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+
+        public CompanyImage createCompanyImage(CompanyImageDTO companyImage)
+        {
+            try
+            {
+                var boat = _mapper.Map<CompanyImage>(companyImage);
+                boat.LastUpdateDate = DateTime.Now;
+                if (boat.Id > 0)
+                {
+                    var result = _fkRepositoryCompanyImage.Update(boat);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    boat.CreateDate = DateTime.Now;
+                    var result = _fkRepositoryCompanyImage.Add(boat);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public CompanyImage createCompanyImageNonDTO(CompanyImage companyImage)
+        {
+            try
+            {
+                //var boat = _mapper.Map<BoatImage>(boatImage);
+                companyImage.LastUpdateDate = DateTime.Now;
+                if (companyImage.Id > 0)
+                {
+                    var result = _fkRepositoryCompanyImage.Update(companyImage);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    companyImage.CreateDate = DateTime.Now;
+                    var result = _fkRepositoryCompanyImage.Add(companyImage);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public bool deleteCompanyImage(CompanyImageDTO companyImage)
+        {
+            try
+            {
+                var boat = _fkRepositoryCompanyImage.GetById(companyImage.Id);
+                boat.Status = 3;
+                _fkRepositoryCompanyImage.Update(boat);
+                _unitOfWork.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 

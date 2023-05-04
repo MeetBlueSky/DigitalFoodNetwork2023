@@ -72,7 +72,7 @@
                         Adı
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="text"  class="form-control"  id="p_Name"> 
+                    <input type="text" class="form-control" id="p_Name">
                 </div>
 
 
@@ -91,19 +91,168 @@
 
 
             </div>
-            <div class="modal-footer"> 
+            <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
                 <button type="button" onclick=" seriKaydet()" class="btn btn-success font-weight-bold">Kaydet</button>
             </div>
+        </div>
+    </div>
+</div>
+
+@*----------------------------------------------------Resim  Modal----------------------------------------------------*@
+<div class="modal fade" id="boatImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Şirket Görselleri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            
+            <div class="modal-header" style="display: flow-root !important;">
+                <button type="button" onclick=" resimEkleModalOpen() " class="btn btn-success font-weight-bold">Şirkete Görsel Ekle</button>
+                
+
+
+            </div>
+
+            <div class="modal-body">
+
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-checkable" id="kt_datatableImage" style="margin-top: 13px !important">
+                        <thead>
+                            <tr>
+                                <th>Sıralama</th>
+                                <th>Ayarlar</th>
+                                <th>ID</th>
+                                <th>Ürün</th>
+                                @*<th>Görsel Tipi</th>*@
+                                <th>Resim</th>
+                                <th>Açıklama</th>
+                                <th>Aktif/Pasif</th>
+                                @*<th>Sıralama</th>*@
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
             </div>
         </div>
-    </div> 
+    </div>
+</div>
+
+
+
+@*----------------------------------------------------Resim Ekle Modal----------------------------------------------------*@
+<div class="modal fade" id="resimEkleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" style="background-color: #f2f3f9;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Şirket Görsel Ekle/Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    Her bir görseli en fazla 1 Mb olacak şekilde ayarlamayı unutmayınız. <br /><ul><li>Üst görsel: 1920 x 1280 px</li><li>Üst görsel mobil versiyon: 600 x 1000 px</li><li>İç / dış görsel: 1920 x 1080 px</li><li>Yerleşim planı: 900 x 600 px</li></ul>
+                </div>
+                @*<label>Görsel Tipi </label>
+                <div class="form-group row">
+                    <div class="dropdown bootstrap-select form-control dropup">
+                        <select id="r_ImageType" class="form-control selectpicker" data-size="7"
+                                data-live-search="true" tabindex="null">
+                            <option value="0">Görsel Tipi Seçiniz...</option>
+                            <option value="1">Üst Görsel</option>
+                            <option value="6">Üst Görsel Mobil Versiyon</option>
+                            <option value="2">İç / Dış Görseller</option>
+                            <option value="3">Yerleşim Planı (opsiyonel)</option>
+                            <option value="4">Üst Metin Yanı Görsel (opsiyonel)</option>
+                            <option value="5">Üst Metin Ödül İkonları (opsiyonel)</option>
+
+                        </select>
+                    </div>
+                </div>*@
+
+                <div class="form-group">
+                    <label>
+                        Görsel :
+                    </label>
+                    <div class="image-input image-input-outline" id="p_Foto1" style="  ">
+                        <div class="image-input-wrapper" style=""></div>
+                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="profile_avatar" id="p_Foto1x" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="profile_avatar_remove" />
+                        </label>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleTextarea">
+                        Açıklama
+                        <span class="text-danger">*</span>
+                    </label>
+                    <textarea class="form-control" id="r_ImageDesc" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Sıralama
+                    </label>
+                    <input type="number" class="form-control" placeholder="...." id="r_RowNum">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Pasif/Aktif
+                        <span class="text-danger">*</span>
+                    </label>
+                    <span class="switch">
+                        <label>
+                            <input type="checkbox" checked="checked" name="select" id="r_Status">
+                            <span></span>
+                        </label>
+                    </span>
+                </div>
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                <button type="button" onclick=" urunResimKaydet()" class="btn btn-success font-weight-bold">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <!--end::Container-->
 @section Scripts{
 
     <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script>
         var hst = "@Url.Action("getCompany", "Company")";
+
+        var hst11 = "@Url.Action("getCompanyImages", "Company")";
+        var hst12 = "@Url.Action("CreatedCompanyImage", "Company")";
+        var hst13 = "@Url.Action("DeleteCompanyImage", "Company")";
+        var hst14 = "@Url.Action("UploderImage", "Company")";
     </script>
     <script>
         var website = "@ViewData["website"]";

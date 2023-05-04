@@ -40,7 +40,6 @@
                             <th>Ayarlar</th>
                             <th>ID</th>
                             <th>Adı</th>
-                            <th>İsmi</th>
                             <th>Kodu</th>
                             <th>Resmi</th>
                             <th>Üst Kategori</th>
@@ -107,20 +106,20 @@
                     </div>
                 </div>
 
-                @*<div class="form-group">
+                <div class="form-group">
                     <label>
-                        Temel Ürün
+                        Üst kategori
                         <span class="text-danger">*</span>
                     </label>
-                    <select id="p_ProductBaseId" class="form-control">
+                    <select id="p_ParentId" class="form-control">
                         <option value="0">Ana Ürün Seçiniz..</option>
 
-                        @for (int i = 0; i < Model.ProductBase.Count; i++)
+                        @for (int i = 0; i < Model.categoryList.Count; i++)
                         {
-                            <option value="@Model.ProductBase[i].Id">@Model.ProductBase[i].Name</option>
+                            <option value="@Model.categoryList[i].Id">@Model.categoryList[i].Name</option>
                         }
                     </select>
-                </div>*@
+                </div>
                 
 
                 
