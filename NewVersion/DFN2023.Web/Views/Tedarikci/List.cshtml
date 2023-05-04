@@ -17,11 +17,16 @@
 								<form class="blog-form">
 									<div class="restaurant">
 										<div class="nice-select-one">
-											<select class="nice-select Advice">
-											  <option>Kategori Seçiniz</option>
+											<select class="nice-select Advice" disabled>
+											  <option value="0">Kategori Seçiniz</option>
 											  @for (var i = 0; i < Model.kategoriler.Count; i++)
 											  {
-											  <option>@Model.kategoriler[i].Name</option>
+										@if (Model.skategoriid==@Model.kategoriler[i].Id)
+										{
+											
+										<option selected>@Model.kategoriler[i].Name</option>
+										}
+										<option>@Model.kategoriler[i].Name</option>
 											  }
 										</select>
 										</div>
@@ -29,7 +34,7 @@
 									<div class="restaurant">
 										<div class="name-form">
 											<i class="fa-regular fa-user"></i>
-											<input type="text" id="urun" placeholder="Ürün Adı Giriniz" />
+											<input type="text" id="urunadi" placeholder="Ürün Adı Giriniz" />
 										</div>
 									</div>	
 									
@@ -92,7 +97,9 @@
 										<a href="#"><i class="fa-solid fa-comment-dots"></i> Mesaj Gönder</a>
 								</div>								
 								<p>@Model.tedariklist[i].ShortDesc</p>						
-								<p class="location"><i class="fa-solid fa-location-dot"></i> Çekmeköy, İstanbul </p>
+								<p class="location"><i class="fa-solid fa-location-dot"></i> @Model.tedariklist[i].CountyName, @Model.tedariklist[i].CityName </p>
+								
+										<a  href="@Url.Action("Harita", "Tedarikci")/@Model.tedariklist[i].Id"><i class="fa-solid fa-arrow-right"></i> Haritada Göster</a>
 							</div>
 					</div>
 				</div>
@@ -100,3 +107,8 @@
 				</div>
 			</div>
 	</section>
+
+	<script>
+		var ürünadi= "@Model.tedarikciadi";
+	</script>
+	<script src="~/assets/js/tedariklist.js"></script>

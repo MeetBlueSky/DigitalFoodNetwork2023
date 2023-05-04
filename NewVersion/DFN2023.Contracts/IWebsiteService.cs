@@ -14,6 +14,7 @@ namespace DFN2023.Contracts
         List<ProductCompanyDTO> getTedarik(int kid, string ürün);
         //getCompanyList
         List<CompanyDTO> getCompanyList();
+        List<StaticContentGrupPageDTO> getAnasayfaList();
         //List<SlaytDTO> getSlaytForHome(int langId);
 
         //StaticContentGrupPageDTO getStaticGrup(int pid, int lang);

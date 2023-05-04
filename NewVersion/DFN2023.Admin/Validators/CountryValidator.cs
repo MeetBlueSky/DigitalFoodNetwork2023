@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DFN2023.Business.Validators
+namespace DFN2023.Admin.Validators
 {
     public class CountryValidator : AbstractValidator<Country>
     {

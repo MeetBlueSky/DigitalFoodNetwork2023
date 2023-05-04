@@ -29,7 +29,8 @@ namespace DFN2023.Entities.Mappings
             CreateMap<ProductBaseDTO, ProductBase>();
 
             CreateMap<ProductCompany, ProductCompanyDTO>();
-            CreateMap<ProductCompanyDTO, ProductCompany>();
+            CreateMap<ProductCompanyDTO, ProductCompany>(); 
+            CreateMap<StaticContentGrupPage, StaticContentGrupPageDTO>();
         }
     }
 }

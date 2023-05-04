@@ -1,4 +1,8 @@
 ﻿
+$(document).ready(function () {
+    $('#urunadi').val(ürünadi);
+});
+
 function filter() {
     if ($('#kategoriid').val() > 0 && $('#urunadi').val().length>0) {
         $.ajax({

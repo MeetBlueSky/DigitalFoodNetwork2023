@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using DFN2023.Admin.Models;
-using DFN2023.Business.Validators;
 using DFN2023.Contracts;
 using DFN2023.Entities.EF;
 using DFN2023.Entities.Models;
@@ -14,6 +13,7 @@ using System.Globalization;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using DFN2023.Admin.Validators;
 
 namespace DFN2023.Admin.Controllers
 {
@@ -107,8 +107,6 @@ namespace DFN2023.Admin.Controllers
 
             if (result.Errors.Count == 0)
             {
-                selectedSlider.LangId = lang;
-                selectedSlider.LastIP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
                 var sonuc = _adminService.createSlider(selectedSlider);
                 return Task.FromResult(Json("true"));
             }

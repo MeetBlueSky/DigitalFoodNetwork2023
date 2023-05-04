@@ -24,9 +24,21 @@ namespace DFN2023.Web.Controllers
 
             var kategorilist = _websiteService.getCategoryList();
             pm.kategoriler = kategorilist;
-            //var sirketlist = _websiteService.getCompanyList();
-            //pm.sirketler = sirketlist;
+            var sirketlist = _websiteService.getCompanyList();
+            pm.sirketler = sirketlist;
+            var a = _websiteService.getAnasayfaList();
+            if (a.Count>0)
+            {
 
+                pm.stanasayfa = a; 
+                pm.stanasayfatuk = a.First(x => x.GrupTempId == 3);
+                pm.stanasayfated = a.First(x => x.GrupTempId == 4);
+
+
+                pm.stanasayfasec1 = a.First(x => x.GrupTempId == 6);
+                pm.stanasayfasec2 = a.First(x => x.GrupTempId == 1);
+            }
+           
 
             return View(pm);
         }

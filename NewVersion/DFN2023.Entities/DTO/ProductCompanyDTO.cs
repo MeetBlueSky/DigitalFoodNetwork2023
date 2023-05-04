@@ -30,6 +30,8 @@ namespace DFN2023.Entities.DTO
         public string? CompanyName { get; set; }
         public string? CategoryName { get; set; }
         public string? ProductBaseName { get; set; }
+        public string? CityName { get; set; }
+        public string? CountyName { get; set; }
 
     }
 }

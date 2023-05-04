@@ -25,6 +25,8 @@ namespace DFN2023.Web.Controllers
 
                 var kategorilist = _websiteService.getCategoryList();
                 pm.kategoriler = kategorilist;
+                pm.skategoriid = kid;
+                pm.tedarikciadi = ürün;
 
                 var filtersonuc = _websiteService.getTedarik(kid, ürün);
                 pm.tedariklist = filtersonuc;
@@ -37,5 +39,13 @@ namespace DFN2023.Web.Controllers
             }
           
         }
-    }
+        public IActionResult Harita(int id)
+        {
+
+            var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
+            PublicModel pm = new PublicModel();
+            pm.user = usr;
+            return View(pm);
+        }
+        }
 }

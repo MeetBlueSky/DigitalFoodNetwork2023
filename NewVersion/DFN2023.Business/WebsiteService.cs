@@ -27,7 +27,10 @@ namespace DFN2023.Business
         IRepository<User> _fkRepositoryUser;
         IRepository<Category> _fkRepositoryCategory;
         IRepository<ProductCompany> _fkRepositoryProductCompany;
-        IRepository<Company> _fkRepositoryCompany;
+        IRepository<Company> _fkRepositoryCompany;//StaticContentGrupPageDTO
+        IRepository<StaticContentGrupPage> _fkRepositoryStaticContentGrupPage;
+        IRepository<City> _fkRepositoryCity;
+        IRepository<County> _fkRepositoryCounty;
 
         IMapper _mapper;
 
@@ -41,6 +44,9 @@ namespace DFN2023.Business
             _fkRepositoryCategory = _unitOfWork.GetRepostory<Category>();
             _fkRepositoryProductCompany = _unitOfWork.GetRepostory<ProductCompany>();
             _fkRepositoryCompany = _unitOfWork.GetRepostory<Company>();
+            _fkRepositoryStaticContentGrupPage = _unitOfWork.GetRepostory<StaticContentGrupPage>();
+            _fkRepositoryCity = _unitOfWork.GetRepostory<City>();
+            _fkRepositoryCounty = _unitOfWork.GetRepostory<County>();
 
             //_fkRepositoryStaticContentPage = _unitOfWork.GetRepostory<StaticContentPage>();
             //_fkRepositoryStaticContentGrupPage = _unitOfWork.GetRepostory<StaticContentGrupPage>();
@@ -87,6 +93,9 @@ namespace DFN2023.Business
                     RowNum=p.RowNum,
                     Status=p.Status,
                     ShortDesc=p.Company.ShortDescription,
+                    CityName = _fkRepositoryCity.Entities.First(c => c.Id == p.Company.OfficialCityId).Name,
+                    CountyName = _fkRepositoryCounty.Entities.First(c => c.Id == p.Company.OfficialCountyId).Name,
+                    
 
                 }).ToList();
                 return data;
@@ -103,7 +112,8 @@ namespace DFN2023.Business
             List < CompanyDTO> a = new();
             try
             {
-                return _mapper.Map<List<CompanyDTO>>(_fkRepositoryCompany.Entities.Where(p => p.Status == 1).ToList());//.OrderByDescending(p => p.CreateDate).Take(4)
+                var ab = _mapper.Map<List<CompanyDTO>>(_fkRepositoryCompany.Entities.Where(p => p.Status == 1).OrderByDescending(p => p.CreateDate).Take(4).ToList());//.OrderByDescending(p => p.CreateDate).Take(4)
+                return ab;
             }
             catch (Exception)
             {
@@ -111,6 +121,51 @@ namespace DFN2023.Business
                 return a;
             }
             
+        }
+
+        public List<StaticContentGrupPageDTO> getAnasayfaList()
+        {
+            List<StaticContentGrupPageDTO> a = new();
+            try
+            {
+                var ab = _mapper.Map<List<StaticContentGrupPageDTO>>(_fkRepositoryStaticContentGrupPage.Entities.Where(p => p.GrupTempId==1 || p.GrupTempId == 3 || p.GrupTempId == 4 || p.GrupTempId == 6).ToList());//.OrderByDescending(p => p.CreateDate).Take(4)
+                return ab;
+            }
+            catch (Exception)
+            {
+
+                return a;
+            }
+
+        }
+        public CompanyDTO getSelectCompanyMap(int pid)
+        {
+            try
+            {
+                var a = _mapper.Map<CompanyDTO>(_fkRepositoryCompany.Entities.First(p => p.Id == pid));
+                return a;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+
+        }
+
+        public List<CompanyDTO> getCompanyMap(string uname, string pass)
+        {
+            try
+            {
+                var a = _mapper.Map<List<CompanyDTO>>(_fkRepositoryCompany.Entities.Where(p => p.Status == 1).ToList());
+                return a;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+
         }
         //public StaticContentGrupPageDTO getStaticGrup(int pid, int lang)
         //{
