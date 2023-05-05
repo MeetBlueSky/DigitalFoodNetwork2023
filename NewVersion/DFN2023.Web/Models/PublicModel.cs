@@ -16,6 +16,8 @@ namespace DFN2023.Web.Models
         public StaticContentGrupPageDTO? stanasayfasec2 { get; set; }
         public int? skategoriid { get; set; }
         public string? tedarikciadi { get; set; }
+        public CompanyDTO? smapkoor { get; set; }
+        public List<CompanyDTO>? mapkoor { get; set; }
 
 
     }

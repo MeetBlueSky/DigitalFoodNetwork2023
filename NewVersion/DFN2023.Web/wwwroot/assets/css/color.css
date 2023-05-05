@@ -19,4 +19,5 @@ ul.crumbs li.two i,ul.paragraph li i,.choose-lunches h3,.star i,.services-card-s
 .error-page a i,.questions i,.join-img-blog i,.pricing-table-cards h6,.blog-list li:before,
 .mobile-nav > ul > li.menu-item-has-children.active > ul.sub-menu li:before,.page-loader	{
 	 background-color: var(--color-theme);
+     cursor:pointer;
 }

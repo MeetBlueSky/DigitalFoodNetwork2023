@@ -11,7 +11,7 @@ var locations = [
 ];
 
 var map = new google.maps.Map(document.getElementById('map'), {
-  zoom: 7,
+  zoom: 9,
   /* Zoom level of your map */
     center: new google.maps.LatLng(36.99265338303669, 35.330914331761434),
   /* coordinates for the center of your map */

@@ -24,8 +24,8 @@ namespace DFN2023.Entities.DTO
         public int? MapCountryId { get; set; }
         public int? MapCityId { get; set; }
         public int? MapCountyId { get; set; }
-        public float? MapX { get; set; }
-        public float? MapY { get; set; }
+        public string? MapX { get; set; }
+        public string? MapY { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Mobile { get; set; }

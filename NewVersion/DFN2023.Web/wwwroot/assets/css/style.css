@@ -309,16 +309,17 @@ header {
     line-height: 55px;
 }
 .button-2 {
-  color: #fff;
-  border: 2px solid #F29F05;
-  background-image: -webkit-linear-gradient(30deg, #F29F05 50%, transparent 50%);
-  background-image: linear-gradient(30deg, #F29F05 50%, transparent 50%);
-  background-size: 500px;
-  background-repeat: no-repeat;
-  background-position: 0%;
-  -webkit-transition: background 300ms ease-in-out;
-  transition: background 300ms ease-in-out;
-  line-height: 51px;
+    color: #fff;
+    border: 2px solid #F29F05;
+    background-image: -webkit-linear-gradient(30deg, #F29F05 50%, transparent 50%);
+    background-image: linear-gradient(30deg, #F29F05 50%, transparent 50%);
+    background-size: 500px;
+    background-repeat: no-repeat;
+    background-position: 0%;
+    -webkit-transition: background 300ms ease-in-out;
+    transition: background 300ms ease-in-out;
+    line-height: 51px;
+    cursor: pointer;
 }
 .button-2:hover {
   background-position: 100%;
@@ -3410,7 +3411,6 @@ li.menu-item-has-children.active {
     position: fixed;
 }
 #map {
-    margin: 0 auto;
     width: 960px;
     height: 450px;
 }

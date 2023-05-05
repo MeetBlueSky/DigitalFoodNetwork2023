@@ -14,10 +14,10 @@
 								</ul>
 								<h2>Ürün / Tedarikçi Bulun</h2>
 								<p>Egestas sed tempus urna et pharetra pharetra massa. Fermentum posuere urna nec tincidunt praesent semper.</p>
-								<form class="blog-form">
+								
 									<div class="restaurant">
 										<div class="nice-select-one">
-											<select class="nice-select Advice" disabled>
+											<select id="kategoriid" class="nice-select Advice" disabled>
 											  <option value="0">Kategori Seçiniz</option>
 											  @for (var i = 0; i < Model.kategoriler.Count; i++)
 											  {
@@ -34,12 +34,12 @@
 									<div class="restaurant">
 										<div class="name-form">
 											<i class="fa-regular fa-user"></i>
-											<input type="text" id="urunadi" placeholder="Ürün Adı Giriniz" />
+											<input type="text" id="urunadi" value="@Model.tedarikciadi" placeholder="Ürün Adı Giriniz" />
 										</div>
 									</div>	
 									
-									<button class="button-price mt-3">Bul</button>	
-								</form>
+									<button onclick="filter()" class="button-price mt-3">Bul</button>	
+								
 							</div>
 						</div>
 						<div class="col-lg-6" data-aos="fade-up"  data-aos-delay="300" data-aos-duration="400">
@@ -54,8 +54,52 @@
 					</div>
 				</div>
 	</section>
+	<!-- best-restaurants -->
+	<section class="best-restaurants gap" style="padding: 0px;">
+		<div class="container">
+			
+	        <a onclick="haritaAc()"  class="button button-2">Harita Görünümü</a>
+			<div class="column" id="urunler" style="display:block">
+				
+				@for (var i = 0; i < @Model.tedariklist.Count; i++)
+				{
+					<div class="col-lg-6 aos-init aos-animate" data-aos="flip-up" data-aos-delay="200" data-aos-duration="300">
+					<div class="logos-card restaurant-page ">
+						<img alt="logo" src="https://via.placeholder.com/100x100">
+							<div class="cafa">
+								<h4><a href="#">@Model.tedariklist[i].Name</a></h4>
+								<div class="cafa-button">
+								@if(Model.tedariklist[i].FavDurum==true){
+									
+								<a onclick="favEkleCikar(@Model.tedariklist[i].CompanyId,1)"><i class="fas fa-heart-broken"></i> Favoriden Çıkart</a>
+								}
+								else
+								{
+									
+								<a onclick="favEkleCikar(@Model.tedariklist[i].CompanyId,0)"><i class="fa-solid fa-heart"></i> Favorilere Ekle</a>
+								}
+										<a href="#"><i class="fa-solid fa-comment-dots"></i> Mesaj Gönder</a>
+								</div>								
+								<p>@Model.tedariklist[i].ShortDesc</p>						
+								<p class="location"><i class="fa-solid fa-location-dot"></i> @Model.tedariklist[i].CountyName, @Model.tedariklist[i].CityName </p>
+								
+										<a  href="@Url.Action("Harita", "Tedarikci")/@Model.tedariklist[i].Id"><i class="fa-solid fa-arrow-right"></i> Haritada Göster</a>
+							</div>
+					</div>
+				</div>
+				}
+				</div>
+				<div class="column" id="harita" style="display:none">
+					<!-- partial:index.partial.html -->
+				<div id="map" style="height: 400px;width: 900px; position: relative;top: 20px;margin: auto overflow: hidden; background-color: rgb(229, 227, 223);"></div>
+
+				<!-- partial -->
+ 
+				</div>
+			</div>
+	</section>
 	<!-- banner -->
-	<section class="banner" data-aos="fade-up"  data-aos-delay="200" data-aos-duration="300">
+	<section class="banner" data-aos="fade-up"  data-aos-delay="200" data-aos-duration="300" style="margin-bottom: 20px;">
 		<div class="container">
 			<div class="banner-img" style="background-image: url(https://via.placeholder.com/1400x393);">
 				<div class="banner-logo">
@@ -81,34 +125,14 @@
 			</div>
 		</div>
 	</section>
-	<!-- best-restaurants -->
-	<section class="best-restaurants gap">
-		<div class="container">
-			<div class="row">
-				@for (var i = 0; i < @Model.tedariklist.Count; i++)
-				{
-					<div class="col-lg-6 aos-init aos-animate" data-aos="flip-up" data-aos-delay="200" data-aos-duration="300">
-					<div class="logos-card restaurant-page ">
-						<img alt="logo" src="https://via.placeholder.com/100x100">
-							<div class="cafa">
-								<h4><a href="#">@Model.tedariklist[i].Name</a></h4>
-								<div class="cafa-button">
-										<a href="#"><i class="fa-solid fa-heart"></i> Favorilere Ekle</a>
-										<a href="#"><i class="fa-solid fa-comment-dots"></i> Mesaj Gönder</a>
-								</div>								
-								<p>@Model.tedariklist[i].ShortDesc</p>						
-								<p class="location"><i class="fa-solid fa-location-dot"></i> @Model.tedariklist[i].CountyName, @Model.tedariklist[i].CityName </p>
-								
-										<a  href="@Url.Action("Harita", "Tedarikci")/@Model.tedariklist[i].Id"><i class="fa-solid fa-arrow-right"></i> Haritada Göster</a>
-							</div>
-					</div>
-				</div>
-				}
-				</div>
-			</div>
-	</section>
+	
+	
 
-	<script>
-		var ürünadi= "@Model.tedarikciadi";
-	</script>
+<script>
+    var hst = "@Url.Action("filterTedarik", "Home")";
+    var hst2 = "@Url.Action("favEkleCikar", "Tedarikci")";
+	var user="@Model.user"
+</script>
+
 	<script src="~/assets/js/tedariklist.js"></script>
+	 <script src='https://maps.google.com/maps/api/js?sensor=false'></script><script src="~/assets/js/maps.js"></script>
