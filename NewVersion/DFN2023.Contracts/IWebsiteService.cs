@@ -11,10 +11,13 @@ namespace DFN2023.Contracts
     {
         List<UserDTO> CheckUser(string uname, string pass);
         List<CategoryDTO> getCategoryList();
-        List<ProductCompanyDTO> getTedarik(int kid, string ürün);
+        List<ProductCompanyDTO> getTedarik(int kid, string ürün,int? userid);
         //getCompanyList
         List<CompanyDTO> getCompanyList();
         List<StaticContentGrupPageDTO> getAnasayfaList();
+        bool favMethod(int companyid, int userid, int pid);
+        public CompanyDTO getSelectCompanyMap(int pid);
+        public List<CompanyDTO> getCompanyMap();
         //List<SlaytDTO> getSlaytForHome(int langId);
 
         //StaticContentGrupPageDTO getStaticGrup(int pid, int lang);

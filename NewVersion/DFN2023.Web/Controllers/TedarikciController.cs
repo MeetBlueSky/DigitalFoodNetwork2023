@@ -1,4 +1,5 @@
 ﻿using DFN2023.Contracts;
+using DFN2023.Entities.DTO;
 using DFN2023.Entities.EF;
 using DFN2023.Web.Helpers;
 using DFN2023.Web.Models;
@@ -17,6 +18,7 @@ namespace DFN2023.Web.Controllers
         {
             int kid = Convert.ToInt32(HttpContext.Session.GetInt32("kategoriid"));
             string ürün = HttpContext.Session.GetString("tedarikciadi");
+            List<ProductCompanyDTO> filtersonuc = new();
             if (kid!=0)
             {
                 var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
@@ -27,8 +29,16 @@ namespace DFN2023.Web.Controllers
                 pm.kategoriler = kategorilist;
                 pm.skategoriid = kid;
                 pm.tedarikciadi = ürün;
+				if (pm.user!=null)
+                {
+                     filtersonuc = _websiteService.getTedarik(kid, ürün, usr.Id);
 
-                var filtersonuc = _websiteService.getTedarik(kid, ürün);
+				}
+				else
+                {
+                     filtersonuc = _websiteService.getTedarik(kid, ürün, 0);
+
+                }
                 pm.tedariklist = filtersonuc;
                 return View(pm);
 
@@ -45,7 +55,52 @@ namespace DFN2023.Web.Controllers
             var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
             PublicModel pm = new PublicModel();
             pm.user = usr;
+            pm.smapkoor = _websiteService.getSelectCompanyMap(id);
+            pm.mapkoor = _websiteService.getCompanyMap();
             return View(pm);
         }
+        [HttpPost]
+        public Task<JsonResult> favEkleCikar(int companyid, int durum)
+        {
+            try
+			{
+
+                var sonuc = new { hata = true, mesaj = "Error", res = "" };
+                var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
+                if (usr.Id> 0)
+				{
+                    var dgr = _websiteService.favMethod(companyid, usr.Id, durum);
+                    if (dgr)
+                    {
+                        if (durum > 0)
+                        {
+                            sonuc = new { hata = false, mesaj = "Favorilere eklendi", res = "" };
+
+                        }
+                        else
+                        {
+                            sonuc = new { hata = false, mesaj = "Favoriden çıkarıldı", res = "" };
+
+                        }
+                    }
+                    else
+                    {
+                        sonuc = new { hata = true, mesaj = "Hata Oluştu", res = "" };
+                    }
+				}
+				else
+				{
+
+                    sonuc = new { hata = true, mesaj = "Giriş Yapın", res = "" };
+                }
+               
+                return Task.FromResult(Json(sonuc));
+            }
+			catch (Exception)
+			{
+
+				throw;
+			}
         }
+    }
 }

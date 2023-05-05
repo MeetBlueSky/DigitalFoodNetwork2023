@@ -32,6 +32,7 @@ namespace DFN2023.Entities.DTO
         public string? ProductBaseName { get; set; }
         public string? CityName { get; set; }
         public string? CountyName { get; set; }
+        public bool? FavDurum { get; set; }
 
     }
 }
