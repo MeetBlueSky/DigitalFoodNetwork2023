@@ -25,6 +25,10 @@ namespace DFN2023.Contracts
         // Company - CompanyType - CompanyImage
         Company createCompany(Company cat);
         bool deleteCompany(Company cat);
+        List<CompanyTypeDTO> getCompanyTypeList(int lang);
+        List<CountryDTO> getCountryList(int lang);
+        List<CityDTO> getCityList(int lang);
+        List<CountyDTO> getCountyList(int lang);
         DtResult<CompanyDTO> getCompany(DtParameters dtParameters, int lang);
         CompanyType createCompanyType(CompanyType cat);
         bool deleteCompanyType(CompanyType cat);

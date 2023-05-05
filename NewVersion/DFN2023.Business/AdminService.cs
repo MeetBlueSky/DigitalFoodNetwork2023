@@ -213,7 +213,7 @@ namespace DFN2023.Business
                     ParentId = p.ParentId,
                     ParentName = p.ParentCategory.Name,
                     RowNum = p.RowNum,
-                    CreatedBy  = p.CreatedBy,
+                    CreatedBy = p.CreatedBy,
                     LastUpdatedBy = p.LastUpdatedBy,
                     CreateDate = p.CreateDate,
                     LastUpdateDate = p.LastUpdateDate,
@@ -315,51 +315,117 @@ namespace DFN2023.Business
                     expProducts = expProducts.And(r => r.OfficialName != null && r.OfficialName.ToUpper().Contains(searchBy.ToUpper()));
                 }
 
-                var sql = _fkRepositoryCompany.Include()
-                .Where(expProducts)
-                .Select(p => new CompanyDTO
-                {
-                    Id = p.Id,
-                    BrandName = p.BrandName,
-                    OfficialName = p.OfficialName,
-                    ShortDescription = p.ShortDescription,
-                    DetailDescription = p.DetailDescription,
-                    TaxOffice = p.TaxOffice,
-                    TaxNo = p.TaxNo,
-                    CompanyTypeId = p.CompanyTypeId,
-                    CompanyTypeName = p.CompanyType.TypeName, 
-                    OfficialAddress = p.OfficialAddress,
-                    OfficialCityId = p.OfficialCityId,
-                    OfficialCountryId = p.OfficialCountryId,
-                    OfficialCountyId = p.OfficialCountyId,
-                    MapAddress = p.MapAddress,
-                    MapCountryId = p.MapCountryId,
-                    MapCityId = p.MapCityId,
-                    MapCountyId = p.MapCountyId,
-                    MapX = p.MapX,
-                    MapY = p.MapY,
-                    Email = p.Email,
-                    Phone = p.Phone,
-                    Mobile = p.Mobile,
-                    YearFounded = p.YearFounded,
-                    Logo = p.Logo,
-                    Attachment = p.Attachment,
-                    Facebook = p.Facebook,
-                    Instagram = p.Instagram,
-                    Tiktok = p.Tiktok,
-                    Youtube = p.Youtube,
-                    Whatsapp = p.Whatsapp,
-                    Website = p.Website,
-                    AdminNotes = p.AdminNotes,
-                    CreatedBy = p.CreatedBy,
-                    LastUpdatedBy = p.LastUpdatedBy,
-                    CreateDate = p.CreateDate,
-                    LastUpdateDate = p.LastUpdateDate,
-                    LastIP = p.LastIP,
-                    Status = p.Status,
-                    /**/
+                //var sql = _fkRepositoryCompany.Include()
+                //.Where(expProducts)
+                //.Select(p => new CompanyDTO
+                //{
+                //    Id = p.Id,
+                //    BrandName = p.BrandName,
+                //    OfficialName = p.OfficialName,
+                //    ShortDescription = p.ShortDescription,
+                //    DetailDescription = p.DetailDescription,
+                //    TaxOffice = p.TaxOffice,
+                //    TaxNo = p.TaxNo,
+                //    CompanyTypeId = p.CompanyTypeId,
+                //    CompanyTypeName = p.CompanyType.TypeName, 
+                //    OfficialAddress = p.OfficialAddress,
+                //    OfficialCityId = p.OfficialCityId,
+                //    OfficialCountryId = p.OfficialCountryId,
+                //    OfficialCountyId = p.OfficialCountyId,
+                //    MapAddress = p.MapAddress,
+                //    MapCountryId = p.MapCountryId,
+                //    MapCityId = p.MapCityId,
+                //    MapCountyId = p.MapCountyId,
+                //    MapX = p.MapX,
+                //    MapY = p.MapY,
+                //    Email = p.Email,
+                //    Phone = p.Phone,
+                //    Mobile = p.Mobile,
+                //    YearFounded = p.YearFounded,
+                //    Logo = p.Logo,
+                //    Attachment = p.Attachment,
+                //    Facebook = p.Facebook,
+                //    Instagram = p.Instagram,
+                //    Tiktok = p.Tiktok,
+                //    Youtube = p.Youtube,
+                //    Whatsapp = p.Whatsapp,
+                //    Website = p.Website,
+                //    AdminNotes = p.AdminNotes,
+                //    CreatedBy = p.CreatedBy,
+                //    LastUpdatedBy = p.LastUpdatedBy,
+                //    CreateDate = p.CreateDate,
+                //    LastUpdateDate = p.LastUpdateDate,
+                //    LastIP = p.LastIP,
+                //    Status = p.Status,
+                //    /**/
 
-                }).AsQueryable();
+                //}).AsQueryable();
+
+                var sql2 = from company in _fkRepositoryCompany.Entities
+                           .Where(expProducts)
+                           from OfficialCountry in _fkRepositoryCountry.Entities
+                               .Where(c => c.Id == company.OfficialCountryId).DefaultIfEmpty()
+                           from OfficialCity in _fkRepositoryCity.Entities
+                               .Where(c => c.Id == company.OfficialCityId).DefaultIfEmpty()
+                           from OfficialCounty in _fkRepositoryCounty.Entities
+                           .Where(c => c.Id == company.OfficialCountyId).DefaultIfEmpty()
+                           from MapCountry in _fkRepositoryCountry.Entities
+                               .Where(c => c.Id == company.MapCountryId).DefaultIfEmpty()
+                           from MapCity in _fkRepositoryCity.Entities
+                           .Where(c => c.Id == company.MapCityId).DefaultIfEmpty()
+                           from MapCounty in _fkRepositoryCountry.Entities
+                               .Where(c => c.Id == company.MapCountyId).DefaultIfEmpty()
+                           select new CompanyDTO
+                           {
+                               Id = company.Id,
+                               BrandName = company.BrandName,
+                               OfficialName = company.OfficialName,
+                               ShortDescription = company.ShortDescription,
+                               DetailDescription = company.DetailDescription,
+                               TaxOffice = company.TaxOffice,
+                               TaxNo = company.TaxNo,
+                               CompanyTypeId = company.CompanyTypeId,
+                               CompanyTypeName = company.CompanyType.TypeName,
+
+                               OfficialAddress = company.OfficialAddress,
+                               OfficialCityId = company.OfficialCityId,
+                               OfficialCountryId = company.OfficialCountryId,
+                               OfficialCountyId = company.OfficialCountyId,
+                               MapAddress = company.MapAddress,
+                               MapCountryId = company.MapCountryId,
+                               MapCityId = company.MapCityId,
+                               MapCountyId = company.MapCountyId,
+
+                               OfficialCountryName = OfficialCountry.Name,
+                               OfficialCityName = OfficialCity.Name,
+                               OfficialCountyName = OfficialCounty.Name,
+                               MapCountryName = MapCountry.Name,
+                               MapCityName = MapCity.Name,
+                               MapCountyName = MapCounty.Name,
+
+                               MapX = company.MapX,
+                               MapY = company.MapY,
+                               Email = company.Email,
+                               Phone = company.Phone,
+                               Mobile = company.Mobile,
+                               YearFounded = company.YearFounded,
+                               Logo = company.Logo,
+                               Attachment = company.Attachment,
+                               Facebook = company.Facebook,
+                               Instagram = company.Instagram,
+                               Tiktok = company.Tiktok,
+                               Youtube = company.Youtube,
+                               Whatsapp = company.Whatsapp,
+                               Website = company.Website,
+                               AdminNotes = company.AdminNotes,
+                               CreatedBy = company.CreatedBy,
+                               LastUpdatedBy = company.LastUpdatedBy,
+                               CreateDate = company.CreateDate,
+                               LastUpdateDate = company.LastUpdateDate,
+                               LastIP = company.LastIP,
+                               Status = company.Status,
+                           };
+                var sql = sql2.AsQueryable();
 
                 var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
                 var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
@@ -425,6 +491,29 @@ namespace DFN2023.Business
             }
         }
 
+        public List<CompanyTypeDTO> getCompanyTypeList(int lang)
+        {
+            var list = _mapper.Map<List<CompanyTypeDTO>>(_fkRepositoryCompanyType.Entities.Where(p => p.Status == 1).ToList());
+            return list;
+        }
+
+        public List<CountryDTO> getCountryList(int lang)
+        {
+            var list = _mapper.Map<List<CountryDTO>>(_fkRepositoryCountry.Entities.Where(p => p.Status == 1).ToList());
+            return list;
+        }
+        public List<CityDTO> getCityList(int lang)
+        {
+            var list = _mapper.Map<List<CityDTO>>(_fkRepositoryCity.Entities.Where(p => p.Status == 1).ToList());
+            return list;
+        }
+
+        public List<CountyDTO> getCountyList(int lang)
+        {
+            var list = _mapper.Map<List<CountyDTO>>(_fkRepositoryCounty.Entities.Where(p => p.Status == 1).ToList());
+            return list;
+        }
+
         public DtResult<CompanyTypeDTO> getCompanyType(DtParameters dtParameters, int lang)
         {
             try
@@ -437,7 +526,7 @@ namespace DFN2023.Business
                 var searchBy = dtParameters.Search?.Value;
                 if (!string.IsNullOrEmpty(searchBy))
                 {
-                    expProducts = expProducts.And(r => r.TypeName!= null && r.TypeName.ToUpper().Contains(searchBy.ToUpper()));
+                    expProducts = expProducts.And(r => r.TypeName != null && r.TypeName.ToUpper().Contains(searchBy.ToUpper()));
                 }
 
                 var sql = _fkRepositoryCompanyType.Include()
@@ -1052,26 +1141,53 @@ namespace DFN2023.Business
                             );
                 }
 
-                var sql = _fkRepositoryMessage.Include()
-                .Where(expProducts)
-                .Select(p => new MessageDTO
-                {
-                    Id = p.Id,
+                //var sql = _fkRepositoryMessage.Include()
+                //.Where(expProducts)
+                //.Select(p => new MessageDTO
+                //{
+                //    Id = p.Id,
 
-                    FromUser = p.FromUser,
-                    ToUser = p.ToUser,
+                //    FromUser = p.FromUser,
+                //    ToUser = p.ToUser,
 
-                    FromRolId = p.FromRolId,
-                    MessageContent = p.MessageContent,
-                    CreateDate = p.CreateDate,
-                    LastIP = p.LastIP,
-                    Status = p.Status,
-                    UserShow = p.UserShow,
-                    CompanyShow = p.CompanyShow,
+                //    FromRolId = p.FromRolId,
+                //    MessageContent = p.MessageContent,
+                //    CreateDate = p.CreateDate,
+                //    LastIP = p.LastIP,
+                //    Status = p.Status,
+                //    UserShow = p.UserShow,
+                //    CompanyShow = p.CompanyShow,
 
 
 
-                }).AsQueryable();
+                //}).AsQueryable();
+
+                var sql2 = from messages in _fkRepositoryMessage.Entities
+                           .Where(expProducts)
+                           from fromUser in _fkRepositoryUser.Entities
+                               .Where(u => u.Id == messages.FromUser).DefaultIfEmpty()
+                           from toUser in _fkRepositoryUser.Entities
+                               .Where(u => u.Id == messages.ToUser).DefaultIfEmpty()
+                           select new MessageDTO
+                           {
+                               Id = messages.Id,
+
+                               FromUser = messages.FromUser,
+                               ToUser = messages.ToUser,
+
+                               UserFrom = fromUser.Name,
+                               UserTo = toUser.Name,
+
+                               FromRolId = messages.FromRolId,
+                               MessageContent = messages.MessageContent,
+                               CreateDate = messages.CreateDate,
+                               LastIP = messages.LastIP,
+                               Status = messages.Status,
+                               UserShow = messages.UserShow,
+                               CompanyShow = messages.CompanyShow,
+                           };
+                var sql = sql2.AsQueryable();
+
 
                 //var sql = from fu in _fkRepositoryUser.Entities
                 //          join m in _fkRepositoryMessage.Entities
@@ -1141,7 +1257,7 @@ namespace DFN2023.Business
                     LastIP = p.LastIP,
                     Status = p.Status,
                     LangId = p.LangId,
-                    
+
                     /**/
 
                 }).AsQueryable();

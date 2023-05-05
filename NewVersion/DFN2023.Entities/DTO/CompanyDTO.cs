@@ -48,6 +48,14 @@ namespace DFN2023.Entities.DTO
 
 
 
+        public string? OfficialCountryName { get; set; }
+        public string? OfficialCityName { get; set; }
+        public string? OfficialCountyName { get; set; }
+        public string? MapCountryName { get; set; }
+        public string? MapCityName { get; set; }
+        public string? MapCountyName { get; set; }
+
+
         public string? CompanyTypeName { get; set; }
 
     }

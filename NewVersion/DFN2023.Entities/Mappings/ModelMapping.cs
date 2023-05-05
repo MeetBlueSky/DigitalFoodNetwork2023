@@ -25,6 +25,16 @@ namespace DFN2023.Entities.Mappings
             CreateMap<Company, CompanyDTO>();
             CreateMap<CompanyDTO, Company>();
 
+            CreateMap<CompanyType, CompanyTypeDTO>();
+            CreateMap<CompanyTypeDTO, CompanyType>();
+
+            CreateMap<Country, CountryDTO>();
+            CreateMap<CountryDTO, Country>();
+            CreateMap<City, CityDTO>();
+            CreateMap<CityDTO, City>();
+            CreateMap<County, CountyDTO>();
+            CreateMap<CountyDTO, Country>();
+
             CreateMap<ProductBase, ProductBaseDTO>();
             CreateMap<ProductBaseDTO, ProductBase>();
 

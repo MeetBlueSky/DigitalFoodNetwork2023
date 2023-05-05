@@ -13,13 +13,13 @@ var KTDatatablesDataSourceAjaxServer = function () {
 			dom: `<'row'<'col-sm-6 text-left'f><'col-sm-6 text-right'B>>
 			<'row'<'col-sm-12'tr>>
 			<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-			buttons: [
-				'print',
-				'copyHtml5',
-				'excelHtml5',
-				'csvHtml5',
-				'pdfHtml5',
-			],
+			//buttons: [
+			//	'print',
+			//	'copyHtml5',
+			//	'excelHtml5',
+			//	'csvHtml5',
+			//	'pdfHtml5',
+			//],
 			ajax: {
 
 				url: hst,
@@ -33,8 +33,8 @@ var KTDatatablesDataSourceAjaxServer = function () {
 			columns: [
 				{ data: 'Id' },
 				{ data: 'Id' },
-				{ data: 'FromUser' },
-				{ data: 'ToUser' },
+				{ data: 'UserFrom' },
+				{ data: 'UserTo' },
 				{ data: 'FromRolId' },
 				{ data: 'MessageContent' },
 				//{ data: 'FromUser' },

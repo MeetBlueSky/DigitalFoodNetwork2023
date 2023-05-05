@@ -1,93 +1,103 @@
 ﻿"use strict";
 var KTDatatablesDataSourceAjaxServer = function () {
 
-	var initTable1 = function () {
-		var table = $('#kt_datatable');
+    var initTable1 = function () {
+        var table = $('#kt_datatable');
 
-		// begin first table
-		table.DataTable({
-			responsive: false,
-			searchDelay: 500,
-			processing: true,
-			serverSide: true,
-			ajax: {
+        // begin first table
+        table.DataTable({
+            responsive: false,
+            searchDelay: 500,
+            processing: true,
+            serverSide: true,
+            ajax: {
 
-				url: hst,
-				type: 'POST',
-				contentType: "application/json",
-				dataType: "json",
-				data: function (d) {
-					return JSON.stringify(d);
-				}
-			},
-			columns: [
-				{ data: 'Id' },
-				{ data: 'Id' },
-				{ data: 'OfficialName' },
-				{ data: 'ShortDescription' },
-				{ data: 'DetailDescription' },
-				{ data: 'Status' },
-				//{ data: 'LangId' },
-			],
-			columnDefs: [
-				{
-					targets: 0,
-					title: 'Actions',
-					orderable: false,
-					render: function (data, type, full, meta) {
-						return '<div style="display: flex;">' +
+                url: hst,
+                type: 'POST',
+                contentType: "application/json",
+                dataType: "json",
+                data: function (d) {
+                    return JSON.stringify(d);
+                }
+            },
+            columns: [
+                { data: 'Id' },
+                { data: 'Id' },
+                { data: 'OfficialName' },
+                /*{ data: null },*/
+                { data: 'OfficialCountryName' },
+                { data: 'ShortDescription' },
+                { data: 'DetailDescription' },
+                { data: 'Status' },
+                //{ data: 'LangId' },
+            ],
+            columnDefs: [
+                {
+                    targets: 0,
+                    title: 'Actions',
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<div style="display: flex;">' +
 
-							'<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" onclick="kategoriDuzenle(' + data + ')"><i class="la la-edit"></i></a>' +
-							'<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" onclick="kategoriSil(' + data + ')"><i class="la la-trash"></i></a>' +
+                            '<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" onclick="kategoriDuzenle(' + data + ')"><i class="la la-edit"></i></a>' +
+                            '<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" onclick="kategoriSil(' + data + ')"><i class="la la-trash"></i></a>' +
 
-							'<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown"><i class="la la-cog"></i></a>' +
-							'<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">' +
-							'<ul class="nav nav-hoverable flex-column">' +
-							
-							'<li class="nav-item"><a onclick="urunResimleri(' + data + ')" class="nav-link" href="#"><i class="nav-icon la la-leaf"></i><span class="nav-text">Tekne Resimleri</span></a></li>' +
-							
-							
-							'</ul>' +
-							'</div>' +
+                            '<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown"><i class="la la-cog"></i></a>' +
+                            '<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">' +
+                            '<ul class="nav nav-hoverable flex-column">' +
 
-							'</div> ' +
-							' ' +
-							' ';
-					},
-				},
+                            '<li class="nav-item"><a onclick="urunResimleri(' + data + ')" class="nav-link" href="#"><i class="nav-icon la la-leaf"></i><span class="nav-text">Şirket Resimleri</span></a></li>' +
 
-				{
-					targets: 5,
-						render: function (data, type, full, meta) {
-						if (data)
-							return '<i class="flaticon2-checkmark text-success"></i>';
-						return '<i class="flaticon2-delete text-danger"></i>';
-					},
-				},
-				//{
-				//	targets: 6,
-				//	render: function (data, type, full, meta) {
-				//		return dilne(data);
-				//	},
-				//},
 
-			],
-		});
-	};
+                            '</ul>' +
+                            '</div>' +
 
-	return {
+                            '</div> ' +
+                            ' ' +
+                            ' ';
+                    },
+                },
 
-		//main function to initiate the module
-		init: function () {
-			initTable1();
-		},
+                //{
+                //    targets: 3,
+                //    data: "numero",
+                //    render: function (data, type, row, meta) {
+                //        return "Data 1: " + row.data().OfficialCountryName + ". Data 2: " + row.data().OfficialCityName;
+                //    }
+                //},
 
-	};
+                {
+                    targets: 6,
+                    render: function (data, type, full, meta) {
+                        if (data)
+                            return '<i class="flaticon2-checkmark text-success"></i>';
+                        return '<i class="flaticon2-delete text-danger"></i>';
+                    },
+                },
+                //{
+                //	targets: 6,
+                //	render: function (data, type, full, meta) {
+                //		return dilne(data);
+                //	},
+                //},
+
+            ],
+        });
+    };
+
+    return {
+
+        //main function to initiate the module
+        init: function () {
+            initTable1();
+        },
+
+    };
 
 }();
 
 jQuery(document).ready(function () {
-	KTDatatablesDataSourceAjaxServer.init();
+    KTDatatablesDataSourceAjaxServer.init();
 });
 
 
@@ -95,22 +105,51 @@ var update = false;
 
 function kayitModalOpen() {
 
-	$('#exampleModalSizeLg').modal('show');
-	$(':input').val('');
-	$('#p_dil').val(lng).trigger('change');
+    $('#exampleModalSizeLg').modal('show');
+    $(':input').val('');
+    $("#p_Status").prop('checked', true);
 
-	update = false;
+    update = false;
 }
 
 var secilendeger;
 function kategoriDuzenle(pid) {
-	update = true;
-	$('#exampleModalSizeLg').modal('show');
-	secilendeger = $('#kt_datatable').DataTable().data().filter(x => x.Id == pid)[0];
+    update = true;
+    $('#exampleModalSizeLg').modal('show');
+    secilendeger = $('#kt_datatable').DataTable().data().filter(x => x.Id == pid)[0];
 
-	$('#p_Name').val(secilendeger.Name); 
+    $('#p_BrandName').val(secilendeger.BrandName);
+    $('#p_OfficialName').val(secilendeger.OfficialName);
+    $('#p_ShortDescription').val(secilendeger.ShortDescription);
+    $('#p_DetailDescription').val(secilendeger.DetailDescription);
+    $('#p_TaxOffice').val(secilendeger.TaxOffice);
+    $('#p_TaxNo').val(secilendeger.TaxNo);
+    $('#p_CompanyTypeId').val(secilendeger.CompanyTypeId);
+    $('#p_OfficialAddress').val(secilendeger.OfficialAddress);
+    $('#p_OfficialCountryId').val(secilendeger.OfficialCountryId);
+    $('#p_OfficialCityId').val(secilendeger.OfficialCityId);
+    $('#p_OfficialCountyId').val(secilendeger.OfficialCountyId);
+    $('#p_MapAddress').val(secilendeger.MapAddress);
+    $('#p_MapCountryId').val(secilendeger.MapCountryId);
+    $('#p_MapCityId').val(secilendeger.MapCityId);
+    $('#p_MapCountyId').val(secilendeger.MapCountyId);
+    $('#p_MapX').val(secilendeger.MapX);
+    $('#p_MapY').val(secilendeger.MapY);
+    $('#p_Email').val(secilendeger.Email);
+    $('#p_Phone').val(secilendeger.Phone);
+    $('#p_Mobile').val(secilendeger.Mobile);
+    $('#p_YearFounded').val(secilendeger.YearFounded);
+    $('#p_Logo').val(secilendeger.Logo);
+    $('#p_Attachment').val(secilendeger.Attachment);
+    $('#p_Facebook').val(secilendeger.facebook);
+    $('#p_Instagram').val(secilendeger.Instagram);
+    $('#p_Tiktok').val(secilendeger.Tiktok);
+    $('#p_Youtube').val(secilendeger.Youtube);
+    $('#p_Whatsapp').val(secilendeger.Whatsapp);
+    $('#p_Website').val(secilendeger.Website);
+    $('#p_AdminNotes').val(secilendeger.AdminNotes);
 
-	$("#p_durum").prop('checked', secilendeger.Status == 1 ? true : false);
+    $("#p_Status").prop('checked', secilendeger.Status == 1 ? true : false);
 
 }
 
@@ -118,147 +157,203 @@ function kategoriDuzenle(pid) {
 
 function seriKaydet() {
 
-	$('#exampleModalSizeLg').pleaseWait();
-	var product = {
-		'Name': $('#p_Name').val(), 
-
-		'Status': $('#p_durum').is(':checked') == true ? 1 : 0,
-
-
-	};
-	var dtt;
-	if (update) {
-
-		secilendeger.Name = product.Name; 
-
-		secilendeger.Status = product.Status;
-
-
-		dtt = { cat: secilendeger };
-	} else {
-		dtt = { cat: product };
-	}
-
-
-	$.ajax({
-		data: dtt,
-		dataType: 'json',
-		cache: false,
-		type: "POST",
-		url: '/' + lngg + '/Category/CreatedKategori',
-		success: function (data) {
-			console.log(data.hata);
-			if (!data.hata) {
-
-				swal.fire({
-					text: data.mesaj,
-					icon: "success",
-					buttonsStyling: false,
-					confirmButtonText: "Ok",
-					customClass: {
-						confirmButton: "btn font-weight-bold btn-light-primary"
-					}
-				}).then(function () {
-					$('#exampleModalSizeLg').modal('hide');
-					$('#kt_datatable').DataTable().ajax.reload();
-				});
-			}
-			else {
-				swal.fire({
-					text: data.mesaj,
-					icon: "error",
-					buttonsStyling: false,
-					confirmButtonText: "Ok",
-					customClass: {
-						confirmButton: "btn font-weight-bold btn-light-primary"
-					}
-				}).then(function () {
-
-				});
-			}
+    $('#exampleModalSizeLg').pleaseWait();
+    var product = {
+        'BrandName': $('#p_BrandName').val(),
+        'OfficialName': $('#p_OfficialName').val(),
+        'ShortDescription': $('#p_ShortDescription').val(),
+        'DetailDescription': $('#p_DetailDescription').val(),
+        'TaxOffice': $('#p_TaxOffice').val(),
+        'TaxNo': $('#p_TaxNo').val(),
+        'CompanyTypeId': $('#p_CompanyTypeId').val(),
+        'OfficialAddress': $('#p_OfficialAddress').val(),
+        'OfficialCountryId': $('#p_OfficialCountryId').val(),
+        'OfficialCityId': $('#p_OfficialCityId').val(),
+        'OfficialCountyId': $('#p_OfficialCountyId').val(),
+        'MapAddress': $('#p_MapAddress').val(),
+        'MapCountryId': $('#p_MapCountryId').val(),
+        'MapCityId': $('#p_MapCityId').val(),
+        'MapCountyId': $('#p_MapCountyId').val(),
+        'MapX': $('#p_MapX').val(),
+        'MapY': $('#p_MapY').val(),
+        'Email': $('#p_Email').val(),
+        'Phone': $('#p_Phone').val(),
+        'Mobile': $('#p_Mobile').val(),
+        'YearFounded': $('#p_YearFounded').val(),
+        'Logo': $('#p_Logo').val(),
+        'Attachment': $('#p_Attachment').val(),
+        'Facebook': $('#p_Facebook').val(),
+        'Instagram': $('#p_Instagram').val(),
+        'Tiktok': $('#p_Tiktok').val(),
+        'Youtube': $('#p_Youtube').val(),
+        'Whatsapp': $('#p_Whatsapp').val(),
+        'Website': $('#p_Website').val(),
+        'AdminNotes': $('#p_AdminNotes').val(),
+        'Status': $('#p_Status').is(':checked') == true ? 1 : 0,
 
 
-		},
-		complete: function (data2) {
+    };
+    var dtt;
+    if (update) {
 
-			$('#exampleModalSizeLg').pleaseWait('stop');
+        secilendeger.BrandName = product.BrandName ;
+        secilendeger.OfficialName = product.OfficialName ;
+        secilendeger.ShortDescription = product.ShortDescription ;
+        secilendeger.DetailDescription = product.DetailDescription ;
+        secilendeger.TaxOffice = product.TaxOffice ;
+        secilendeger.TaxNo = product.TaxNo ;
+        secilendeger.CompanyTypeId = product.CompanyTypeId ;
+        secilendeger.OfficialAddress = product.OfficialAddress ;
+        secilendeger.OfficialCountryId = product.OfficialCountryId ;
+        secilendeger.OfficialCityId = product.OfficialCityId ;
+        secilendeger.OfficialCountyId = product.OfficialCountyId ;
+        secilendeger.MapAddress = product.MapAddress ;
+        secilendeger.MapCountryId = product.MapCountryId ;
+        secilendeger.MapCityId = product.MapCityId ;
+        secilendeger.MapCountyId = product.MapCountyId ;
+        secilendeger.MapX = product.MapX ;
+        secilendeger.MapY = product.MapY ;
+        secilendeger.Email = product.Email ;
+        secilendeger.Phone = product.Phone ;
+        secilendeger.Mobile = product.Mobile ;
+        secilendeger.YearFounded = product.YearFounded ;
+        secilendeger.Logo = product.Logo ;
+        secilendeger.Attachment = product.Attachment ;
+        secilendeger.facebook = product.facebook ;
+        secilendeger.Instagram = product.Instagram ;
+        ecilendeger.Tiktok = product.Tiktok ;
+        secilendeger.Youtube = product.Youtube ;
+        secilendeger.Whatsapp = product.Whatsapp ;
+        secilendeger.Website = product.Website ;
+        secilendeger.AdminNotes = product.AdminNotes ;
+        secilendeger.Status = product.Status;
 
-		},
-		error: function (data2) {
 
-		}
-	});
+        dtt = { ct: secilendeger };
+    } else {
+        dtt = { ct: product };
+    }
+
+
+    $.ajax({
+        data: dtt,
+        dataType: 'json',
+        cache: false,
+        type: "POST",
+        url: '/' + lngg + '/Company/CreatedCompany',
+        success: function (data) {
+            console.log(data.hata);
+            if (!data.hata) {
+
+                swal.fire({
+                    text: data.mesaj,
+                    icon: "success",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok",
+                    customClass: {
+                        confirmButton: "btn font-weight-bold btn-light-primary"
+                    }
+                }).then(function () {
+                    $('#exampleModalSizeLg').modal('hide');
+                    $('#kt_datatable').DataTable().ajax.reload();
+                });
+            }
+            else {
+                swal.fire({
+                    text: data.mesaj,
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok",
+                    customClass: {
+                        confirmButton: "btn font-weight-bold btn-light-primary"
+                    }
+                }).then(function () {
+
+                });
+            }
+
+
+        },
+        complete: function (data2) {
+
+            $('#exampleModalSizeLg').pleaseWait('stop');
+
+        },
+        error: function (data2) {
+
+        }
+    });
 }
 
 
 
 function kategoriSil(pid) {
 
-	swal.fire({
-		text: "Id= " + pid + "  seriyi Silmek istiyor musunuz?",
-		icon: "warning",
-		buttonsStyling: false,
-		confirmButtonText: "Ok",
-		showCloseButton: true,
-		showCancelButton: true,
-		customClass: {
-			confirmButton: "btn font-weight-bold btn-light-primary",
-			cancelButton: "btn font-weight-bold btn-light-warning"
-		}
-	}).then(function (data) {
+    swal.fire({
+        text: "Id= " + pid + "  şirketi Silmek istiyor musunuz?",
+        icon: "warning",
+        buttonsStyling: false,
+        confirmButtonText: "Ok",
+        showCloseButton: true,
+        showCancelButton: true,
+        customClass: {
+            confirmButton: "btn font-weight-bold btn-light-primary",
+            cancelButton: "btn font-weight-bold btn-light-warning"
+        }
+    }).then(function (data) {
 
-		if (data.isConfirmed) {
+        if (data.isConfirmed) {
 
-			$('#kt_datatable').pleaseWait();
-			$.ajax({
-				data: { cat: { Id: pid } },
-				dataType: 'json',
-				cache: false,
-				type: "POST",
-				url: '/' + lngg + '/Category/DeleteKategori',
-				success: function (data) {
+            $('#kt_datatable').pleaseWait();
+            $.ajax({
+                data: { ct: { Id: pid } },
+                dataType: 'json',
+                cache: false,
+                type: "POST",
+                url: '/' + lngg + '/Company/DeleteCompany',
+                success: function (data) {
 
-					if (!data.hata) {
+                    if (!data.hata) {
 
-						swal.fire({
-							text: data.mesaj,
-							icon: "success",
-							buttonsStyling: false,
-							confirmButtonText: "Ok",
-							customClass: {
-								confirmButton: "btn font-weight-bold btn-light-primary"
-							}
-						}).then(function () {
-							$('#kt_datatable').DataTable().ajax.reload();
-						});
-					}
-					else {
-						swal.fire({
-							text: data.mesaj,
-							icon: "error",
-							buttonsStyling: false,
-							confirmButtonText: "Ok",
-							customClass: {
-								confirmButton: "btn font-weight-bold btn-light-primary"
-							}
-						}).then(function () {
+                        swal.fire({
+                            text: data.mesaj,
+                            icon: "success",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light-primary"
+                            }
+                        }).then(function () {
+                            $('#kt_datatable').DataTable().ajax.reload();
+                        });
+                    }
+                    else {
+                        swal.fire({
+                            text: data.mesaj,
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light-primary"
+                            }
+                        }).then(function () {
 
-						});
-					}
+                        });
+                    }
 
 
-				},
-				complete: function (data2) {
+                },
+                complete: function (data2) {
 
-					$('#kt_datatable').pleaseWait('stop');
+                    $('#kt_datatable').pleaseWait('stop');
 
-				},
-				error: function (data2) {
+                },
+                error: function (data2) {
 
-				}
-			});
-		}
-	});
+                }
+            });
+        }
+    });
 }
 
 

@@ -36,10 +36,14 @@ namespace DFN2023.Admin.Controllers
 
             ViewData["website"] = anadizin;
             int lang = getLang(CultureInfo.CurrentCulture.Name);
-            WepPageModel spm = new WepPageModel();
-            spm.lang = lang;
-            spm.language = CultureInfo.CurrentCulture.Name.ToLower();
-            return View(spm);
+            CompanyPageModel cpm = new CompanyPageModel();
+            cpm.CompanyType = _adminService.getCompanyTypeList(lang);
+            cpm.OfficialCountry = cpm.MapCountry = _adminService.getCountryList(lang);
+            cpm.OfficialCity = cpm.MapCity = _adminService.getCityList(lang);
+            cpm.OfficialCounty = cpm.MapCounty = _adminService.getCountyList(lang);
+            cpm.lang = lang;
+            cpm.language = CultureInfo.CurrentCulture.Name.ToLower();
+            return View(cpm);
         }
 
         [HttpPost]

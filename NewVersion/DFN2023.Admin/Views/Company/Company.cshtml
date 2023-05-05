@@ -1,4 +1,4 @@
-﻿@model DFN2023.Admin.Models.WepPageModel
+﻿@model DFN2023.Admin.Models.CompanyPageModel
 @{
     ViewData["Title"] = "Category";
 }
@@ -40,6 +40,7 @@
                             <th>Ayarlar</th>
                             <th>ID</th>
                             <th>Adı</th>
+                            <th>Adres</th>
                             <th>Açıklama</th>
                             <th>Uzun açıkl.</th>
                             <th>Durum</th>
@@ -69,10 +70,267 @@
 
                 <div class="form-group">
                     <label>
-                        Adı
+                        Marka Adı
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="text" class="form-control" id="p_Name">
+                    <input type="text" class="form-control" id="p_BrandName">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Resmi Adı
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="p_OfficialName">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Kısa Açıklama
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="p_ShortDescription">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleTextarea">
+                        Detaylı Açıklama
+                        <span class="text-danger">*</span>
+                    </label>
+                    <textarea class="form-control" id="p_DetailDescription" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Vergi Dairesi
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="p_TaxOffice">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Vergi Numarası
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="p_TaxNo">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Şirket Tipi
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select id="p_CompanyTypeId" class="form-control">
+                        <option value="0">Tip Seçiniz..</option>
+
+                        @for (int i = 0; i < Model.CompanyType.Count; i++)
+                        {
+                            <option value="@Model.CompanyType[i].Id">@Model.CompanyType[i].TypeName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Resmi Adres
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="p_OfficialAddress">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Resmi Ülke
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select id="p_OfficialCountryId" class="form-control">
+                        <option value="0">Ülke Seçiniz..</option>
+
+                        @for (int i = 0; i < Model.OfficialCountry.Count; i++)
+                        {
+                            <option value="@Model.OfficialCountry[i].Id">@Model.OfficialCountry[i].Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Resmi Şehir
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select id="p_OfficialCityId" class="form-control">
+                        <option value="0">Şehir Seçiniz..</option>
+
+                        @for (int i = 0; i < Model.OfficialCity.Count; i++)
+                        {
+                            <option value="@Model.OfficialCity[i].Id">@Model.OfficialCity[i].Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Resmi İlçe
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select id="p_OfficialCountyId" class="form-control">
+                        <option value="0">İlçe Seçiniz..</option>
+
+                        @for (int i = 0; i < Model.OfficialCounty.Count; i++)
+                        {
+                            <option value="@Model.OfficialCounty[i].Id">@Model.OfficialCounty[i].Name</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Haritadaki Adres
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="p_OfficialAddress">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Haritadaki Ülke
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select id="p_MapCountryId" class="form-control">
+                        <option value="0">Ülke Seçiniz..</option>
+
+                        @for (int i = 0; i < Model.MapCountry.Count; i++)
+                        {
+                            <option value="@Model.MapCountry[i].Id">@Model.MapCountry[i].Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Haritadaki Şehir
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select id="p_MapCityId" class="form-control">
+                        <option value="0">Şehir Seçiniz..</option>
+
+                        @for (int i = 0; i < Model.MapCity.Count; i++)
+                        {
+                            <option value="@Model.MapCity[i].Id">@Model.MapCity[i].Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Haritadaki İlçe
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select id="p_MapCountyId" class="form-control">
+                        <option value="0">İlçe Seçiniz..</option>
+
+                        @for (int i = 0; i < Model.MapCounty.Count; i++)
+                        {
+                            <option value="@Model.MapCounty[i].Id">@Model.MapCounty[i].Name</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Koordinat X
+                    </label>
+                    <input type="text" class="form-control" id="p_MapX">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Koordinat Y
+                    </label>
+                    <input type="text" class="form-control" id="p_MapY">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Email
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="p_Email">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Telefon
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="p_Phone">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Mobil
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="p_Mobile">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Kuruluş Yılı
+                    </label>
+                    <input type="text" class="form-control" id="p_YearFounded">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Logo
+                    </label>
+                    <input type="text" class="form-control" id="p_Logo">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Ek
+                    </label>
+                    <input type="text" class="form-control" id="p_Attachment">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Facebook
+                    </label>
+                    <input type="text" class="form-control" id="p_Facebook">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Instagram
+                    </label>
+                    <input type="text" class="form-control" id="p_Instagram">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Tiktok
+                    </label>
+                    <input type="text" class="form-control" id="p_Tiktok">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Youtube
+                    </label>
+                    <input type="text" class="form-control" id="p_Youtube">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Whatsapp
+                    </label>
+                    <input type="text" class="form-control" id="p_Whatsapp">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Web Sitesi
+                    </label>
+                    <input type="text" class="form-control" id="p_Website">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Admin Notları
+                    </label>
+                    <input type="text" class="form-control" id="p_AdminNotes">
                 </div>
 
 

@@ -22,5 +22,9 @@ namespace DFN2023.Entities.DTO
         public int Status { get; set; }
         public bool? UserShow { get; set; }
         public bool? CompanyShow { get; set; }
+
+
+        public string? UserFrom { get; set; }
+        public string? UserTo { get; set; }
     }
 }
