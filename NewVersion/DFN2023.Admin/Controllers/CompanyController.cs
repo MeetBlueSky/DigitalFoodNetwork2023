@@ -16,6 +16,7 @@ using DFN2023.Entities.Models;
 using System.Net.Http.Headers;
 using DFN2023.Admin.Helpers;
 using DFN2023.Entities.DTO;
+using FluentValidation;
 
 namespace DFN2023.Admin.Controllers
 {
@@ -59,18 +60,21 @@ namespace DFN2023.Admin.Controllers
 
         public Task<JsonResult> CreatedCompany(Company ct)
         {
+            
             int lang = getLang(CultureInfo.CurrentCulture.Name);
             //ct.LangId = lang;
+            CompanyValidator vn = new CompanyValidator();
+            ValidationResult result = vn.Validate(ct);
 
             var sonuc = new { hata = true, mesaj = "Error", res = "" };
             try
             {
-
-                if (ct != null)
+                if (result.Errors.Count == 0)
                 {
+                    ct.LastIP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
 
-                    var result = _adminService.createCompany(ct);
-                    if (result != null)
+                    var result2 = _adminService.createCompany(ct);
+                    if (result2 != null)
                     {
 
                         sonuc = new { hata = false, mesaj = "Başarılı", res = "" };
@@ -80,14 +84,18 @@ namespace DFN2023.Admin.Controllers
                         sonuc = new { hata = true, mesaj = "Hata", res = "" };
 
                     }
-
                 }
                 else
                 {
-                    sonuc = new { hata = true, mesaj = "Hata", res = "" };
+                    var s = "";
+                    foreach (var item in result.Errors)
+                    {
+                        s += item.ErrorMessage.ToString() + "</br> ";
 
+                    }
+                    //return Task.FromResult(Json(s));
+                    sonuc = new { hata = true, mesaj = s, res = "" };
                 }
-
 
             }
             catch (Exception e)
@@ -174,20 +182,21 @@ namespace DFN2023.Admin.Controllers
         {
             User usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
 
-
             int lang = getLang(CultureInfo.CurrentCulture.Name);
             //ct.LangId = lang;
+            CompanyTypeValidator vn = new CompanyTypeValidator();
+            ValidationResult result = vn.Validate(ct);
 
             var sonuc = new { hata = true, mesaj = "Error", res = "" };
             try
             {
-                
 
-                if (ct != null)
+                if (result.Errors.Count == 0)
                 {
 
-                    var result = _adminService.createCompanyType(ct);
-                    if (result != null)
+
+                    var result2 = _adminService.createCompanyType(ct);
+                    if (result2 != null)
                     {
 
                         sonuc = new { hata = false, mesaj = "Başarılı", res = "" };
@@ -201,10 +210,15 @@ namespace DFN2023.Admin.Controllers
                 }
                 else
                 {
-                    sonuc = new { hata = true, mesaj = "Hata", res = "" };
+                    var s = "";
+                    foreach (var item in result.Errors)
+                    {
+                        s += item.ErrorMessage.ToString() + "</br> ";
 
+                    }
+                    //return Task.FromResult(Json(s));
+                    sonuc = new { hata = true, mesaj = s, res = "" };
                 }
-
 
             }
             catch (Exception e)

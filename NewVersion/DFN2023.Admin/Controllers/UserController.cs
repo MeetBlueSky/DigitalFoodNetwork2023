@@ -76,7 +76,7 @@ namespace DFN2023.Admin.Controllers
                     var result = _adminService.createUser(usr);
                     if (result != null)
                     {
-
+                        usr.LastIP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
                         sonuc = new { hata = false, mesaj = "Başarılı", res = "" };
                     }
                     else

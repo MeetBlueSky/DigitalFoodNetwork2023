@@ -153,7 +153,7 @@ function companyTypeKaydet() {
 		url: '/' + lngg + '/Company/CreatedCompanyType',
 		success: function (data) {
 			console.log(data.hata);
-			if (!data.hata) {
+			if (data == 'true') {
 
 				swal.fire({
 					text: data.mesaj,
@@ -170,7 +170,7 @@ function companyTypeKaydet() {
 			}
 			else {
 				swal.fire({
-					text: data.mesaj,
+					html: data.mesaj,
 					icon: "error",
 					buttonsStyling: false,
 					confirmButtonText: "Ok",
