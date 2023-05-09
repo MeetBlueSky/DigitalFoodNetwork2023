@@ -29,7 +29,9 @@ namespace DFN2023.Web.Controllers
                 pm.kategoriler = kategorilist;
                 pm.skategoriid = kid;
                 pm.tedarikciadi = ürün;
-				if (pm.user!=null)
+                pm.mapkoor = _websiteService.getCompanyMap();
+
+                if (pm.user!=null)
                 {
                      filtersonuc = _websiteService.getTedarik(kid, ürün, usr.Id);
 
@@ -55,8 +57,6 @@ namespace DFN2023.Web.Controllers
             var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
             PublicModel pm = new PublicModel();
             pm.user = usr;
-            pm.smapkoor = _websiteService.getSelectCompanyMap(id);
-            pm.mapkoor = _websiteService.getCompanyMap();
             return View(pm);
         }
         [HttpPost]

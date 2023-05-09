@@ -32,7 +32,7 @@ namespace DFN2023.Web.Controllers
 
                     if (usr.Count > 0)
                     {
-                        if (usr[0].Role== EnumRol.Tuketici)
+                        if (usr[0].Role== EnumRol.Tuketici || usr[0].Role == EnumRol.Tedarikci)
                         {
                             if (user.Password.Equals(XamarinUtils.SifreCoz(usr[0].Password)))
                             {

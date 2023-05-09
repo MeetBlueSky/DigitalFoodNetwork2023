@@ -11,23 +11,14 @@ namespace DFN2023.Contracts
     {
         List<UserDTO> CheckUser(string uname, string pass);
         List<CategoryDTO> getCategoryList();
-        List<ProductCompanyDTO> getTedarik(int kid, string ürün,int? userid);
+        List<ProductCompanyDTO> getTedarik(int kid, string? ürün,int? userid);
         //getCompanyList
         List<CompanyDTO> getCompanyList();
         List<StaticContentGrupPageDTO> getAnasayfaList();
         bool favMethod(int companyid, int userid, int pid);
-        public CompanyDTO getSelectCompanyMap(int pid);
         public List<CompanyDTO> getCompanyMap();
-        //List<SlaytDTO> getSlaytForHome(int langId);
-
-        //StaticContentGrupPageDTO getStaticGrup(int pid, int lang);
-        //List<StaticContentPageDTO> getStaticContentPageList(int langId, int start, int grupID, int adet);
-        //List<StaticContentPageDTO> getStaticContentPageListMultiple(int langId, int start, int grupID, int grupID2, int adet);
-        //StaticContentPageDTO getStaticPage(int pid, int lang);
-
-        //List<StaticContentGrupPageDTO> getStaticContentPublications();
-        //List<StaticContentPageDTO> getStaticPageListByTempId(int tempID, int langId);
-
-
+        public List<MessageDTO> getMesajList(int userid, int role);
+        List<MessageDTO> getMesajDetay(int userid, int fromid, int rolid);
+        bool mesajYazUser(Message m);
     }
 }

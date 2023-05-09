@@ -41,6 +41,7 @@ namespace DFN2023.Entities.Mappings
             CreateMap<ProductCompany, ProductCompanyDTO>();
             CreateMap<ProductCompanyDTO, ProductCompany>(); 
             CreateMap<StaticContentGrupPage, StaticContentGrupPageDTO>();
+            CreateMap<Message, MessageDTO>();
         }
     }
 }

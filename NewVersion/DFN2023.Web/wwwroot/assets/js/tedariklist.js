@@ -69,26 +69,23 @@ function haritaAc() {
         document.getElementById("harita").style.display = "block";
 
     }
-
+  
 }
 
-
+document.addEventListener("DOMContentLoaded", () => {
+    for (var i = 0; i < maplist.length; i++) {
+        locations = [];
+        locations.push(['<b>Name 1</b><br>Address Line 1<br>Bismarck, ND 58501<br>Phone: 701-555-1234<br><a href="#" >Link<a> of some sort.', parseFloat(maplist[i].MapX), parseFloat(maplist[i].MapY), (i+1)]);
+    }
+});
 var locations = [
-    ['<b>Name 1</b><br>Address Line 1<br>Bismarck, ND 58501<br>Phone: 701-555-1234<br><a href="#" >Link<a> of some sort.', 36.99265338303669, 35.330914331761434, 4],
-    ['<b>Name 2</b><br>Address Line 1<br>Fargo, ND 58103<br>Phone: 701-555-4321<br><a href="#" target="_blank">Link<a> of some sort.', 36.99649231333599, 35.34662134856738, 5]
-    /*
-     * Next point on map
-     *   -Notice how the last number within the brackets incrementally increases from the prior marker
-     *   -Use http://itouchmap.com/latlong.html to get Latitude and Longitude of a specific address
-     *   -Follow the model below:
-     *      ['<b>Name 3</b><br>Address Line 1<br>City, ST Zipcode<br>Phone: ###-###-####<br><a href="#" target="_blank">Link<a> of some sort.', ##.####, -##.####, #]
-     */
+
 ];
 
 var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 9,
     /* Zoom level of your map */
-    center: new google.maps.LatLng(36.99265338303669, 35.330914331761434),
+    center: new google.maps.LatLng(parseFloat(maplist[0].MapX), parseFloat(maplist[0].MapY)),
     /* coordinates for the center of your map */
     mapTypeId: google.maps.MapTypeId.ROADMAP
 });

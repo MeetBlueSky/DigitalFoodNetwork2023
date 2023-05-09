@@ -1,6 +1,6 @@
 ﻿
 function filter() {
-    if ($('#kategoriid').val() > 0 && $('#urunadi').val().length>0) {
+    if ($('#kategoriid').val() > 0) {
         $.ajax({
             data: {
                 kid: $('#kategoriid').val(),

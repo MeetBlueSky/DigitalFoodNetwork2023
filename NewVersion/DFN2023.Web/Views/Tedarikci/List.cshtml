@@ -55,7 +55,7 @@
 				</div>
 	</section>
 	<!-- best-restaurants -->
-	<section class="best-restaurants gap" style="padding: 0px;">
+	<section class="best-restaurants gap">
 		<div class="container">
 			
 	        <a onclick="haritaAc()"  class="button button-2">Harita Görünümü</a>
@@ -78,7 +78,7 @@
 									
 								<a onclick="favEkleCikar(@Model.tedariklist[i].CompanyId,0)"><i class="fa-solid fa-heart"></i> Favorilere Ekle</a>
 								}
-										<a href="#"><i class="fa-solid fa-comment-dots"></i> Mesaj Gönder</a>
+										<a href="@Url.Action("Detay", "Mesaj")/@Model.tedariklist[i].Id"><i class="fa-solid fa-comment-dots"></i> Mesaj Gönder</a>
 								</div>								
 								<p>@Model.tedariklist[i].ShortDesc</p>						
 								<p class="location"><i class="fa-solid fa-location-dot"></i> @Model.tedariklist[i].CountyName, @Model.tedariklist[i].CityName </p>
@@ -91,7 +91,7 @@
 				</div>
 				<div class="column" id="harita" style="display:none">
 					<!-- partial:index.partial.html -->
-				<div id="map" style="height: 400px;width: 900px; position: relative;top: 20px;margin: auto overflow: hidden; background-color: rgb(229, 227, 223);"></div>
+				<div id="map" style="height: 700px;width: 1200px; position: relative;top: 20px;margin: auto; overflow: hidden; background-color: rgb(229, 227, 223);"></div>
 
 				<!-- partial -->
  
@@ -99,7 +99,7 @@
 			</div>
 	</section>
 	<!-- banner -->
-	<section class="banner" data-aos="fade-up"  data-aos-delay="200" data-aos-duration="300" style="margin-bottom: 20px;">
+	<section class="banner" data-aos="fade-up"  data-aos-delay="200" data-aos-duration="300" style="margin-bottom: 20px;padding-top: 10px;">
 		<div class="container">
 			<div class="banner-img" style="background-image: url(https://via.placeholder.com/1400x393);">
 				<div class="banner-logo">
@@ -132,6 +132,8 @@
     var hst = "@Url.Action("filterTedarik", "Home")";
     var hst2 = "@Url.Action("favEkleCikar", "Tedarikci")";
 	var user="@Model.user"
+	var maplist = @Html.Raw(Json.Serialize(@Model.mapkoor));
+
 </script>
 
 	<script src="~/assets/js/tedariklist.js"></script>

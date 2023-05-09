@@ -32,6 +32,7 @@ namespace DFN2023.Business
         IRepository<City> _fkRepositoryCity;
         IRepository<County> _fkRepositoryCounty;
         IRepository<UserUrunler> _fkRepositoryUserUrunler;
+        IRepository<Message> _fkRepositoryMessage;
 
         IMapper _mapper;
 
@@ -49,6 +50,7 @@ namespace DFN2023.Business
             _fkRepositoryCity = _unitOfWork.GetRepostory<City>();
             _fkRepositoryCounty = _unitOfWork.GetRepostory<County>();
             _fkRepositoryUserUrunler = _unitOfWork.GetRepostory<UserUrunler>();
+            _fkRepositoryMessage = _unitOfWork.GetRepostory<Message>();
 
             //_fkRepositoryStaticContentPage = _unitOfWork.GetRepostory<StaticContentPage>();
             //_fkRepositoryStaticContentGrupPage = _unitOfWork.GetRepostory<StaticContentGrupPage>();
@@ -70,12 +72,12 @@ namespace DFN2023.Business
         {
             return _mapper.Map<List<CategoryDTO>>(_fkRepositoryCategory.Entities.Where(p => p.Status == 1).OrderBy(p => p.RowNum).ToList());
         }
-        public List<ProductCompanyDTO> getTedarik(int kid, string ürün,int? userid)
+        public List<ProductCompanyDTO> getTedarik(int kid, string? urun,int? userid)
         {
             try
             {
                 var data = _fkRepositoryProductCompany.Entities
-                .Where(x=>x.CategoryId==kid && x.Name.ToUpper().Contains(ürün.ToUpper()))
+                .Where(x=> urun != "" ? x.CategoryId==kid &&  x.Name.ToUpper().Contains(urun.ToUpper()): x.CategoryId == kid)
                 .Select(p => new ProductCompanyDTO
                 {
                     Id = p.Id,
@@ -141,21 +143,6 @@ namespace DFN2023.Business
             }
 
         }
-        public CompanyDTO getSelectCompanyMap(int pid)
-        {
-            try
-            {
-                var a = _mapper.Map<CompanyDTO>(_fkRepositoryCompany.Entities.First(p => p.Id == pid));
-                return a;
-            }
-            catch (Exception)
-            {
-
-                return null;
-            }
-
-        }
-
         public List<CompanyDTO> getCompanyMap()
         {
             try
@@ -171,14 +158,14 @@ namespace DFN2023.Business
 
         }
 
-        public bool favMethod(int companyid,int userid,int durum)
+        public bool favMethod(int companyid, int userid, int durum)
         {
             try
             {
 
                 if (durum > 0)
                 {
-                    UserUrunler u = _fkRepositoryUserUrunler.Entities.First(x=>x.CompanyId== companyid);
+                    UserUrunler u = _fkRepositoryUserUrunler.Entities.First(x => x.CompanyId == companyid);
                     _fkRepositoryUserUrunler.Delete(u);
                     _unitOfWork.SaveChanges();
                     return true;
@@ -194,6 +181,74 @@ namespace DFN2023.Business
                     _unitOfWork.SaveChanges();
                     return true;
                 }
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+        public List<MessageDTO> getMesajList(int userid,int role)
+        {
+            try
+            {
+                var a = _mapper.Map<List<MessageDTO>>(_fkRepositoryMessage.Entities.Where(p => p.Status == 1 && p.ToUser==userid && p.FromRolId== 2).GroupBy(p => p.FromUser).Select(p => p.FirstOrDefault()).ToList());//.DistinctBy(p => p.FromUser).OrderBy(x=>x.CreateDate)
+                return a;
+            }
+            catch (Exception e)
+            {
+
+                return null;
+            }
+
+        }
+        public List<MessageDTO> getMesajDetay(int userid,int fromid,int rolid)
+        {
+            try
+            {
+                //var mesajlarlist = _fkRepositoryMessage.Entities.Where(p => p.FromUser == fromid && p.ToUser == userid).ToList();
+                //for (int i = 0; i < mesajlarlist.Count; i++)
+                //{
+                //    var mesaj=_fkRepositoryMessage.GetById()
+                //}
+                List<Message> results = _fkRepositoryMessage.Entities.Where(p => p.FromUser == fromid && p.ToUser == userid).ToList();
+
+                foreach (Message p in results)
+                {
+                    if (rolid==2)
+                    {
+
+                        p.CompanyShow = true;
+                    }
+                    else
+                    {
+
+                        p.UserShow = true;
+                    }
+                    _fkRepositoryMessage.Update(p);
+                    _unitOfWork.SaveChanges();
+                }
+
+                var a = _mapper.Map<List<MessageDTO>>(_fkRepositoryMessage.Entities.Where(p => p.Status == 1 && (p.ToUser == userid && p.FromUser == fromid) || (p.ToUser == fromid && p.FromUser == userid)).ToList());
+                return a;
+            }
+            catch (Exception e)
+            {
+
+                return null;
+            }
+
+        }
+
+        public bool mesajYazUser(Message m)
+        {
+            try
+            {
+
+                   _fkRepositoryMessage.Add(m);
+                    _unitOfWork.SaveChanges();
+                    return true;
+                
             }
             catch (Exception)
             {

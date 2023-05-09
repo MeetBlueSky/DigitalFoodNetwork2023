@@ -1,0 +1,51 @@
+﻿
+  
+  <!-- blog-content -->
+  <section class="hero-section about single-blog blog-content gap no-top">
+  	<div class="container">
+  		<div class="row">
+  			<div class="offset-xl-2 col-xl-8 col-lg-12">
+  				
+	  			
+	  			<div class="comment">
+	  				<h2><span>@Model.mesajlist.Count.ToString()</span> Mesajınız Var</h2>
+	  			</div>
+	  			<ul class="comment gap no-top">
+					  @if(@Model.mesajlist.Count>0){
+					  @for (var i = 0; i < @Model.mesajlist.Count; i++)
+					  {
+						  <li>
+		  				<div class="comment-text">
+		  					<a href="/Mesaj/Detay/@Model.mesajlist[i].FromUser"><span>Cevap Ver<i class="fa-solid fa-reply"></i></span></a>
+		  				</div>
+		  				<div class="author-name-comment">
+		  					<div>
+								<!-- Mesajdaki Şirket / Kişi Adı-->
+								<h6>Jackie Johnson</h6>
+								<!-- Son Yazışmanın Tarihi -->
+			  					<span>@Model.mesajlist[i].CreateDate</span>
+		  					</div>
+								<!-- Karşı Taraf Şirket İse Logosu, Kişi İse Aşağıdaki Görsel Kalsın. -->
+			  					<img alt="man" src="https://via.placeholder.com/50x50">
+		  				</div>
+	  				</li>
+					  }}
+	  				
+	  				
+	  			
+	  				
+	  				
+	  				<li class="show-all-button">
+	  					<h6>4 more answers <a href="#"><span>Show All<i class="fa-solid fa-angle-down"></i></span></a></h6>
+	  				</li>
+	  				<li>
+	  					<div class="button-gap">
+							<a href="#" class="button button-2 non">Tüm Mesajları Gör<i class="fa-solid fa-angle-down"></i></a>
+						</div>
+					</li>
+	  			</ul>
+	  			
+  			</div>
+  		</div>
+  	</div>
+  </section>

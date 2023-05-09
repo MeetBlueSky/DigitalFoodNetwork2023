@@ -58,7 +58,7 @@ namespace DFN2023.Web.Controllers
         {
 
             HttpContext.Session.SetInt32("kategoriid", kid);
-            HttpContext.Session.SetString("tedarikciadi", urun);
+            HttpContext.Session.SetString("tedarikciadi", urun==null?"":urun);
         }
 
     }
