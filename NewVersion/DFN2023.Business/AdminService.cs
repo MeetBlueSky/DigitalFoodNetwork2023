@@ -457,12 +457,16 @@ namespace DFN2023.Business
 
                 if (com.Id > 0)
                 {
+                    com.LastUpdateDate = DateTime.Now;
+                    com.LastUpdatedBy = 1;
                     var result = _fkRepositoryCompany.Update(com);
                     _unitOfWork.SaveChanges();
                     return result;
                 }
                 else
                 {
+                    com.LastUpdateDate = DateTime.Now;
+                    com.LastUpdatedBy = 1;
                     var result = _fkRepositoryCompany.Add(com);
                     _unitOfWork.SaveChanges();
                     return result;
@@ -623,7 +627,7 @@ namespace DFN2023.Business
                 Expression<Func<CompanyImage, bool>> expCompanyImage = c => true;
                 expCompanyImage = expCompanyImage.And(p => p.CompanyId == dtParameters.FilterId);
                 expCompanyImage = expCompanyImage.And(p => p.Status == 1 || p.Status == 2);
-                int boatSelectListValue = Convert.ToInt32(dtParameters.AdditionalValues.ElementAt(0));
+                //int boatSelectListValue = Convert.ToInt32(dtParameters.AdditionalValues.ElementAt(0));
                 //if (boatSelectListValue != 0)
                 //{
                 //    expBoatImage = expBoatImage.And(p => p.ImageType == boatSelectListValue);

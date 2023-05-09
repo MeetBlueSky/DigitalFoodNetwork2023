@@ -141,7 +141,7 @@ function kategoriDuzenle(pid) {
     $('#p_YearFounded').val(secilendeger.YearFounded);
     $('#p_Logo').val(secilendeger.Logo);
     $('#p_Attachment').val(secilendeger.Attachment);
-    $('#p_Facebook').val(secilendeger.facebook);
+    $('#p_Facebook').val(secilendeger.Facebook);
     $('#p_Instagram').val(secilendeger.Instagram);
     $('#p_Tiktok').val(secilendeger.Tiktok);
     $('#p_Youtube').val(secilendeger.Youtube);
@@ -243,7 +243,7 @@ function seriKaydet() {
         url: '/' + lngg + '/Company/CreatedCompany',
         success: function (data) {
             console.log(data.hata);
-            if (!data.hata) {
+            if (data == 'true') {
 
                 swal.fire({
                     text: data.mesaj,
@@ -260,7 +260,7 @@ function seriKaydet() {
             }
             else {
                 swal.fire({
-                    text: data.mesaj,
+                    html: data.mesaj,
                     icon: "error",
                     buttonsStyling: false,
                     confirmButtonText: "Ok",
@@ -410,7 +410,7 @@ function tumResimler(pid) {
             { data: 'RowNum' },
             { data: 'Id' },
             { data: 'Id' },
-            { data: 'Boat' },
+            /*{ data: 'Boat' },*/
             /*{ data: 'ImageType' },//3*/
             { data: 'Path' },//4
             { data: 'Desc' },
@@ -455,7 +455,7 @@ function tumResimler(pid) {
             //    },
             //},
             {
-                targets: 4,
+                targets: 3,
                 render: function (data, type, full, meta) {
                     if (data != null)
                         return '<img class="h-100px rounded-sm" src="' + website + 'assets/boat/' + data + '" alt="....">';
@@ -464,7 +464,7 @@ function tumResimler(pid) {
             },
 
             {
-                targets: 6,
+                targets: 5,
                 render: function (data, type, full, meta) {
                     if (data == 1) {
                         return '<i class="flaticon2-checkmark text-success"></i>';

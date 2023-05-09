@@ -172,7 +172,7 @@ function productCompanyKaydet() {
 		url: '/' + lngg + '/Product/CreatedProductCompany',
 		success: function (data) {
 			console.log(data.hata);
-			if (!data.hata) {
+			if (data == 'true') {
 
 				swal.fire({
 					text: data.mesaj,
@@ -189,7 +189,7 @@ function productCompanyKaydet() {
 			}
 			else {
 				swal.fire({
-					text: data.mesaj,
+					html: data.mesaj,
 					icon: "error",
 					buttonsStyling: false,
 					confirmButtonText: "Ok",
