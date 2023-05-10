@@ -19,8 +19,7 @@ namespace DFN2023.Web.Controllers
             int kid = Convert.ToInt32(HttpContext.Session.GetInt32("kategoriid"));
             string ürün = HttpContext.Session.GetString("tedarikciadi");
             List<ProductCompanyDTO> filtersonuc = new();
-            if (kid!=0)
-            {
+           
                 var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
                 PublicModel pm = new PublicModel();
                 pm.user = usr;
@@ -44,11 +43,7 @@ namespace DFN2023.Web.Controllers
                 pm.tedariklist = filtersonuc;
                 return View(pm);
 
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+          
           
         }
         public IActionResult Harita(int id)

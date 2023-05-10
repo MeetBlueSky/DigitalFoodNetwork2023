@@ -27,6 +27,7 @@
 
 	<!-- Font Awesome 5 -->
 	<script src="https://kit.fontawesome.com/27a041baf1.js" crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 </head>
 <body class="menu-layer">
 
@@ -87,10 +88,12 @@
 				          <a  href="/Home/Index">Anasayfa</a>
 				        </li>
 						 <li class="navbar-dropdown">
-				          <a  href="/Home/Index">Firmalar</a>
+				          <a  href="/Tedarikci/List">Firmalar</a>
 				        </li>
 						@if (Model.user!=null){
+
 						<li class="navbar-dropdown">
+
 				          <a  href="/Mesaj/List">Mesajlarım</a>
 				        </li>
 						}

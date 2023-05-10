@@ -17,21 +17,39 @@ namespace DFN2023.Web.Controllers
         public IActionResult List()
         {
             var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
-            PublicModel pm = new PublicModel();
-            pm.user = usr;
-            pm.mesajlist= _websiteService.getMesajList(usr.Id,usr.Role);
+            PublicModel pm = new PublicModel(); if (usr != null)
+            {
+                var m= _websiteService.getMesajList(usr.Id, usr.Role);
+                pm.user = usr;
+                pm.mesajlist = m;
+                pm.mokunmamiscount = m.gelenokunmamis.Count + m.gonderdigimiz.Where(x=>x.IsShow==true).ToList().Count;
 
             return View(pm);
         }
+        
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+}
         public IActionResult Detay(int id)
         {
             var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
             PublicModel pm = new PublicModel();
-            pm.user = usr;
-            pm.selectcompanyid = id;
-            pm.mesajdetay = _websiteService.getMesajDetay(usr.Id,id,usr.Role);
-
-            return View(pm);
+            if (usr!=null)
+            {
+                pm.user = usr;
+                pm.selectcompanyid = id;
+                pm.mesajdetay = _websiteService.getMesajDetay(usr.Id, id, usr.Role);
+                pm.tedarikciadi = _websiteService.sirketOzelligi(id, usr.Role);
+                return View(pm);
+            }
+        
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+    
         }
         [HttpPost]
         public Task<JsonResult> mesajYazUser(string mesajtext,int touser)
@@ -46,13 +64,11 @@ namespace DFN2023.Web.Controllers
                     Message mesaj = new Message();
                     mesaj.FromUser = usr.Id;
                     mesaj.ToUser= touser;
-                    mesaj.FromRolId = 3;
                     mesaj.MessageContent = mesajtext;
                     mesaj.CreateDate = DateTime.Now;
                     mesaj.LastIP = 1;
                     mesaj.Status = 1;
-                    mesaj.CompanyShow = false;
-                    mesaj.UserShow = false;
+                    mesaj.IsShow = false;
                     var dgr = _websiteService.mesajYazUser(mesaj);
                     if (dgr)
                     {

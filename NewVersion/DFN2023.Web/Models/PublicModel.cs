@@ -17,9 +17,10 @@ namespace DFN2023.Web.Models
         public int? skategoriid { get; set; }
         public string? tedarikciadi { get; set; }
         public List<CompanyDTO>? mapkoor { get; set; }
-        public List<MessageDTO>? mesajlist { get; set; }
+        public MesajListDT? mesajlist { get; set; }
         public List<MessageDTO>? mesajdetay { get; set; }
         public int? selectcompanyid { get; set; }
+        public int? mokunmamiscount { get; set; }
 
 
     }

@@ -223,6 +223,20 @@ namespace DFN2023.Infrastructure.Context
             });
 
 
+            modelBuilder.Entity<Message>(entity =>
+            {
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Message)
+                    .HasForeignKey(d => d.FromUser)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_User_Message");
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Message)
+                    .HasForeignKey(d => d.ToUser)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_User_Message");
+            });
 
 
         }

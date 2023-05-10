@@ -72,46 +72,56 @@ namespace DFN2023.Business
         {
             return _mapper.Map<List<CategoryDTO>>(_fkRepositoryCategory.Entities.Where(p => p.Status == 1).OrderBy(p => p.RowNum).ToList());
         }
-        public List<ProductCompanyDTO> getTedarik(int kid, string? urun,int? userid)
-        {
-            try
-            {
-                var data = _fkRepositoryProductCompany.Entities
-                .Where(x=> urun != "" ? x.CategoryId==kid &&  x.Name.ToUpper().Contains(urun.ToUpper()): x.CategoryId == kid)
-                .Select(p => new ProductCompanyDTO
-                {
-                    Id = p.Id,
-                    Name=p.Name,
-                    CategoryId=p.CategoryId,
-                    CategoryName=p.Category.Name,
-                    Code=p.Code,
-                    CompanyId=p.CompanyId,
-                    CompanyName=p.Company.OfficialName,
-                    CreateDate=p.CreateDate,
-                    LastUpdateDate=p.LastUpdateDate,
-                    CreatedBy=p.CreatedBy,
-                    LastUpdatedBy=p.LastUpdatedBy,
-                    LastIP=p.LastIP,
-                     Currency=p.Currency,
-                     Price=p.Price,
-                    RowNum=p.RowNum,
-                    Status=p.Status,
-                    ShortDesc=p.Company.ShortDescription,
-                    CityName = _fkRepositoryCity.Entities.First(c => c.Id == p.Company.OfficialCityId).Name,
-                    CountyName = _fkRepositoryCounty.Entities.First(c => c.Id == p.Company.OfficialCountyId).Name,
-                    FavDurum = _fkRepositoryUserUrunler.Entities.Count()>0?_fkRepositoryUserUrunler.Entities.Where(c => c.CompanyId == p.CompanyId && c.UserId==userid).Count()>0?true:false:false,
-                    //Null kontrollerini unutma
 
-                }).ToList();
-                return data;
-            }
-            catch (Exception)
+
+        public List<ProductCompanyDTO> getTedarik(int kid, string? urun, int? userid)
+        {
+            Expression<Func<ProductCompany, bool>> expProductCompany = c => true;
+            expProductCompany = expProductCompany.And(p => p.Status == 1);
+            if (kid != 0)
             {
-                return null;
+                expProductCompany = expProductCompany.And(p => p.CategoryId == kid);
             }
+            if (urun != "" && urun!=null)
+            {
+                expProductCompany = expProductCompany.And(p => p.Name.ToUpper().Contains(urun.ToUpper()));
+
+            }
+
+            var sql = _fkRepositoryProductCompany.Entities
+               .Where(expProductCompany)
+               .Select(p => new ProductCompanyDTO
+               {
+                   Id = p.Id,
+                   Name = p.Name,
+                   CategoryId = p.CategoryId,
+                   CategoryName = p.Category.Name,
+                   Code = p.Code,
+                   CompanyId = p.CompanyId,
+                   CompanyName = p.Company.OfficialName,
+                   CreateDate = p.CreateDate,
+                   LastUpdateDate = p.LastUpdateDate,
+                   CreatedBy = p.CreatedBy,
+                   LastUpdatedBy = p.LastUpdatedBy,
+                   LastIP = p.LastIP,
+                   Currency = p.Currency,
+                   Price = p.Price,
+                   RowNum = p.RowNum,
+                   Status = p.Status,
+                   ShortDesc = p.Company.ShortDescription,
+                   CityName = _fkRepositoryCity.Entities.Count() > 0 ? _fkRepositoryCity.Entities.First(c => c.Id == p.Company.OfficialCityId).Name:"",
+                   CountyName = _fkRepositoryCounty.Entities.Count() > 0 ? _fkRepositoryCounty.Entities.First(c => c.Id == p.Company.OfficialCountyId).Name:"",
+                   FavDurum = _fkRepositoryUserUrunler.Entities.Count() > 0 ? _fkRepositoryUserUrunler.Entities.Where(c => c.CompanyId == p.CompanyId && c.UserId == userid).Count() > 0 ? true : false : false,
+                   UserId=Convert.ToInt32( p.Company.UserId)
+                   //Null kontrollerini unutma
+
+               }).ToList();
+
+            return sql;
         }
 
 
+      
         public List<CompanyDTO> getCompanyList()
         {
             List < CompanyDTO> a = new();
@@ -188,20 +198,63 @@ namespace DFN2023.Business
                 return false;
             }
         }
-        public List<MessageDTO> getMesajList(int userid,int role)
+        public MesajListDT getMesajList(int userid, int role)
         {
             try
             {
-                var a = _mapper.Map<List<MessageDTO>>(_fkRepositoryMessage.Entities.Where(p => p.Status == 1 && p.ToUser==userid && p.FromRolId== 2).GroupBy(p => p.FromUser).Select(p => p.FirstOrDefault()).ToList());//.DistinctBy(p => p.FromUser).OrderBy(x=>x.CreateDate)
+                // Expression<Func<Message, bool>> expMessage = c => true;
+
+                var gonderilenokunmamis = _fkRepositoryMessage.Entities.Where(p => p.Status== 1 && p.ToUser == userid && p.IsShow==false)
+                .Select(p => new MessageDTO
+                {
+                    Id = p.Id,
+                    FromUser = p.FromUser,
+                    ToUser = p.ToUser,
+                    MessageContent=p.MessageContent,
+                    CreateDate = p.CreateDate,
+                    IsShow=p.IsShow,
+                    UserFrom= _fkRepositoryUser.Entities.Count() > 0 ? _fkRepositoryUser.Entities.First(c => c.Id == p.FromUser).UserName : "",
+
+                }).OrderByDescending(p => p.CreateDate).GroupBy(p => p.FromUser).Select(p => p.FirstOrDefault()).ToList();
+
+                var gonderdigimiz = _fkRepositoryMessage.Entities.Where(p => p.Status == 1 && p.FromUser == userid )
+                .Select(p => new MessageDTO
+                {
+                    Id = p.Id,
+                    FromUser = p.FromUser,
+                    ToUser = p.ToUser,
+                    MessageContent = p.MessageContent,
+                    CreateDate = p.CreateDate,
+                    IsShow = p.IsShow,
+                    UserFrom = _fkRepositoryUser.Entities.Count() > 0 ? _fkRepositoryUser.Entities.First(c => c.Id == p.ToUser).UserName : "",
+
+                }).OrderByDescending(p => p.CreateDate).GroupBy(p => p.ToUser).Select(p => p.FirstOrDefault()).ToList();
+                MesajListDT a = new MesajListDT();
+                a.gelenokunmamis = gonderilenokunmamis;
+                for (int i = 0; i < gonderilenokunmamis.Count; i++)
+                {
+                   if(gonderdigimiz.Select(x => x.ToUser).Contains(gonderilenokunmamis[i].FromUser))
+                    {
+
+                   
+                        var varolan = gonderdigimiz.Where(p => p.ToUser == gonderilenokunmamis[i].FromUser).ToList();
+                        gonderdigimiz.RemoveAll(p => varolan.Contains(p));
+                    }
+
+                }
+
+                a.gonderdigimiz = gonderdigimiz;
                 return a;
             }
+            
             catch (Exception e)
             {
 
-                return null;
+                throw;
             }
-
         }
+      
+
         public List<MessageDTO> getMesajDetay(int userid,int fromid,int rolid)
         {
             try
@@ -215,22 +268,30 @@ namespace DFN2023.Business
 
                 foreach (Message p in results)
                 {
-                    if (rolid==2)
-                    {
-
-                        p.CompanyShow = true;
-                    }
-                    else
-                    {
-
-                        p.UserShow = true;
-                    }
+                    
+                     p.IsShow = true;
+                  
                     _fkRepositoryMessage.Update(p);
                     _unitOfWork.SaveChanges();
                 }
 
-                var a = _mapper.Map<List<MessageDTO>>(_fkRepositoryMessage.Entities.Where(p => p.Status == 1 && (p.ToUser == userid && p.FromUser == fromid) || (p.ToUser == fromid && p.FromUser == userid)).ToList());
-                return a;
+                
+                var sql = _fkRepositoryMessage.Entities
+                   .Where(p => p.Status == 1 && (p.ToUser == userid && p.FromUser == fromid) || (p.ToUser == fromid && p.FromUser == userid))
+                   .Select(p => new MessageDTO
+                   {
+                       Id = p.Id,
+                       IsShow = p.IsShow,
+                       FromUser = p.FromUser,
+                       MessageContent = p.MessageContent,
+                       ToUser = p.ToUser,
+                       CreateDate = p.CreateDate,
+                       LastIP = p.LastIP,
+                       Status = p.Status,
+
+                   }).OrderBy(p => p.CreateDate).ToList();
+
+                return sql;
             }
             catch (Exception e)
             {
@@ -239,7 +300,7 @@ namespace DFN2023.Business
             }
 
         }
-
+    
         public bool mesajYazUser(Message m)
         {
             try
@@ -254,6 +315,30 @@ namespace DFN2023.Business
             {
 
                 return false;
+            }
+        }
+        public string sirketOzelligi(int id,int role)
+        {
+            string a = "";
+            try
+            {
+
+                if (role==3)
+                {
+                    a = _fkRepositoryCompany.Entities.First(p => p.UserId == id).OfficialName;
+
+                }
+                else
+                {
+                    a = _fkRepositoryUser.Entities.First(p => p.Id == id).Name;
+
+                }
+                return a;
+            }
+            catch (Exception e)
+            {
+
+                return a;
             }
         }
     }

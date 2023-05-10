@@ -17,19 +17,16 @@
 								
 									<div class="restaurant">
 										<div class="nice-select-one">
-											<select id="kategoriid" class="nice-select Advice" disabled>
+											<select id="kategoriid" class="nice-select Advice">
 											  <option value="0">Kategori Seçiniz</option>
 											  @for (var i = 0; i < Model.kategoriler.Count; i++)
 											  {
-										@if (Model.skategoriid==@Model.kategoriler[i].Id)
-										{
-											
-										<option selected>@Model.kategoriler[i].Name</option>
-										}
-										<option>@Model.kategoriler[i].Name</option>
+											  <option value="@Model.kategoriler[i].Id">@Model.kategoriler[i].Name</option>
 											  }
 										</select>
 										</div>
+
+									
 									</div>
 									<div class="restaurant">
 										<div class="name-form">
@@ -63,7 +60,7 @@
 				
 				@for (var i = 0; i < @Model.tedariklist.Count; i++)
 				{
-					<div class="col-lg-6 aos-init aos-animate" data-aos="flip-up" data-aos-delay="200" data-aos-duration="300">
+					<div class="aos-init aos-animate" data-aos="flip-up" data-aos-delay="200" data-aos-duration="300" style="margin-bottom: 10px;">
 					<div class="logos-card restaurant-page ">
 						<img alt="logo" src="https://via.placeholder.com/100x100">
 							<div class="cafa">
@@ -78,7 +75,7 @@
 									
 								<a onclick="favEkleCikar(@Model.tedariklist[i].CompanyId,0)"><i class="fa-solid fa-heart"></i> Favorilere Ekle</a>
 								}
-										<a href="@Url.Action("Detay", "Mesaj")/@Model.tedariklist[i].Id"><i class="fa-solid fa-comment-dots"></i> Mesaj Gönder</a>
+										<a href="@Url.Action("Detay", "Mesaj")/@Model.tedariklist[i].UserId"><i class="fa-solid fa-comment-dots"></i> Mesaj Gönder</a>
 								</div>								
 								<p>@Model.tedariklist[i].ShortDesc</p>						
 								<p class="location"><i class="fa-solid fa-location-dot"></i> @Model.tedariklist[i].CountyName, @Model.tedariklist[i].CityName </p>
@@ -91,8 +88,15 @@
 				</div>
 				<div class="column" id="harita" style="display:none">
 					<!-- partial:index.partial.html -->
-				<div id="map" style="height: 700px;width: 1200px; position: relative;top: 20px;margin: auto; overflow: hidden; background-color: rgb(229, 227, 223);"></div>
+			 <div id="map" style="height: 700px;width: 1200px; position: relative;top: 20px;margin: auto; overflow: hidden; background-color: rgb(229, 227, 223);"></div>
 
+    <!-- 
+      The `defer` attribute causes the callback to execute after the full HTML
+      document has been parsed. For non-blocking uses, avoiding race conditions,
+      and consistent behavior across browsers, consider loading using Promises.
+      See https://developers.google.com/maps/documentation/javascript/load-maps-js-api
+      for more information.
+      -->
 				<!-- partial -->
  
 				</div>
@@ -133,8 +137,12 @@
     var hst2 = "@Url.Action("favEkleCikar", "Tedarikci")";
 	var user="@Model.user"
 	var maplist = @Html.Raw(Json.Serialize(@Model.mapkoor));
+	var skate="@Model.skategoriid";
 
 </script>
-
+  <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhkdNk86J-CRSA68iqu4k7IyTW3B2Peo&callback=initMap&v=weekly"
+      defer
+    ></script>
 	<script src="~/assets/js/tedariklist.js"></script>
 	 <script src='https://maps.google.com/maps/api/js?sensor=false'></script><script src="~/assets/js/maps.js"></script>

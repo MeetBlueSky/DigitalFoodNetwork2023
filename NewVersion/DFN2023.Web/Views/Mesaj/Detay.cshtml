@@ -1,4 +1,5 @@
-﻿  
+﻿
+  
   <!-- blog-content -->
   <section class="hero-section about single-blog blog-content gap no-top">
   	<div class="container">
@@ -7,12 +8,18 @@
   				
 	  			
 	  			<div class="comment">
-	  				<h2>XYZ Firması Mesajlarınız</h2>
+					  @if(@Model.user.Role==3){
+	  				<h2>@Model.tedarikciadi Firması Mesajlarınız</h2>
+
+					  }else{
+						  
+	  				<h2>@Model.tedarikciadi isimli Tüketici Mesajlarınız</h2>
+					  }
 	  			</div>
 	  			<ul class="comment gap no-top">
 					   @for (var i = 0; i < @Model.mesajdetay.Count; i++)
 					  {
-						  @if(@Model.mesajdetay[i].FromRolId==3){
+						  @if(@Model.mesajdetay[i].FromUser==@Model.user.Id){
 					<li>
 		  				<div class="comment-text">
 		  					<p>@Model.mesajdetay[i].MessageContent</p>
@@ -21,6 +28,13 @@
 		  					<div>
 								<h6>Siz</h6>
 			  					<span>@Model.mesajdetay[i].CreateDate</span>
+								   @if(@Model.mesajdetay[i].IsShow){
+									  
+								  <i class="fa fa-check" style="color: limegreen;"></i>
+								  }else{
+									  
+								  <i class="fa fa-check"></i>
+								  }
 		  					</div>
                                 <!-- Kişinin yazışmalarında aşağıdaki görsel kalsın-->
 			  					<img alt="man" src="https://via.placeholder.com/50x50">
@@ -28,7 +42,7 @@
 	  				</li>
 						  }
 						  
-					   @if(@Model.mesajdetay[i].FromRolId==2){
+					   @if(@Model.mesajdetay[i].FromUser!=@Model.user.Id){
 						   <li class="reply one">
 		  				<div class="comment-text">
 
@@ -38,8 +52,16 @@
                              <!-- Karşı taraf şirketse, onların logosunu basacağız. -->
 		  					<img alt="man" src="https://via.placeholder.com/50x50">
 		  					<div>
-								<h6>XYZ Şirketi</h6>
+								<h6>@Model.mesajdetay[i].UserFrom</h6>
 			  					<span>@Model.mesajdetay[i].CreateDate</span>
+								   @if(@Model.mesajdetay[i].IsShow){
+									  
+								  <i class="fa fa-check" style="color: limegreen;"></i>
+								  }else{
+									  
+								  <i class="fa fa-check"></i>
+								  }
+								 
 		  					</div>
 			  					
 		  				</div>
@@ -64,8 +86,10 @@
 	  			</ul>
 	  			<div class="comment">
 	  				<h2>Mesajınızı Giriniz</h2>
+	  				<form class="comment-blog">
 	  					<textarea id="mesajalani" placeholder="Enter you comment"></textarea>
-	  					<button onclick="mesajYaz(@Model.selectcompanyid)" class="button-price">Mesajı Gönder</button>
+	  				</form>
+						  <button onclick="mesajYaz(@Model.selectcompanyid)" class="button-price">Mesajı Gönder</button>
 	  				
 	  				
 	  			</div>
@@ -79,3 +103,4 @@
 	var user="@Model.user"
 </script>
 	<script src="~/assets/js/mesajdetay.js"></script>
+

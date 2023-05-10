@@ -17,8 +17,9 @@ namespace DFN2023.Contracts
         List<StaticContentGrupPageDTO> getAnasayfaList();
         bool favMethod(int companyid, int userid, int pid);
         public List<CompanyDTO> getCompanyMap();
-        public List<MessageDTO> getMesajList(int userid, int role);
+        public MesajListDT getMesajList(int userid, int role);
         List<MessageDTO> getMesajDetay(int userid, int fromid, int rolid);
         bool mesajYazUser(Message m);
+        string sirketOzelligi(int id, int role);
     }
 }
