@@ -32,6 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\assets\logo\" />
+    <Folder Include="wwwroot\assets\pdf\" />
     <Folder Include="wwwroot\css\" />
   </ItemGroup>
 

@@ -19,7 +19,7 @@ namespace DFN2023.Web.Controllers
             var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
             PublicModel pm = new PublicModel(); if (usr != null)
             {
-                var m= _websiteService.getMesajList(usr.Id, usr.Role);
+                var m= _websiteService.getMesajList(usr.Id, false);
                 pm.user = usr;
                 pm.mesajlist = m;
                 pm.mokunmamiscount = m.gelenokunmamis.Count + m.gonderdigimiz.Where(x=>x.IsShow==true).ToList().Count;
@@ -38,9 +38,10 @@ namespace DFN2023.Web.Controllers
             PublicModel pm = new PublicModel();
             if (usr!=null)
             {
+                HttpContext.Session.SetInt32("mesaydetayid", id);
                 pm.user = usr;
                 pm.selectcompanyid = id;
-                pm.mesajdetay = _websiteService.getMesajDetay(usr.Id, id, usr.Role);
+                pm.mesajdetay = _websiteService.getMesajDetay(usr.Id, id, usr.Role,0,4);
                 pm.tedarikciadi = _websiteService.sirketOzelligi(id, usr.Role);
                 return View(pm);
             }
@@ -96,5 +97,25 @@ namespace DFN2023.Web.Controllers
                 throw;
             }
         }
+
+        [HttpPost]
+        public Task<JsonResult> getMesajDetay(int start,int finish)
+        {
+            var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
+            PublicModel pm = new PublicModel();
+            if (usr != null)
+            {
+                int mid = Convert.ToInt32(HttpContext.Session.GetInt32("mesaydetayid"));
+                var sonuc = _websiteService.getMesajDetay(usr.Id, mid, usr.Role, start, finish);
+                return Task.FromResult(Json(sonuc));
+            }
+            else
+            {
+                return Task.FromResult(Json(null));
+            }
+            }
+
+
     }
-}
+    }
+

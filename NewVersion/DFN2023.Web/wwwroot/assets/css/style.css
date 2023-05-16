@@ -1914,7 +1914,15 @@ ul.food-dishes li {
     position: relative;
 }
 .name-form input[type="text"] {
-    color: #cfcfcf;
+    border: 1px solid #F2F2F2;
+    width: 100%;
+    height: 60px;
+    padding-left: 46px;
+    border-radius: 10px;
+    margin-top: 20px;
+    outline: none;
+}
+.name-form input[type="number"] {
     border: 1px solid #F2F2F2;
     width: 100%;
     height: 60px;

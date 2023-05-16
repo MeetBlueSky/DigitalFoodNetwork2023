@@ -1,0 +1,72 @@
+﻿
+
+ <!-- blog-content -->
+  <section class="hero-section about single-blog blog-content gap no-top">
+  	<div class="container">
+  		<div class="row">
+  			<div class="offset-xl-2 col-xl-8 col-lg-12">
+  				
+	  			<h1>Teşekkürler, kaydınız alınmıştır. Lütfen, email adresinize gelen onay mailini tıklayınız.</h1>
+                <h1>Mail ulaşmadı ise,<span onclick="tekrarMailYolla()">tekrar gönderebiliriz.</span></h1>
+	  			
+  			</div>
+  		</div>
+  	</div>
+  </section>
+
+  <script>
+  
+
+function tekrarMailYolla() {
+   
+        $.ajax({
+            type: "POST",
+            async: true,
+            url: "@Url.Action("tekrarMailYolla", "Login")",
+            dataType: 'json',
+            success: function (data) {
+                if (!data.hata) {
+                    swal.fire({
+                        text: data.mesaj,
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok",
+                        customClass: {
+                            confirmButton: "btn font-weight-bold btn-light-primary"
+                        }
+                    }).then(function () {
+
+
+
+
+                    });
+                } else {
+                    swal.fire({
+                        text: data.mesaj,
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok",
+                        customClass: {
+                            confirmButton: "btn font-weight-bold btn-light-primary"
+                        }
+                    }).then(function () {
+
+
+
+
+                    });
+                }
+                
+
+            },
+            complete: function (data2) {
+
+                $('#kayitModal').pleaseWait('stop');
+
+            },
+
+        });
+    
+
+}
+  </script>

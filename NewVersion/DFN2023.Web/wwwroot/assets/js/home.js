@@ -1,6 +1,5 @@
 ﻿
 function filter() {
-    if ($('#kategoriid').val() > 0) {
         $.ajax({
             data: {
                 kid: $('#kategoriid').val(),
@@ -15,6 +14,98 @@ function filter() {
             },
 
         });
-    }
     
+    
+}
+
+
+// Get the <span> element that closes the modal
+var rol = 0;
+function kayitOl(role) {
+    rol = role;
+    kayitmodal.style.display = "block";
+}
+
+
+function kayitOlFunction() {
+    if ($("#kayitpassword").val() != $("#kayitpassword2").val()) {
+        uyari("Şifrreler aynı değil");
+    }
+    else if ($("#kayitname").val().length < 1) {
+
+        uyari("İsim Alanı boş geçilemez");
+    }
+    else if ($("#kayitsoyad").val().length < 1) {
+
+        uyari("Soyad Alanı boş geçilemez");
+    }
+    else if ($("#kayitkullaniciadi").val().length < 1) {
+
+        uyari("Kullanıcı Alanı boş geçilemez");
+    }
+    else if ($("#kayittel").val().length < 1) {
+
+        uyari("Telefon Alanı boş geçilemez");
+    }
+    else if ($("#kayitpassword").val().length < 6) {
+
+        uyari("Şifrreler uzunluğu minimum 6 uzunluğunda olmalıdır");
+    }
+    else if (document.getElementById("kullanimsartlari").checked == false || document.getElementById("kvkk").checked == false) {
+
+        uyari("Onay kutucuklarını onaylayınız");
+    }
+    else {
+        $('#kayitModal').pleaseWait();
+        $.ajax({
+            type: "POST",
+            async: true,
+            url: hst2,
+            data: {
+                Name: $("#kayitname").val(),
+                Surname: $("#kayitsoyad").val(),
+                UserName: $("#kayitkullaniciadi").val(),
+                Email: $("#kayitemail").val(),
+                CitizenId: $("#kayittckn").val(),
+                Phone: $("#kayittel").val(),
+                Password: $("#kayitpassword").val(),
+                Role: rol,
+                Status:0,
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (!data.hata) {
+                    swal.fire({
+                        text: data.mesaj,
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok",
+                        customClass: {
+                            confirmButton: "btn font-weight-bold btn-light-primary"
+                        }
+                    }).then(function () {
+
+
+
+                        window.location.href = '/Login/HesapOnayBilgi';
+
+
+
+                    });
+                } else {
+                    uyari(data.mesaj);
+                }
+                
+               
+            },
+            complete: function (data2) {
+
+                $('#kayitModal').pleaseWait('stop');
+
+            },
+
+        });
+    }
+   
+
 }

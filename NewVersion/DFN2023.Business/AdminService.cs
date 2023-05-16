@@ -1182,13 +1182,11 @@ namespace DFN2023.Business
                                UserFrom = fromUser.Name,
                                UserTo = toUser.Name,
 
-                               FromRolId = messages.FromRolId,
                                MessageContent = messages.MessageContent,
                                CreateDate = messages.CreateDate,
                                LastIP = messages.LastIP,
                                Status = messages.Status,
-                               UserShow = messages.UserShow,
-                               CompanyShow = messages.CompanyShow,
+                               IsShow = messages.IsShow,
                            };
                 var sql = sql2.AsQueryable();
 

@@ -33,8 +33,9 @@
 										</div>
 									</div>	
 									
-									<button onclick=filter() class="button-price mt-3">Bul</button>	
 								</form>
+							 <button onclick=filter() class="button-price mt-3">Bul</button>	
+
 					</div>
 				</div>
 				<div class="col-lg-6" data-aos="fade-up"  data-aos-delay="300" data-aos-duration="400">
@@ -86,7 +87,7 @@
 						@if(Model.stanasayfatuk.Id>0){
 							@Html.Raw(@Model.stanasayfatuk.Html)
 						}
-						<a href="#" class="button button-2" style="margin-top: 10px;">Üyelik</a>
+						<a onclick="kayitOl(3)" class="button button-2" style="margin-top: 10px;">Üyelik</a>
 					</div>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12" data-aos="flip-up"  data-aos-delay="300" data-aos-duration="400">
@@ -94,7 +95,7 @@
 						@if(Model.stanasayfated.Id>0){
 							@Html.Raw(@Model.stanasayfated.Html)
 						}
-						<a href="#" class="button button-2" style="margin-top: 10px;">Başvur</a>
+						<a onclick="kayitOl(2)" class="button button-2" style="margin-top: 10px;">Başvur</a>
 					</div>
 				</div>
 			</div>
@@ -134,9 +135,74 @@
 		</div>
 	</section>
 
+	
+  <div id="kayitModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content" style="width: 40%;">
+   <div style="margin-block: 60px;margin-inline: 60px;text-align: center;">
+                   
+	   <span style="font-weight: bold;font-size: x-large;">Kayıt OL</span>
+							  <div class="name-form">
+
+								<i class="fa fa-user"></i>
+									<input type="text" name="name" id="kayitname" placeholder="Adınızı giriniz">
+								</div>
+								 <div class="name-form">
+								<i class="fa fa-user"></i>
+									<input type="text" name="name" id="kayitsoyad" placeholder="Soyadınızı giriniz">
+								</div>
+								 <div class="name-form">
+								<i class="fa fa-user"></i>
+									<input type="text" name="name" id="kayitkullaniciadi" placeholder="Kullanıcı adınızı giriniz">
+								</div>
+								 <div class="name-form">
+								<i class="fa fa-user"></i>
+									<input type="text" name="name" id="kayitemail" placeholder="E-mailinizi giriniz">
+								</div>
+								 <div class="name-form">
+								<i class="fa fa-user"></i>
+									<input type="text" name="name" id="kayittckn" placeholder="TCKN giriniz">
+								</div>
+								 <div class="name-form">
+								<i class="fa fa-user"></i>
+									<input type="text" name="name" id="kayittel" placeholder="Telefon numaranızı giriniz">
+								</div>
+								
+								  <div class="name-form">
+									<i class="fa fa-key"></i>
+									<input type="text" name="name" id="kayitpassword" placeholder="Şifrenizi giriniz">@*type="password" yazınca buzuluyor bakılcak*@
+								</div>
+								  <div class="name-form">
+									<i class="fa fa-key"></i>
+									<input type="text" name="name" id="kayitpassword2" placeholder="Şifrenizi giriniz">@*type="password" yazınca buzuluyor bakılcak*@
+								</div>
+
+								 <div class="name-form">
+                                    <input class="form-check-input" type="checkbox" id="kvkk">
+                                    <label class="form-check-label" for="remember">KVKK Onayı</label>
+                               
+							  </div>
+								 <div class="name-form">
+                                    <input class="form-check-input" type="checkbox" id="kullanimsartlari">
+                                    <label class="form-check-label" for="remember">Kullanım Şartları Onayı</label>
+                               
+							  </div>
+			
+			
+			  
+								<button style="margin-top: 20px;margin-bottom: 20px;" onclick="kayitOlFunction()" class="button-price">Giriş Yap</button>
+								
+							@* <span style="font-size: medium;">Üye değilseniz kayıt olun.</span>
+							<a   onclick="kayitOlModal()" style="margin-top: 10px;"  class="button button-2">Kayıt Ol</a>*@
+          </div>
+  </div>
+
+</div>
 
 
 <script>
     var hst = "@Url.Action("filterTedarik", "Home")";
+    var hst2 = "@Url.Action("kayitOl", "Home")";
 </script>
 	<script src="~/assets/js/home.js"></script>

@@ -6,6 +6,7 @@ namespace DFN2023.Web.Models
     public class PublicModel
     {
         public User? user { get; set; }
+        public User? userbilg { get; set; }
         public List<CategoryDTO>? kategoriler { get; set; }
         public List<ProductCompanyDTO>? tedariklist { get; set; }
         public List<CompanyDTO>? sirketler { get; set; }
@@ -21,6 +22,7 @@ namespace DFN2023.Web.Models
         public List<MessageDTO>? mesajdetay { get; set; }
         public int? selectcompanyid { get; set; }
         public int? mokunmamiscount { get; set; }
+        public List<CountryDTO>? ulkeler { get; set; }
 
 
     }

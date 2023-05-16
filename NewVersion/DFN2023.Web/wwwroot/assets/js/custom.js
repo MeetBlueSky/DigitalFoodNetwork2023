@@ -19,6 +19,14 @@
 ----------------------------------------------------------------------------------- */
 
 /*---------   count-number    ----------------*/
+
+function uyari(text) {
+    return Swal.fire(
+        'HATA',
+        text,
+        'error'
+    )
+}
 (function($) {
   $.fn.countTo = function(options) {
     options = options || {};

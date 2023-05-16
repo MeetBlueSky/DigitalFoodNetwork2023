@@ -469,7 +469,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 	<!-- jQuery -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script src="~/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 	<script src="~/assets/js/jquery.nice-select.min.js"></script>
 	<!-- owl.carousel -->
 	<script src="~/assets/js/owl.carousel.min.js"></script>
@@ -484,6 +484,11 @@
 </body>
 
 <script>
+
+	var span = document.getElementsByClassName("close")[0];
+
+
+
 	function loginmodalshow(){
                 $('#exampleModalSizeLg').modal('show');
 
@@ -496,12 +501,14 @@ var btn = document.getElementById("girisBtn");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
+var kayitmodal = document.getElementById("kayitModal");
 
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
   kmodal.style.display = "none";
+    kayitmodal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
@@ -510,7 +517,9 @@ window.onclick = function(event) {
     modal.style.display = "none";
   } if (event.target == kmodal) {
     kmodal.style.display = "none";
-  }
+  } if (event.target == kayitmodal) {
+        kayitmodal.style.display = "none";
+    }
 }
 function girisYapModal(){
 	
@@ -563,7 +572,8 @@ function girisYap(){
 						'success'
 					);
 					 modal.style.display = "none";
-					 window.location.reload();
+					 
+                window.location.href = data.res;
 				}
 				else {
 					Swal.fire(

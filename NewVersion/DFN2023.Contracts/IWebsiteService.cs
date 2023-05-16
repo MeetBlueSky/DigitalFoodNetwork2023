@@ -9,7 +9,7 @@ namespace DFN2023.Contracts
 {
     public interface IWebsiteService
     {
-        List<UserDTO> CheckUser(string uname, string pass);
+        UserDTO CheckUser(string uname, string pass);
         List<CategoryDTO> getCategoryList();
         List<ProductCompanyDTO> getTedarik(int kid, string? ürün,int? userid);
         //getCompanyList
@@ -17,9 +17,15 @@ namespace DFN2023.Contracts
         List<StaticContentGrupPageDTO> getAnasayfaList();
         bool favMethod(int companyid, int userid, int pid);
         public List<CompanyDTO> getCompanyMap();
-        public MesajListDT getMesajList(int userid, int role);
-        List<MessageDTO> getMesajDetay(int userid, int fromid, int rolid);
+        public MesajListDT getMesajList(int userid, bool hepsi);
+        List<MessageDTO> getMesajDetay(int userid, int fromid, int rolid, int start, int finish);
         bool mesajYazUser(Message m);
         string sirketOzelligi(int id, int role);
+        User createUser(User user);
+        User kayitKoduKontrol(string code);
+        List<CountryDTO> getCountryList();
+        List<City> listCities(int id);
+        List<County> listDistrict(int id);
+        Company createFirma(CompanyDTO cm);
     }
 }

@@ -1,0 +1,215 @@
+﻿
+
+ <!-- blog-content -->
+  <section class="hero-section about single-blog blog-content gap no-top">
+  	<div class="container">
+  		<div class="row">
+  			<div class="offset-xl-2 col-xl-8 col-lg-12">
+  				
+			           
+	  			<h1>Firma Bilgileri</h1>
+                  <form class="blog-form">
+                      <div class="restaurant">
+                        <label for="fname">Marka:</label>
+			            <div class="name-form">
+                        <input type="text" name="fname" placeholder="Marka ismi giriniz." id="marka" >
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">Şirket Ünvanı:</label>
+                        <input type="text" name="fname" placeholder=" Şirket Ünvanı giriniz." id="sirkerunvani" >
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">Vergi Dairesi:</label>
+                        <input type="text" name="fname" placeholder="Vergi dairesi giriniz." id="vergidairesi" >
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">VKN:</label>
+                        <input type="text" name="fname" placeholder="VKN giriniz." id="vkn" >
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">Ülke:</label>
+                        <div class="nice-select-one">
+								<select id="ulke" class="nice-select Advice">
+                                   
+								  <option value="0">Ülke Seçiniz</option>
+                        @for (int i = 0; i < Model.ulkeler.Count; i++)
+                        {
+                            <option value="@Model.ulkeler[i].Id">@Model.ulkeler[i].Name</option>
+                        }
+								</select>
+						</div>
+                        <br><br>
+                        </div>
+
+			            <div class="name-form">
+                        <label for="fname">İl:</label>
+								<select id="il" >
+								  <option value="0">İl seçmek için lütfen Ülke Seçiniz</option>
+                      
+								</select>
+						
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">İlçe:</label>
+								<select id="ilce" >
+								  <option value="0">İlçe seçmek için lütfen İl Seçiniz</option>
+								</select>
+                        <br><br>
+                        </div>
+
+                        
+			            <div class="name-form">
+                        <label for="fname">Adres:</label>
+                        <textarea row="2" type="text" placeholder="Adres giriniz." name="fname" id="adres" ></textarea>
+                        <br><br>
+                        </div>
+
+			            <div class="name-form">
+                        <label for="fname">Email:</label>
+                        <input type="text" name="fname" placeholder="E-mail adresgiriniz." id="emailadres" >
+                        <br><br>
+                        </div>
+                        
+			            <div class="name-form">
+                        <label for="fname">Tel:</label>
+                        <input type="text" name="fname" placeholder="Telefon numarası giriniz." id="tel" >
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">Cep Telefonu:</label>
+                        <input type="text" name="fname" placeholder="Telefon numarası giriniz." id="ceptel" >
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">Web:</label>
+                        <input type="text" name="fname" placeholder="Web adresi giriniz." id="web" >
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">Instagram:</label>
+                        <input type="text" name="fname" placeholder="İnstagram adresi giriniz." id="instagram" >
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">Youtube:</label>
+                        <input type="text" name="fname" placeholder="Youtube adresi giriniz." id="youtube" >
+                        <br><br>
+                        </div>
+                        
+                        
+			            <div class="name-form">
+                        <label for="fname">Harita Ülke:</label>
+                        <div class="nice-select-one">
+								<select id="haritaulke" class="nice-select Advice">
+								  <option value="0">Harita Ülke Seçiniz</option>
+                        @for (int i = 0; i < Model.ulkeler.Count; i++)
+                        {
+                            <option value="@Model.ulkeler[i].Id">@Model.ulkeler[i].Name</option>
+                        }
+								</select>
+						</div>
+                        <br><br>
+                        </div>
+                        
+                        
+			            <div class="name-form">
+                        <label for="fname">Harita İl:</label>
+								<select id="haritail" >
+								  <option value="0">Harita İl seçmek için lütfen Ülke Seçiniz</option>
+								</select>
+						
+                        <br><br>
+                        </div>
+
+			            <div class="name-form">
+                        <label for="fname">Harita İlçe:</label>
+								<select id="haritailce" >
+								  <option value="0">Harita İlçe seçmek için lütfen İl Seçiniz</option>
+								</select>
+                        <br><br>
+                        </div>
+
+			            <div class="name-form">
+                        <label for="fname">Harita Adres:</label>
+                        <textarea row="2" type="text" placeholder="Harita Adresi giriniz." name="fname" id="hadres" ></textarea>
+                        <br><br>
+                        </div>
+
+                        
+			            <div class="name-form">
+                        <label for="fname">KoordinatX:</label>
+                        <input type="text" name="fname" placeholder="KoordinatX giriniz." id="kx" >
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">KoordinatY:</label>
+                        <input type="text" name="fname" placeholder="KoordinatY giriniz." id="ky" >
+                        <br><br>
+                        </div>
+                        
+			            <div class="name-form">
+                        <label for="fname">Uzun Açıklama Alanı:</label>
+                        <textarea row="2" type="text" placeholder="Harita Adresi giriniz." name="fname" id="ddesc" ></textarea>
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">Kısa Açıklama Alanı:</label>
+                        <textarea row="2" type="text" placeholder="Harita Adresi giriniz." name="fname" id="sdesc" ></textarea>
+                        <br><br>
+                        </div>
+
+			              <div class="buttons">
+                            <div class="upload-button">
+                              <input id="files" name="files" type="file" size="1" multiple onchange="uploadFiles('files');" />
+                            </div>
+                             </div>
+
+
+			            <div class="buttons">
+                            <div class="upload-button">
+                              <input id="files2" name="files" type="file" size="1" multiple onchange="uploadFilesPdf('files2');" />
+                            </div>
+                             </div>
+
+
+                        
+                        
+                       @* <div class="form-group ">
+                            <label>Dosya</label>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="dropzone dropzone-default dropzone-success" id="kt_dropzone_3">
+                                    <div class="dropzone-msg dz-message needsclick">
+                                        <h3 class="dropzone-msg-title">Drop files here or click to upload.</h3>
+                                        <span class="dropzone-msg-desc">Only image, pdf and psd files are allowed for upload</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+  		              </div>
+                       
+                    </form>
+                    <button onclick=firmaKaydet() class="button-price mt-3">Kaydet</button>	
+	  			
+  			</div>
+  		</div>
+  	</div>
+  </section>
+
+  
+
+  <script>
+    
+    var hst = "@Url.Action("UploderImage", "Login")";
+    var hst1 = "@Url.Action("UploderDokuman", "Login")";
+    var hst2 = "@Url.Action("firmaBilgiKaydet", "Login")";
+    var hst3 = "@Url.Action("getCity", "Login")";
+    var hst4 = "@Url.Action("getDistrict", "Login")";
+	var user = @Html.Raw(Json.Serialize(@Model.userbilg));
+</script>
+	<script src="~/assets/js/tedfirma.js"></script>
+

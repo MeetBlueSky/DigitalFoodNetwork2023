@@ -20,7 +20,7 @@ namespace DFN2023.Entities.DTO
         public DateTime? CreateDate { get; set; }
         public DateTime? LastUpdateDate { get; set; }
         public string? LastIP { get; set; }
-        public int? EmailConfirmed { get; set; }
+        public string? EmailConfirmed { get; set; }
         public DateTime? EmailConfirmDate { get; set; }
         public int? GDPRConfirmed { get; set; }
         public int? GDPRConfirmDate { get; set; }

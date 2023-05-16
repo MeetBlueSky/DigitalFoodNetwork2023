@@ -33,6 +33,7 @@ namespace DFN2023.Business
         IRepository<County> _fkRepositoryCounty;
         IRepository<UserUrunler> _fkRepositoryUserUrunler;
         IRepository<Message> _fkRepositoryMessage;
+        IRepository<Country> _fkRepositoryCountry;
 
         IMapper _mapper;
 
@@ -51,6 +52,7 @@ namespace DFN2023.Business
             _fkRepositoryCounty = _unitOfWork.GetRepostory<County>();
             _fkRepositoryUserUrunler = _unitOfWork.GetRepostory<UserUrunler>();
             _fkRepositoryMessage = _unitOfWork.GetRepostory<Message>();
+            _fkRepositoryCountry = _unitOfWork.GetRepostory<Country>();
 
             //_fkRepositoryStaticContentPage = _unitOfWork.GetRepostory<StaticContentPage>();
             //_fkRepositoryStaticContentGrupPage = _unitOfWork.GetRepostory<StaticContentGrupPage>();
@@ -59,9 +61,26 @@ namespace DFN2023.Business
         }
 
 
-        public List<UserDTO> CheckUser(string uname, string pass)
+        public UserDTO CheckUser(string uname, string pass)
         {
-            var a = _mapper.Map<List<UserDTO>>(_fkRepositoryUser.Entities.Where(p => p.UserName == uname && p.Status == 1).ToList());
+            var a = _mapper.Map<UserDTO>(_fkRepositoryUser.Entities.First(p => p.UserName == uname));
+            if (a.Status==0)
+            {
+                if (a.Role==2 && a.EmailConfirmed!=null)
+                {
+                    return new UserDTO
+                    {
+                        Id = -1,
+                        EmailConfirmed=a.EmailConfirmed,
+                    };//Firma Bilgileri girilmedi
+                   
+                }
+                return new UserDTO
+                {
+                    Id = -2,
+                };
+
+            }
             return a;
 
         }
@@ -198,7 +217,7 @@ namespace DFN2023.Business
                 return false;
             }
         }
-        public MesajListDT getMesajList(int userid, int role)
+        public MesajListDT getMesajList(int userid, bool hepsi)
         {
             try
             {
@@ -244,6 +263,7 @@ namespace DFN2023.Business
                 }
 
                 a.gonderdigimiz = gonderdigimiz;
+               
                 return a;
             }
             
@@ -255,7 +275,7 @@ namespace DFN2023.Business
         }
       
 
-        public List<MessageDTO> getMesajDetay(int userid,int fromid,int rolid)
+        public List<MessageDTO> getMesajDetay(int userid,int fromid,int rolid,int start,int finish)
         {
             try
             {
@@ -289,9 +309,17 @@ namespace DFN2023.Business
                        LastIP = p.LastIP,
                        Status = p.Status,
 
-                   }).OrderBy(p => p.CreateDate).ToList();
+                   }).AsQueryable();
 
-                return sql;
+                if (start!=-1 && finish!=-1)
+                {
+                    
+                   var sonuc = sql.Skip(start).Take(finish).OrderBy(p => p.CreateDate).ToList();
+                    return sonuc;
+                }
+                 return sql.OrderBy(p => p.CreateDate).ToList();
+                
+
             }
             catch (Exception e)
             {
@@ -339,6 +367,163 @@ namespace DFN2023.Business
             {
 
                 return a;
+            }
+        }
+        public User createUser(User user)
+        {
+            try
+            {
+                var a = _fkRepositoryUser.Entities.Where(p => p.UserName == user.UserName || p.Email==user.Email).ToList();
+
+                if (a.Count()>0)
+                {
+                    return new User
+                        {
+                            Id = -1,
+                        };
+                }
+                else
+                {
+                    Random generator = new Random();
+                    String r = generator.Next(0, 1000000000).ToString("D9");
+
+                    var body = "Mail Onaylama";
+                    var mesaj = false;
+                    if (user.Role==2)
+                    {
+                         mesaj = send(user.Email, "Mail onaylamak için http://localhost:54803/Login/TedMailOnaylama?code=" + r + " linkine tıklayarak onaylayabilirsiniz", body);
+
+                    }
+                    else
+                    {
+                         mesaj = send(user.Email, "Mail onaylamak için http://localhost:54803/Login/TukMailOnaylama?code=" + r + " linkine tıklayarak onaylayabilirsiniz", body);
+
+                    }
+                    if (mesaj)
+                    {
+
+                        user.EmailConfirmed = r;
+                        var result = _fkRepositoryUser.Add(user);
+                        _unitOfWork.SaveChanges();
+                        return result;
+                    }
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public static bool send(string pTo, string pBody, string pSubject)
+        {
+           // var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+
+            MailMessage mm = new MailMessage();
+            mm.To.Add(pTo);
+            mm.Body = pBody;
+            mm.Subject = pSubject;
+            mm.IsBodyHtml = true;
+            mm.Sender = new MailAddress(
+                       "hbeyzakgl@yandex.com"
+               );
+            mm.From = new MailAddress(
+                       "hbeyzakgl@yandex.com"
+               );
+            try
+            {
+                SmtpClient sc = new SmtpClient();
+                sc.Host = "smtp.yandex.com";
+                sc.DeliveryMethod = SmtpDeliveryMethod.Network;
+                sc.UseDefaultCredentials = false;
+                sc.EnableSsl = true;
+                //sc.EnableSsl = Convert.ToBoolean(config["AppSettings:SendMailSMTPSSL"].ToString());
+                sc.Port = 587;
+                //sc.Port = 587;
+                /*sc.Port = Convert.ToInt32(config["AppSettings:SendMailSMTPPort"].ToString()); */// gmail 587
+
+                sc.Credentials = new System.Net.NetworkCredential(
+                      "hbeyzakgl@yandex.com.tr",
+                         "pera123456."
+                );
+
+                sc.Send(mm);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+
+
+        public User kayitKoduKontrol(string code)
+        {
+            try
+            {
+                var a = _fkRepositoryUser.Entities.First(p =>p.EmailConfirmed == code);
+
+                a.EmailConfirmDate = DateTime.Now;
+               var result= _fkRepositoryUser.Update(a);
+                _unitOfWork.SaveChanges();
+                return result;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+
+        }
+
+        public List<CountryDTO> getCountryList()
+        {
+            return _mapper.Map<List<CountryDTO>>(_fkRepositoryCountry.Entities.Where(p => p.Status == 1).ToList());
+        }
+
+
+        public List<City> listCities(int id)
+        {
+            var getCityList = _fkRepositoryCity.GetList(p => p.CountryId == id && p.Status == 1).ToList();
+            return getCityList;
+        }
+        public List<County> listDistrict(int id)
+        {
+            var getCityList = _fkRepositoryCounty.GetList(p => p.CityId == id && p.Status == 1).ToList();
+            return getCityList;
+        }
+
+        public Company createFirma(CompanyDTO cm)
+        {
+            try
+            {
+                var a = _fkRepositoryCompany.Entities.Where(p => p.UserId == cm.UserId).ToList();
+
+                if (a.Count() > 0)
+                {
+                    return new Company
+                    {
+                        Id = -1,
+                    };
+                }
+                else
+                {
+                     var company = _mapper.Map<Company>(cm);
+                    company.TaxNo = "";
+                     var result = _fkRepositoryCompany.Add(company);
+                     _unitOfWork.SaveChanges();
+                     var us = _fkRepositoryUser.Entities.First(p => p.Id==company.UserId);
+                     us.Status = 1;
+                     _fkRepositoryUser.Update(us);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                   
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
     }
