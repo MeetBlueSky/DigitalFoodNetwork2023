@@ -23,6 +23,7 @@ namespace DFN2023.Web.Models
         public int? selectcompanyid { get; set; }
         public int? mokunmamiscount { get; set; }
         public List<CountryDTO>? ulkeler { get; set; }
+        public List<ProductCompanyDTO>? urunler { get; set; }
 
 
     }

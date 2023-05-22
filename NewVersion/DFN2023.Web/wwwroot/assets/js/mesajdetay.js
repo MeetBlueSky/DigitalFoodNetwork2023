@@ -36,7 +36,7 @@ function mesajDetayGetir(control) {
                             ' <i class="fa fa-check" ></i> ' +
 
                             '   </div> ' +
-                            '  <img alt = "man" src = "https://via.placeholder.com/50x50"> ' +
+                            '  <img alt = "man" src = "~/assets/img/stcontent/50x50.png"> ' +
                             '</div></li>';
                     }
                     if (data[i].FromUser != user.Id) {
@@ -44,7 +44,7 @@ function mesajDetayGetir(control) {
                             ' <p>' + data[i].MessageContent + '</p>' +
                             '	</div> ' +
                             '  <div class= "author-name-comment"> ' +
-                            '  <img alt = "man" src = "https://via.placeholder.com/50x50"> ' +
+                            '  <img alt = "man" src = "~/assets/img/stcontent/50x50.png"> ' +
                             '   <div> ' +
                             ' <h6>' + tedarikciadi + '</h6> ' +
                             ' <span>' + data[i].CreateDate + '</span > ' +
@@ -64,7 +64,7 @@ function mesajDetayGetir(control) {
 }
 
 function mesajYaz(touser) {
-    if (user.length>0) {
+    if (user.Id>0) {
         $.ajax({
             data: {
                 mesajtext: $("#mesajalani").val(),

@@ -69,6 +69,7 @@ namespace DFN2023.Web.Controllers
             try
             {
                 user.CreateDate = DateTime.Now;
+                user.Password = XamarinUtils.Sifrele(user.Password);
                 var usr = _websiteService.createUser(user);
                 if (usr!=null)
                 {

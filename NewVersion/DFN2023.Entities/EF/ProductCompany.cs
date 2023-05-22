@@ -23,6 +23,8 @@ namespace DFN2023.Entities.EF
         public DateTime? LastUpdateDate { get; set; }
         public string? LastIP { get; set; }
         public int Status { get; set; }
+        public int UnitId { get; set; }
+        public string? Desc { get; set; }
 
 
         public virtual Company Company { get; set; }

@@ -5,100 +5,25 @@
   			<div class="offset-xl-2 col-xl-8 col-lg-12">
   				
 	  			
-	  			<div class="comment">
-					@if (@Model.mokunmamiscount>0)
-					{
-						<h2><span>@Model.mokunmamiscount</span> Yeni Mesajınız Var</h2>
-					}
-					else
-					{
-						
-					<h2>Yeni Mesajınız Bulunmamaktadır</h2>
-					}
+	  			<div class="comment" id="counttext">
+					
 				</div>
-	  			<ul class="comment gap no-top">
-
-					@if (@Model.mesajlist.gelenokunmamis.Count > 0)
-					{
-						@for (var i = 0; i < @Model.mesajlist.gelenokunmamis.Count; i++)
-						{
-							<li>
-								<div class="comment-text" style="background-color: aliceblue;">
-									
-									<p style="font-weight: 600;">@Model.mesajlist.gelenokunmamis[i].MessageContent</p>
-									<a href="@Url.Action("Detay", "Mesaj")/@Model.mesajlist.gelenokunmamis[i].FromUser"><span>Reply<i class="fa-solid fa-reply"></i></span></a>
-								</div>
-								<div class="author-name-comment">
-									<div>
-										<!-- Mesajdaki Şirket / Kişi Adı-->
-								<h6>@Model.mesajlist.gelenokunmamis[i].UserFrom</h6>
-										<!-- Son Yazışmanın Tarihi -->
-			  					<span>@Model.mesajlist.gelenokunmamis[i].CreateDate</span>
-									</div>
-									<!-- Karşı Taraf Şirket İse Logosu, Kişi İse Aşağıdaki Görsel Kalsın. -->
-			  					<img alt="man" src="https://via.placeholder.com/50x50">
-								</div>
-							</li>
-						}
-
-					}
-					@if (@Model.mesajlist.gonderdigimiz.Count > 0)
-					{
-						@for (var i = 0; i < @Model.mesajlist.gonderdigimiz.Count; i++)
-						{
-							@if (@Model.mesajlist.gonderdigimiz[i].IsShow==false)
-							{
-									<li>
-								<div class="comment-text" style="background-color: aliceblue;">
-									<p style="font-weight: 600;">@Model.mesajlist.gonderdigimiz[i].MessageContent</p>
-									<a href="@Url.Action("Detay", "Mesaj")/@Model.mesajlist.gonderdigimiz[i].ToUser"><span>Reply<i class="fa-solid fa-reply"></i></span></a>
-								</div>
-								<div class="author-name-comment">
-									<div>
-										<!-- Mesajdaki Şirket / Kişi Adı-->
-								<h6>@Model.mesajlist.gonderdigimiz[i].UserFrom</h6>
-										<!-- Son Yazışmanın Tarihi -->
-			  					<span>@Model.mesajlist.gonderdigimiz[i].CreateDate</span>
-									</div>
-									<!-- Karşı Taraf Şirket İse Logosu, Kişi İse Aşağıdaki Görsel Kalsın. -->
-			  					<img alt="man" src="https://via.placeholder.com/50x50">
-								</div>
-							</li>
-							}
-							else
-							{
-									<li>
-								<div class="comment-text">
-									<p>@Model.mesajlist.gonderdigimiz[i].MessageContent</p>
-									<a href="@Url.Action("Detay", "Mesaj")/@Model.mesajlist.gonderdigimiz[i].ToUser"><span>Reply<i class="fa-solid fa-reply"></i></span></a>
-								</div>
-								<div class="author-name-comment">
-									<div>
-										<!-- Mesajdaki Şirket / Kişi Adı-->
-								<h6>@Model.mesajlist.gonderdigimiz[i].UserFrom</h6>
-										<!-- Son Yazışmanın Tarihi -->
-			  					<span>@Model.mesajlist.gonderdigimiz[i].CreateDate</span>
-									</div>
-									<!-- Karşı Taraf Şirket İse Logosu, Kişi İse Aşağıdaki Görsel Kalsın. -->
-			  					<img alt="man" src="https://via.placeholder.com/50x50">
-								</div>
-							</li>
-							}
-						
-						}
-
-					}
+	  			<ul class="comment gap no-top" id="mesajlist">
 
 	  				
 	  				
-	  				<li>
-	  					<div class="button-gap">
-							<a href="#" class="button button-2 non">Tüm Mesajları Gör<i class="fa-solid fa-angle-down"></i></a>
-						</div>
-					</li>
 	  			</ul>
 	  			
   			</div>
   		</div>
   	</div>
   </section>
+
+
+  
+  <script>
+    var hst = "@Url.Action("getMesajList", "Mesaj")";
+    var hst2 = "@Url.Action("Detay", "Mesaj")";
+	var user=@Html.Raw(Json.Serialize(@Model.user));
+</script>
+	<script src="~/assets/js/mesajlist.js"></script>

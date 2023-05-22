@@ -97,6 +97,13 @@
 				          <a  href="/Mesaj/List">Mesajlarım</a>
 				        </li>
 						}
+						@if (Model.user!=null && Model.user.Role==2 && Model.user.Status==1){
+
+						<li class="navbar-dropdown">
+
+				          <a  href="/Tedarikci/UrunEkle">Ürünler</a>
+				        </li>
+						}
 				       
 				      
 				       
@@ -128,7 +135,7 @@
 							<h2>My Orders</h2>
 						</div>
 						<div class="banner-wilmington">
-							<img alt="logo" src="https://via.placeholder.com/50x50">
+							<img alt="logo" src="~/assets/img/stcontent/50x50.png">
 							<h6>Kennington Lane Cafe</h6>
 						</div>
 						<ul>
@@ -136,7 +143,7 @@
 							<i class="closeButton fa-solid fa-xmark"></i>
 							<div class="counter-container">
 								<div class="counter-food">
-									<img alt="food" src="https://via.placeholder.com/100x67">
+									<img alt="food" src="~/assets/img/stcontent/100x67.png">
 									<h4>Pasta, kiwi and sauce chilli</h4>
 								</div>
 								<h3>$39</h3>
@@ -160,7 +167,7 @@
 							<i class="closeButton fa-solid fa-xmark"></i>
 							<div class="counter-container">
 								<div class="counter-food">
-									<img alt="food" src="https://via.placeholder.com/100x67">
+									<img alt="food" src="~/assets/img/stcontent/100x67.png">
 									<h4>Rice with shrimps and kiwi</h4>
 								</div>
 								<h3>$49</h3>
@@ -309,7 +316,7 @@
 								
 	   <div class="name-form">
 									<i class="fa fa-key"></i>
-									<input type="text" name="name" id="password" placeholder="Şifrenizi giriniz">@*type="password" yazınca buzuluyor bakılcak*@
+									<input type="password" name="name" id="password" placeholder="Şifrenizi giriniz">@*type="password" yazınca buzuluyor bakılcak*@
 								</div>
 		
 			
@@ -317,8 +324,6 @@
 			  
 								<button style="margin-top: 20px;margin-bottom: 20px;" onclick="girisYap()" class="button-price">Giriş Yap</button>
 								
-							 <span style="font-size: medium;">Üye değilseniz kayıt olun.</span>
-							<a   onclick="kayitOlModal()" style="margin-top: 10px;"  class="button button-2">Kayıt Ol</a>
           </div>
   </div>
 
@@ -494,6 +499,7 @@
 
 	}
 	var modal = document.getElementById("myModal");
+	var uguncmodal = document.getElementById("urunGuncelleModal");
 
 // Get the button that opens the modal
 var btn = document.getElementById("girisBtn");
@@ -509,6 +515,7 @@ span.onclick = function() {
   modal.style.display = "none";
   kmodal.style.display = "none";
     kayitmodal.style.display = "none";
+    uguncmodal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
@@ -519,6 +526,8 @@ window.onclick = function(event) {
     kmodal.style.display = "none";
   } if (event.target == kayitmodal) {
         kayitmodal.style.display = "none";
+    }if (event.target == uguncmodal) {
+        uguncmodal.style.display = "none";
     }
 }
 function girisYapModal(){

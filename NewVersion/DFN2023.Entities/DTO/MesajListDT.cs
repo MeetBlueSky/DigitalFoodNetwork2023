@@ -8,7 +8,8 @@ namespace DFN2023.Entities.DTO
 {
     public class MesajListDT
     {
-        public List<MessageDTO>? gelenokunmamis { get; set; }
-        public List<MessageDTO>? gonderdigimiz { get; set; }
+        public List<MessageDTO>  yenigelenmesaj { get; set; } = new List<MessageDTO>();
+        public List<MessageDTO>  mesajlar { get; set; } = new List<MessageDTO>();
+        public int okunmamiscount { get; set; }
     }
 }

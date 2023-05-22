@@ -17,7 +17,8 @@ namespace DFN2023.Contracts
         List<StaticContentGrupPageDTO> getAnasayfaList();
         bool favMethod(int companyid, int userid, int pid);
         public List<CompanyDTO> getCompanyMap();
-        public MesajListDT getMesajList(int userid, bool hepsi);
+       // public MesajListDT getMesajList(int userid, bool hepsi);
+        MesajListDT getMesajList(int userid, int start, int length);
         List<MessageDTO> getMesajDetay(int userid, int fromid, int rolid, int start, int finish);
         bool mesajYazUser(Message m);
         string sirketOzelligi(int id, int role);
@@ -27,5 +28,9 @@ namespace DFN2023.Contracts
         List<City> listCities(int id);
         List<County> listDistrict(int id);
         Company createFirma(CompanyDTO cm);
+        public List<ProductCompanyDTO> getUrunlerList(int userid);
+        public ProductCompany createUrun(ProductCompanyDTO comp);
+        public bool deleteUrun(int id);
+        int getCompanyId(int userid);
     }
 }

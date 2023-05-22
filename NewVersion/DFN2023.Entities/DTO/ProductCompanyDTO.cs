@@ -25,6 +25,7 @@ namespace DFN2023.Entities.DTO
         public int Status { get; set; }
 
         public string? ShortDesc { get; set; }
+        public string? Desc { get; set; }
         
 
         public string? CompanyName { get; set; }
@@ -34,6 +35,17 @@ namespace DFN2023.Entities.DTO
         public string? CountyName { get; set; }
         public bool? FavDurum { get; set; }
         public int UserId { get; set; }
+        public int? UnitId { get; set; }
+        public string? Unit { get; set; }
+
+
+        public string BrandName { get; set; }
+        public string OfficialName { get; set; }
+        public string ShortDescription { get; set; }
+        public string MapAddress { get; set; }
+        public string? MapX { get; set; }
+        public string? MapY { get; set; }
+        public string? Logo { get; set; }
 
     }
 }

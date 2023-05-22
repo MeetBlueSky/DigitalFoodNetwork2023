@@ -4,6 +4,7 @@ using DFN2023.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DFN2023.Infrastructure.Migrations.Sql
 {
     [DbContext(typeof(SqlContext))]
-    partial class SqlContextModelSnapshot : ModelSnapshot
+    [Migration("20230516082851_16052023.1")]
+    partial class _160520231
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -449,7 +451,7 @@ namespace DFN2023.Infrastructure.Migrations.Sql
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FromUser");
+                    b.HasIndex("ToUser");
 
                     b.ToTable("Message", "dbo");
                 });
@@ -525,9 +527,6 @@ namespace DFN2023.Infrastructure.Migrations.Sql
 
                     b.Property<int?>("Currency")
                         .HasColumnType("int");
-
-                    b.Property<string>("Desc")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastIP")
                         .HasColumnType("nvarchar(max)");
@@ -1015,7 +1014,7 @@ namespace DFN2023.Infrastructure.Migrations.Sql
                 {
                     b.HasOne("DFN2023.Entities.EF.User", "User")
                         .WithMany("Message")
-                        .HasForeignKey("FromUser")
+                        .HasForeignKey("ToUser")
                         .IsRequired()
                         .HasConstraintName("FK_User_Message");
 

@@ -40,12 +40,7 @@ namespace DFN2023.Entities.EF
         public virtual ICollection<Message> Message { get; set; }
 
 
-        ////[InverseProperty("From")]
-        //public virtual ICollection<Message>? MessageFrom { get; set; }
-
-
-        ////[InverseProperty("To")]
-        //public virtual ICollection<Message>? MessageTo { get; set; }
+       
 
     }
 }

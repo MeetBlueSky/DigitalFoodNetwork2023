@@ -42,7 +42,7 @@
 					<div class="img-restaurant">
 							@if (Model.stanasayfasec1.Id > 0)
 					{
-						<img alt="img" src="@Model.stanasayfasec1.Image1">
+						<img alt="img" src="~/assets/img/stcontent/@Model.stanasayfasec1.Image1">
 					}
 					
 						
@@ -60,7 +60,7 @@
 						
 					@if (Model.stanasayfasec2.Id > 0)
 					{
-						<img alt="img" src="@Model.stanasayfasec2.Image1">
+						<img alt="img" src="~/assets/img/stcontent/@Model.stanasayfasec2.Image1">
 					}
 				</div>
 				</div>
@@ -117,7 +117,7 @@
 				{
 						<div class="col-lg-6" data-aos="flip-up"  data-aos-delay="400" data-aos-duration="500">
 					<div class="logos-card two">
-						<img alt="logo" src="@Model.sirketler[i].Logo">
+						<img alt="logo" src="~/assets/img/stcontent/@Model.sirketler[i].Logo">
 							<div class="cafa">
 								<h4><a href="restaurant-card.html">@Model.sirketler[i].OfficialName</a></h4>
 								
@@ -171,11 +171,11 @@
 								
 								  <div class="name-form">
 									<i class="fa fa-key"></i>
-									<input type="text" name="name" id="kayitpassword" placeholder="Şifrenizi giriniz">@*type="password" yazınca buzuluyor bakılcak*@
+									<input type="password" name="name" id="kayitpassword" placeholder="Şifrenizi giriniz">@*type="password" yazınca buzuluyor bakılcak*@
 								</div>
 								  <div class="name-form">
 									<i class="fa fa-key"></i>
-									<input type="text" name="name" id="kayitpassword2" placeholder="Şifrenizi giriniz">@*type="password" yazınca buzuluyor bakılcak*@
+									<input type="password" name="name" id="kayitpassword2" placeholder="Şifrenizi giriniz">@*type="password" yazınca buzuluyor bakılcak*@
 								</div>
 
 								 <div class="name-form">
@@ -191,7 +191,7 @@
 			
 			
 			  
-								<button style="margin-top: 20px;margin-bottom: 20px;" onclick="kayitOlFunction()" class="button-price">Giriş Yap</button>
+								<button style="margin-top: 20px;margin-bottom: 20px;" onclick="kayitOlFunction()" class="button-price">Kayıt Ol</button>
 								
 							@* <span style="font-size: medium;">Üye değilseniz kayıt olun.</span>
 							<a   onclick="kayitOlModal()" style="margin-top: 10px;"  class="button button-2">Kayıt Ol</a>*@

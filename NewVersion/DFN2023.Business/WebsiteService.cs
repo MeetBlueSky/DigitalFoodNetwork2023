@@ -64,16 +64,16 @@ namespace DFN2023.Business
         public UserDTO CheckUser(string uname, string pass)
         {
             var a = _mapper.Map<UserDTO>(_fkRepositoryUser.Entities.First(p => p.UserName == uname));
-            if (a.Status==0)
+            if (a.Status == 0)
             {
-                if (a.Role==2 && a.EmailConfirmed!=null)
+                if (a.Role == 2 && a.EmailConfirmed != null)
                 {
                     return new UserDTO
                     {
                         Id = -1,
-                        EmailConfirmed=a.EmailConfirmed,
+                        EmailConfirmed = a.EmailConfirmed,
                     };//Firma Bilgileri girilmedi
-                   
+
                 }
                 return new UserDTO
                 {
@@ -101,7 +101,7 @@ namespace DFN2023.Business
             {
                 expProductCompany = expProductCompany.And(p => p.CategoryId == kid);
             }
-            if (urun != "" && urun!=null)
+            if (urun != "" && urun != null)
             {
                 expProductCompany = expProductCompany.And(p => p.Name.ToUpper().Contains(urun.ToUpper()));
 
@@ -128,11 +128,17 @@ namespace DFN2023.Business
                    RowNum = p.RowNum,
                    Status = p.Status,
                    ShortDesc = p.Company.ShortDescription,
-                   CityName = _fkRepositoryCity.Entities.Count() > 0 ? _fkRepositoryCity.Entities.First(c => c.Id == p.Company.OfficialCityId).Name:"",
-                   CountyName = _fkRepositoryCounty.Entities.Count() > 0 ? _fkRepositoryCounty.Entities.First(c => c.Id == p.Company.OfficialCountyId).Name:"",
+                   CityName = _fkRepositoryCity.Entities.Count() > 0 ? _fkRepositoryCity.Entities.First(c => c.Id == p.Company.OfficialCityId).Name : "",
+                   CountyName = _fkRepositoryCounty.Entities.Count() > 0 ? _fkRepositoryCounty.Entities.First(c => c.Id == p.Company.OfficialCountyId).Name : "",
                    FavDurum = _fkRepositoryUserUrunler.Entities.Count() > 0 ? _fkRepositoryUserUrunler.Entities.Where(c => c.CompanyId == p.CompanyId && c.UserId == userid).Count() > 0 ? true : false : false,
-                   UserId=Convert.ToInt32( p.Company.UserId)
-                   //Null kontrollerini unutma
+                   UserId = Convert.ToInt32(p.Company.UserId),
+                   BrandName = p.Company.BrandName,
+                   OfficialName=p.Company.OfficialName,
+                   MapAddress=p.Company.MapAddress,
+                   ShortDescription = p.Company.ShortDescription,
+                   Logo = p.Company.Logo,
+                   MapX=p.Company.MapX,
+                   MapY=p.Company.MapY,
 
                }).ToList();
 
@@ -140,10 +146,10 @@ namespace DFN2023.Business
         }
 
 
-      
+
         public List<CompanyDTO> getCompanyList()
         {
-            List < CompanyDTO> a = new();
+            List<CompanyDTO> a = new();
             try
             {
                 var ab = _mapper.Map<List<CompanyDTO>>(_fkRepositoryCompany.Entities.Where(p => p.Status == 1).OrderByDescending(p => p.CreateDate).Take(4).ToList());//.OrderByDescending(p => p.CreateDate).Take(4)
@@ -154,7 +160,7 @@ namespace DFN2023.Business
 
                 return a;
             }
-            
+
         }
 
         public List<StaticContentGrupPageDTO> getAnasayfaList()
@@ -162,7 +168,7 @@ namespace DFN2023.Business
             List<StaticContentGrupPageDTO> a = new();
             try
             {
-                var ab = _mapper.Map<List<StaticContentGrupPageDTO>>(_fkRepositoryStaticContentGrupPage.Entities.Where(p => p.GrupTempId==1 || p.GrupTempId == 3 || p.GrupTempId == 4 || p.GrupTempId == 6).ToList());//.OrderByDescending(p => p.CreateDate).Take(4)
+                var ab = _mapper.Map<List<StaticContentGrupPageDTO>>(_fkRepositoryStaticContentGrupPage.Entities.Where(p => p.GrupTempId == 1 || p.GrupTempId == 3 || p.GrupTempId == 4 || p.GrupTempId == 6).ToList());//.OrderByDescending(p => p.CreateDate).Take(4)
                 return ab;
             }
             catch (Exception)
@@ -217,65 +223,139 @@ namespace DFN2023.Business
                 return false;
             }
         }
-        public MesajListDT getMesajList(int userid, bool hepsi)
+
+        //public MesajListDT getMesajList(int userid, int start,int length)
+        //{
+        //    try
+        //    {
+        //        MesajListDT a = new MesajListDT();
+        //        Expression<Func<Message, bool>> expMessage = c => true;
+        //        expMessage = expMessage.And(p => p.ToUser == userid || p.FromUser==userid);
+
+
+        //        var sql = _fkRepositoryMessage.Include()
+        //        .Where(expMessage)
+        //        .Select(p => new MessageDTO
+        //        {
+        //            Id = p.Id,
+        //            FromUser = p.FromUser,
+        //            ToUser = p.ToUser,
+        //            MessageContent = p.MessageContent,
+        //            CreateDate = p.CreateDate,
+        //            IsShow = p.IsShow,
+        //            UserFrom = _fkRepositoryUser.Entities.Count() > 0 ? _fkRepositoryUser.Entities.First(c => c.Id == p.ToUser).UserName : "",
+
+
+        //        }).AsQueryable();
+
+        //        sql = sql.OrderByDescending(p => p.CreateDate);
+        //        //if (sql.Select(x => new MessageDTO { x.ToUser, x.FromUser }).t)
+        //        //{
+
+        //        //}
+        //        var gonderilenokunmamis = sql.GroupBy(p => p.FromUser)
+        //        .Select(g => g.OrderByDescending(p => p.CreateDate).First())
+        //        .ToList();
+        //        var gonderdigimiz = sql.GroupBy(p => p.ToUser).Select(p => p.FirstOrDefault()).ToList();
+
+        //        var count = sql.Count();
+
+        //        var sonuc = sql.ToList().Skip(start).Take(length).ToList();
+        //        return a;
+
+        //        //return new DtResult<CategoryDTO>
+        //        //{
+        //        //    RecordsTotal = count,
+        //        //    RecordsFiltered = count,
+        //        //    Data = sonuc
+        //        //};
+        //    }
+
+        //    catch (Exception e)
+        //    {
+
+        //        throw;
+        //    }
+        //}
+        public MesajListDT getMesajList(int userid, int start, int length)
         {
             try
             {
-                // Expression<Func<Message, bool>> expMessage = c => true;
 
-                var gonderilenokunmamis = _fkRepositoryMessage.Entities.Where(p => p.Status== 1 && p.ToUser == userid && p.IsShow==false)
+
+
+
+                var gelenSonMesajlar  = _fkRepositoryMessage.Entities.Where(p => p.Status == 1 && p.ToUser == userid && p.IsShow == false)
                 .Select(p => new MessageDTO
                 {
                     Id = p.Id,
                     FromUser = p.FromUser,
                     ToUser = p.ToUser,
-                    MessageContent=p.MessageContent,
-                    CreateDate = p.CreateDate,
-                    IsShow=p.IsShow,
-                    UserFrom= _fkRepositoryUser.Entities.Count() > 0 ? _fkRepositoryUser.Entities.First(c => c.Id == p.FromUser).UserName : "",
-
-                }).OrderByDescending(p => p.CreateDate).GroupBy(p => p.FromUser).Select(p => p.FirstOrDefault()).ToList();
-
-                var gonderdigimiz = _fkRepositoryMessage.Entities.Where(p => p.Status == 1 && p.FromUser == userid )
-                .Select(p => new MessageDTO
-                {
-                    Id = p.Id,
-                    FromUser = p.FromUser,
-                    ToUser = p.ToUser,
-                    MessageContent = p.MessageContent,
-                    CreateDate = p.CreateDate,
                     IsShow = p.IsShow,
-                    UserFrom = _fkRepositoryUser.Entities.Count() > 0 ? _fkRepositoryUser.Entities.First(c => c.Id == p.ToUser).UserName : "",
+                    CreateDate= p.CreateDate,
+                    MessageContent = p.MessageContent,  
+                    UserFrom = p.User.Name + " " + p.User.Surname
+                }).ToList();
 
-                }).OrderByDescending(p => p.CreateDate).GroupBy(p => p.ToUser).Select(p => p.FirstOrDefault()).ToList();
-                MesajListDT a = new MesajListDT();
-                a.gelenokunmamis = gonderilenokunmamis;
-                for (int i = 0; i < gonderilenokunmamis.Count; i++)
+
+                var gelenmesajUserBazliCount = gelenSonMesajlar.Select(p => new MessageDTO
                 {
-                   if(gonderdigimiz.Select(x => x.ToUser).Contains(gonderilenokunmamis[i].FromUser))
-                    {
+                    FromUser = p.FromUser,
+                    ToUser = p.ToUser,
+                }).DistinctBy(p => p.FromUser).ToList();
 
-                   
-                        var varolan = gonderdigimiz.Where(p => p.ToUser == gonderilenokunmamis[i].FromUser).ToList();
-                        gonderdigimiz.RemoveAll(p => varolan.Contains(p));
-                    }
+
+                MesajListDT a = new MesajListDT();
+                
+                for (int i = 0; i < gelenmesajUserBazliCount.Count; i++)
+                {
+                    var ml= gelenSonMesajlar.Where(p=>p.FromUser== gelenmesajUserBazliCount[i].FromUser).OrderByDescending(p=>p.CreateDate).FirstOrDefault();
+                    a.yenigelenmesaj.Add((MessageDTO)ml);
+                     
+                }
+
+                a.okunmamiscount = gelenmesajUserBazliCount.Count;
+
+
+
+                var gelenMesajlar = _fkRepositoryMessage.Entities.Where(p => p.Status == 1 && p.ToUser == userid )
+                .Select(p => new MessageDTO
+                {
+                    Id = p.Id,
+                    FromUser = p.FromUser,
+                    ToUser = p.ToUser,
+                    IsShow = p.IsShow,
+                    CreateDate = p.CreateDate,
+                    MessageContent = p.MessageContent,
+                    UserFrom = p.User.Name + " " + p.User.Surname
+                }).ToList();
+
+                var gelenMesajlarCount = gelenSonMesajlar.Select(p => new MessageDTO
+                {
+                    FromUser = p.FromUser,
+                    ToUser = p.ToUser,
+                }).DistinctBy(p => p.FromUser).ToList();
+
+                for (int i = 0; i < gelenMesajlarCount.Count; i++)
+                {
+                    var ml = gelenSonMesajlar.Where(p => p.FromUser == gelenMesajlarCount[i].FromUser).OrderByDescending(p => p.CreateDate).FirstOrDefault();
+                    a.mesajlar.Add((MessageDTO)ml);
 
                 }
 
-                a.gonderdigimiz = gonderdigimiz;
-               
+
                 return a;
             }
-            
+
             catch (Exception e)
             {
 
-                throw;
+                return new MesajListDT();
             }
         }
-      
 
-        public List<MessageDTO> getMesajDetay(int userid,int fromid,int rolid,int start,int finish)
+
+        public List<MessageDTO> getMesajDetay(int userid, int fromid, int rolid, int start, int finish)
         {
             try
             {
@@ -288,14 +368,14 @@ namespace DFN2023.Business
 
                 foreach (Message p in results)
                 {
-                    
-                     p.IsShow = true;
-                  
+
+                    p.IsShow = true;
+
                     _fkRepositoryMessage.Update(p);
                     _unitOfWork.SaveChanges();
                 }
 
-                
+
                 var sql = _fkRepositoryMessage.Entities
                    .Where(p => p.Status == 1 && (p.ToUser == userid && p.FromUser == fromid) || (p.ToUser == fromid && p.FromUser == userid))
                    .Select(p => new MessageDTO
@@ -309,16 +389,16 @@ namespace DFN2023.Business
                        LastIP = p.LastIP,
                        Status = p.Status,
 
-                   }).AsQueryable();
+                   }).AsQueryable().OrderByDescending(x=>x.CreateDate);
 
-                if (start!=-1 && finish!=-1)
+                if (start != -1 && finish != -1)
                 {
-                    
-                   var sonuc = sql.Skip(start).Take(finish).OrderBy(p => p.CreateDate).ToList();
+
+                    var sonuc = sql.Skip(start).Take(finish).OrderBy(p => p.CreateDate).ToList();
                     return sonuc;
                 }
-                 return sql.OrderBy(p => p.CreateDate).ToList();
-                
+                return sql.OrderBy(p => p.CreateDate).ToList();
+
 
             }
             catch (Exception e)
@@ -328,16 +408,16 @@ namespace DFN2023.Business
             }
 
         }
-    
+
         public bool mesajYazUser(Message m)
         {
             try
             {
 
-                   _fkRepositoryMessage.Add(m);
-                    _unitOfWork.SaveChanges();
-                    return true;
-                
+                _fkRepositoryMessage.Add(m);
+                _unitOfWork.SaveChanges();
+                return true;
+
             }
             catch (Exception)
             {
@@ -345,13 +425,13 @@ namespace DFN2023.Business
                 return false;
             }
         }
-        public string sirketOzelligi(int id,int role)
+        public string sirketOzelligi(int id, int role)
         {
             string a = "";
             try
             {
 
-                if (role==3)
+                if (role == 3)
                 {
                     a = _fkRepositoryCompany.Entities.First(p => p.UserId == id).OfficialName;
 
@@ -373,14 +453,14 @@ namespace DFN2023.Business
         {
             try
             {
-                var a = _fkRepositoryUser.Entities.Where(p => p.UserName == user.UserName || p.Email==user.Email).ToList();
+                var a = _fkRepositoryUser.Entities.Where(p => p.UserName == user.UserName || p.Email == user.Email).ToList();
 
-                if (a.Count()>0)
+                if (a.Count() > 0)
                 {
                     return new User
-                        {
-                            Id = -1,
-                        };
+                    {
+                        Id = -1,
+                    };
                 }
                 else
                 {
@@ -389,14 +469,14 @@ namespace DFN2023.Business
 
                     var body = "Mail Onaylama";
                     var mesaj = false;
-                    if (user.Role==2)
+                    if (user.Role == 2)
                     {
-                         mesaj = send(user.Email, "Mail onaylamak için http://localhost:54803/Login/TedMailOnaylama?code=" + r + " linkine tıklayarak onaylayabilirsiniz", body);
+                        mesaj = send(user.Email, "Mail onaylamak için http://localhost:54803/Login/TedMailOnaylama?code=" + r + " linkine tıklayarak onaylayabilirsiniz", body);
 
                     }
                     else
                     {
-                         mesaj = send(user.Email, "Mail onaylamak için http://localhost:54803/Login/TukMailOnaylama?code=" + r + " linkine tıklayarak onaylayabilirsiniz", body);
+                        mesaj = send(user.Email, "Mail onaylamak için http://localhost:54803/Login/TukMailOnaylama?code=" + r + " linkine tıklayarak onaylayabilirsiniz", body);
 
                     }
                     if (mesaj)
@@ -417,7 +497,7 @@ namespace DFN2023.Business
         }
         public static bool send(string pTo, string pBody, string pSubject)
         {
-           // var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            // var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
             MailMessage mm = new MailMessage();
             mm.To.Add(pTo);
@@ -462,10 +542,11 @@ namespace DFN2023.Business
         {
             try
             {
-                var a = _fkRepositoryUser.Entities.First(p =>p.EmailConfirmed == code);
+                var a = _fkRepositoryUser.Entities.First(p => p.EmailConfirmed == code);
 
                 a.EmailConfirmDate = DateTime.Now;
-               var result= _fkRepositoryUser.Update(a);
+                a.Status = 1;
+                var result = _fkRepositoryUser.Update(a);
                 _unitOfWork.SaveChanges();
                 return result;
             }
@@ -509,21 +590,120 @@ namespace DFN2023.Business
                 }
                 else
                 {
-                     var company = _mapper.Map<Company>(cm);
+                    var company = _mapper.Map<Company>(cm);
                     company.TaxNo = "";
-                     var result = _fkRepositoryCompany.Add(company);
-                     _unitOfWork.SaveChanges();
-                     var us = _fkRepositoryUser.Entities.First(p => p.Id==company.UserId);
-                     us.Status = 1;
-                     _fkRepositoryUser.Update(us);
+                    var result = _fkRepositoryCompany.Add(company);
+                    _unitOfWork.SaveChanges();
+                    var us = _fkRepositoryUser.Entities.First(p => p.Id == company.UserId);
+                    us.Status = 1;
+                    _fkRepositoryUser.Update(us);
                     _unitOfWork.SaveChanges();
                     return result;
-                   
+
                 }
             }
             catch (Exception e)
             {
                 return null;
+            }
+        }
+
+        public List<ProductCompanyDTO> getUrunlerList(int userid)
+        {
+            try
+            {
+                var sirket = _fkRepositoryCompany.Entities.First(x => x.UserId == userid);
+                var sql = _fkRepositoryProductCompany.Entities.Include(p => p.Company).Include(p => p.Category).Where(p => p.Status == 1 && p.CompanyId == sirket.Id)
+                .Select(p => new ProductCompanyDTO
+                {
+                    Id = p.Id,
+                    CategoryId = p.CategoryId,
+                    Name = p.Name,
+                    UserId = Convert.ToInt32(p.Company.UserId),
+                    CategoryName = p.Category.Name,
+                    Code = p.Code,
+                    CompanyId = p.CompanyId,
+                    UnitId = p.UnitId,
+                    Unit = p.UnitId == 1 ? "Gr" : p.UnitId == 2 ? "Kg" : "Adet",
+                    Price = p.Price,
+                    Desc = p.Desc,
+
+                }).ToList();
+
+
+                return sql;
+            }
+
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
+        public ProductCompany createUrun(ProductCompanyDTO comp)
+        {
+            try
+            {
+
+                var company = _mapper.Map<ProductCompany>(comp);
+                if (company.Id > 0)
+                {
+                    var a = _fkRepositoryProductCompany.Entities.First(x => x.Id == company.Id);
+                    a.CategoryId = company.CategoryId;
+                    a.Name = company.Name;
+                    a.Price = company.Price;
+                    a.UnitId = company.UnitId;
+                    a.Desc = company.Desc;
+                    var result = _fkRepositoryProductCompany.Update(a);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    var result = _fkRepositoryProductCompany.Add(company);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public bool deleteUrun(int id)
+        {
+            try
+            {
+                ProductCompany c = _fkRepositoryProductCompany.GetById(id);
+                c.Status = 0;
+                _fkRepositoryProductCompany.Update(c);
+                _unitOfWork.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+
+            }
+        }
+        public int getCompanyId(int userid)
+        {
+            try
+            {
+
+                var a = _fkRepositoryCompany.Entities.First(x => x.UserId == userid).Id;
+
+                return a;
+
+            }
+            catch (Exception)
+            {
+                return 0;
+
+
             }
         }
     }

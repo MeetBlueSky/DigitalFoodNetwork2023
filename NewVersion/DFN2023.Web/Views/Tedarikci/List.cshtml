@@ -41,7 +41,7 @@
 						</div>
 						<div class="col-lg-6" data-aos="fade-up"  data-aos-delay="300" data-aos-duration="400">
 							<div class="restaurants-girl-img food-photo-section">
-								<img alt="man" src="https://via.placeholder.com/676x585">
+								<img alt="man" src="~/assets/img/stcontent/676x585.png">
 								<a href="#" class="one"><i class="fa-solid fa-burger"></i>Burgers</a>
 								<a href="#" class="two"><i class="fa-solid fa-drumstick-bite"></i>Chicken</a>
 								<a href="#" class="three"><i class="fa-solid fa-cheese"></i>Steaks</a>
@@ -62,7 +62,12 @@
 				{
 					<div class="aos-init aos-animate" data-aos="flip-up" data-aos-delay="200" data-aos-duration="300" style="margin-bottom: 10px;">
 					<div class="logos-card restaurant-page ">
-						<img alt="logo" src="https://via.placeholder.com/100x100">
+						@if(Model.tedariklist[i].Logo!=null){
+						<img alt="logo" src="~/assets/logo/@Model.tedariklist[i].Logo">
+						}else{
+						
+							<img alt="logo" src="~/assets/img/stcontent/100x100.png">
+						}
 							<div class="cafa">
 								<h4><a href="#">@Model.tedariklist[i].Name</a></h4>
 								<div class="cafa-button">
@@ -88,7 +93,7 @@
 				</div>
 				<div class="column" id="harita" style="display:none">
 					<!-- partial:index.partial.html -->
-			 <div id="map" style="height: 700px;width: 1200px; position: relative;top: 20px;margin: auto; overflow: hidden; background-color: rgb(229, 227, 223);"></div>
+			 <div id="map" style="height: 700px;width: 1400px; position: relative;top: 20px;margin: auto; overflow: hidden; background-color: rgb(229, 227, 223);"></div>
 
     <!-- 
       The `defer` attribute causes the callback to execute after the full HTML
@@ -111,7 +116,7 @@
 					<span class="chevron chevron--left"></span>
 				</h4>
 					<div class="banner-wilmington">
-						<img alt="logo" src="https://via.placeholder.com/40x40">
+						<img alt="logo" src="~/assets/img/stcontent/40x40.png">
 						<h6>The Wilmington</h6>
 					</div>
 				</div>
@@ -135,8 +140,9 @@
 <script>
     var hst = "@Url.Action("filterTedarik", "Home")";
     var hst2 = "@Url.Action("favEkleCikar", "Tedarikci")";
+    var hst3 = "@Url.Action("Detay", "Mesaj")";
 	var user="@Model.user"
-	var maplist = @Html.Raw(Json.Serialize(@Model.mapkoor));
+	var maplist = @Html.Raw(Json.Serialize(@Model.tedariklist));
 	var skate="@Model.skategoriid";
 
 </script>

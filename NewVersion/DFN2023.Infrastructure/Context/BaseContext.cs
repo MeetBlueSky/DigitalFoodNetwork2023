@@ -142,16 +142,7 @@ namespace DFN2023.Infrastructure.Context
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Company_CompanyImage");
             });
-
-            //modelBuilder.Entity<Message>(entity =>
-            //{
-
-            //    entity.HasOne(d => d.ParentMessage)
-            //        .WithMany(p => p.ChildMessage)
-            //        .HasForeignKey(d => d.ParentId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_Message_Message");
-            //});
+             
 
             modelBuilder.Entity<ProductCompany>(entity =>
             {
@@ -230,12 +221,7 @@ namespace DFN2023.Infrastructure.Context
                     .WithMany(p => p.Message)
                     .HasForeignKey(d => d.FromUser)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_User_Message");
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Message)
-                    .HasForeignKey(d => d.ToUser)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_User_Message");
+                    .HasConstraintName("FK_User_Message"); 
             });
 
 

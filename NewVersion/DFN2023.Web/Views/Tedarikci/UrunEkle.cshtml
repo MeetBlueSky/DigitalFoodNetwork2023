@@ -1,0 +1,189 @@
+﻿
+
+ <!-- blog-content -->
+  <section class="hero-section about single-blog blog-content gap no-top">
+  	<div class="container">
+  		<div class="row">
+  			<div>
+  				
+	  			<h1>Firma Bilgileri</h1>
+                  <form class="blog-form">
+                      <div class="row">
+                      <div class="col-2"> 
+			            <div class="name-form">
+                        <label for="fname">Kategori:</label>
+                        <div class="nice-select-one">
+								<select id="kategoriid" class="nice-select Advice">
+								  <option value="0">Kategori Seçiniz</option>
+                                   @for (var i = 0; i < Model.kategoriler.Count; i++)
+								    {
+									 <option value="@Model.kategoriler[i].Id">@Model.kategoriler[i].Name</option>
+									}
+								</select>
+						</div>
+                        <br><br>
+                        </div></div>
+                         <div class="col-2"> 
+			            <div class="name-form">
+                        <label for="fname">Ürün:</label>
+                        <input type="text" id="urun" placeholder="Ürün Adı Giriniz" />
+
+                        <br><br>
+                        </div></div>
+                       
+                         <div class="col-2"> 
+			            <div class="name-form">
+                        <label for="fname">Fiyat(TL):</label>
+                        
+                        <input type="number" id="fiyat" placeholder="Fiyat Giriniz" />
+                        <br><br>
+                        </div></div>
+                         <div class="col-2"> 
+			            <div class="name-form">
+                        <label for="fname">Birim:</label>
+                        <div class="nice-select-one">
+								<select id="birimid" class="nice-select Advice">
+								  <option value="0">Birim Seçiniz</option>
+								  <option value="1">gr</option>
+								  <option value="2">kg</option>
+								  <option value="3">Adet</option>
+								</select>
+						</div>
+                        <br><br>
+                        </div></div>
+                           <div class="col-4"> 
+			            <div class="name-form">
+                        <label for="fname">Açıklama:</label>
+                        <input type="text" id="aciklama" placeholder="Açıklama Giriniz" />
+                        <br><br>
+                        </div></div>
+
+                    </div>
+                     
+                       
+                    </form>
+                    <button onclick="urunKaydet()" class="button-price mt-3">Kaydet</button>	
+	  			
+  			</div>
+  		</div>
+  	</div>
+  </section>
+  <section class="hero-section about single-blog blog-content gap no-top">
+    <div class="container">
+  <div class="card">
+    <div class="card-body">
+     
+      <div class="table-responsive hidden">
+        <table id="tableurun" class="table table-striped table-bordered" style="width: 100%">
+          <thead>
+              
+            <tr>
+              <th>Id</th>
+              <th>Kategorisi</th>
+              <th>Ürün Adı</th>
+              <th>Fiyatı</th>
+              <th>Birimi</th>
+              <th>Açıklaması</th>
+              <th>Güncelle</th>
+              <th>Sil</th>
+            </tr>
+            @for (var i = 0; i < Model.urunler.Count; i++)
+			 {
+			 <tr>
+              <td>@Model.urunler[i].Id</td>
+              <td>@Model.urunler[i].CategoryName</td>
+              <td>@Model.urunler[i].Name</td>
+              <td>@Model.urunler[i].Price</td>
+              <td>@Model.urunler[i].Unit</td>
+              <td>@Model.urunler[i].Desc</td>
+              <td><button onclick="guncelleModal(@Model.urunler[i].Id,@Model.urunler[i].CategoryId,'@Model.urunler[i].Name',@Model.urunler[i].Price,@Model.urunler[i].UnitId,'@Model.urunler[i].Desc')">Güncelle</button></td>
+              <td><button onclick="urunSil(@Model.urunler[i].Id)">Sil</button></td>
+            </tr>
+			 }
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+  </section>
+  
+    <div id="urunGuncelleModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+   <div style="margin-block: 60px;margin-inline: 60px;text-align: center;">
+                   
+	   <span style="font-weight: bold;font-size: x-large;">Guncelle</span>
+	   
+  			<div>
+  				
+	  			<h1>Firma Bilgileri</h1>
+                  <form class="blog-form">
+                      <div class="column">
+			            <div class="name-form">
+                        <label for="fname">Kategori:</label>
+								<select id="gkategoriid" >
+                                   @for (var i = 0; i < Model.kategoriler.Count; i++)
+								    {
+									 <option value="@Model.kategoriler[i].Id">@Model.kategoriler[i].Name</option>
+									}
+								</select>
+						
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">Ürün:</label>
+                        <input type="text" id="gurun" placeholder="Ürün Adı Giriniz" />
+
+                        <br><br>
+                        </div>
+                       
+			            <div class="name-form">
+                        <label for="fname">Fiyat(TL):</label>
+                        
+                        <input type="number" id="gfiyat" placeholder="Fiyat Giriniz" />
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">Birim:</label>
+								<select id="gbirimid" class="nice-select Advice">
+								  <option value="0">Birim Seçiniz</option>
+								  <option value="1">gr</option>
+								  <option value="2">kg</option>
+								  <option value="3">Adet</option>
+								</select>
+						
+                        <br><br>
+                        </div>
+			            <div class="name-form">
+                        <label for="fname">Açıklama:</label>
+                        <input type="text" id="gaciklama" placeholder="Açıklama Giriniz" />
+                        <br><br>
+                        </div>
+
+                    </div>
+                     
+                       
+                    </form>
+	  			
+  			</div>
+			  
+		<button style="margin-top: 20px;margin-bottom: 20px;" onclick="urunGuncelle()" class="button-price">Kaydet</button>
+							
+          </div>
+  </div>
+
+</div>
+
+<!--end::Container-->
+
+
+<script>
+    var hst = "@Url.Action("getUrunlerList", "Tedarikci")";
+    var hst2 = "@Url.Action("createUrun", "Tedarikci")";
+    var hst3 = "@Url.Action("deleteUrun", "Tedarikci")";
+
+</script>
+<script src="~/assets/js/product.js"></script>
+

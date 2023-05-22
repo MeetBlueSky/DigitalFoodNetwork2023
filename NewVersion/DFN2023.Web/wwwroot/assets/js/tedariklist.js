@@ -81,21 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function initMap() {
-    const contentString =
-        '<div id="content">' +
-        '<div id="siteNotice">' +
-        "</div>" +
-        '<h1 id="firstHeading" class="firstHeading">Uluru</h1>' +
-        '<div id="bodyContent">' +
-        "<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large " +
-        "sandstone rock formation in the southern part of the " +
-        '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
-        "https://en.wikipedia.org/w/index.php?title=Uluru</a> " +
-        "(last visited June 22, 2009).</p></div></div>";
-
+    
     for (var i = 0; i < maplist.length; i++) {
         loc.push({ lat: parseFloat(maplist[i].MapX), lng: parseFloat(maplist[i].MapY) });
-        desc.push({ baslik: maplist[i].OfficialName, title: maplist[i].ShortDescription });
+        desc.push({ baslik: maplist[i].BrandName, desc: maplist[i].ShortDescription, unvan: maplist[i].OfficialName, adres: maplist[i].MapAddress, id: maplist[i].Id, userid: maplist[i].UserId, durum: maplist[i].Id, textfav: maplist[i].CompanyId, logo: maplist[i].Logo});
   
     }
 
@@ -121,16 +110,35 @@ function initMap() {
             if (infowindow) infowindow.close()
             let content = `Marker ${index}`
             infowindow = new google.maps.InfoWindow({
-                content: '<div id="content">' +
+                content: desc[index].FavDurum==true?'<div id="content">' +
                     '<div id="siteNotice">' +
                     "</div>" +
-                    '<h1 id="firstHeading" class="firstHeading">'+desc[index].baslik+'</h1>' +
+                    '<div style="width: 60%;" class="row"><div class="col-4"><img alt="man" src="/assets/logo/' + desc[index].logo + '" style=" width: 100px "></div>'+
+                    '<div class="col-6" style="width: inherit;"><h1 id="firstHeading" class="firstHeading" style="line-height:0">' + desc[index].baslik + '</h1>' +
+                    '<p id="firstHeading" class= "firstHeading" style="font-size: 12px;" > ' + desc[index].unvan + '</p>' +
+                    ' <p id="firstHeading" class="firstHeading" style="font-size: 12px;">' + desc[index].desc + '</p>' +
+                    '</div><div class= "cafa-button" >' +
+                    '<a onclick="favEkleCikar('+desc[index].textfav+',1)"><i class="fas fa-heart-broken"></i> Favoriden Çıkart</a>'+
+                    ' <a href="' + hst3+'/' + desc[index].userid + '" > <i class="fa-solid fa-comment-dots"></i> Mesaj Gönder</a >' +
+                      '</div ></div > '+
+                    
                     '<div id="bodyContent">' +
-                    "<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large " +
-                    "sandstone rock formation in the southern part of the " +
-                    '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
-                    "https://en.wikipedia.org/w/index.php?title=Uluru</a> " +
-                    "(last visited June 22, 2009).</p></div></div>",
+                    "<p>" + desc[index].adres + "</p></div></div>" :
+
+                    '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    "</div>" +
+                    '<div style="width: 60%;" class="row"><div class="col-4"><img alt="man" src="/assets/logo/' + desc[index].logo + '" style=" width: 100px "></div>' +
+                    '<div class="col-6" style="width: inherit;"><h1 id="firstHeading" class="firstHeading" style="line-height:0">' + desc[index].baslik + '</h1>' +
+                    '<p id="firstHeading" class= "firstHeading" style="font-size: 12px;" > ' + desc[index].unvan + '</p>' +
+                    ' <p id="firstHeading" class="firstHeading" style="font-size: 12px;">' + desc[index].desc + '</p>' +
+                    '</div><div class= "cafa-button" >' +
+                    '	<a onclick="favEkleCikar(' + desc[index].textfav +',0)"><i class="fa-solid fa-heart" style="color: #F29F05;"></i> Favorilere Ekle</a>'+
+                    ' <a href="'+hst3+'/'+desc[index].userid+'" > <i class="fa-solid fa-comment-dots"></i> Mesaj Gönder</a >' +
+                    '</div ></div > ' +
+
+                    '<div id="bodyContent">' +
+                    "<p>" + desc[index].adres + "</p></div></div>",
                 ariaLabel: 'AA',
             })
             infowindow.open(map, marker)

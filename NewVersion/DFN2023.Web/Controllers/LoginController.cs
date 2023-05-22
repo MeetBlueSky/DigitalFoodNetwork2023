@@ -112,15 +112,9 @@ namespace DFN2023.Web.Controllers
         {
             PublicModel pm = new PublicModel();
             var usr = _websiteService.kayitKoduKontrol(code);
-            if (usr != null) { 
             
-
                 pm.user = new();
                 return View(pm);
-            
-            }
-
-            return RedirectToAction("Index", "Home");
             
 
         }
@@ -128,7 +122,7 @@ namespace DFN2023.Web.Controllers
         {
             var usrses = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
             PublicModel pm = new PublicModel();
-            
+
             var usr = _websiteService.kayitKoduKontrol(code);
 
             if (usr != null)
@@ -143,15 +137,6 @@ namespace DFN2023.Web.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
-        }
-        public IActionResult UrunEkle()
-        {
-            PublicModel pm = new PublicModel();
-
-                pm.user = new();
-                return View(pm);
-            
 
         }
         public IActionResult HesapOnayBilgi()
@@ -381,5 +366,6 @@ namespace DFN2023.Web.Controllers
             SelectList listDist = new SelectList(listDistrict, "Id", "Name");
             return Json(listDist);
         }
+
     }
 }

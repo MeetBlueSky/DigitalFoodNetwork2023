@@ -46,7 +46,124 @@ namespace DFN2023.Web.Controllers
           
           
         }
-        public IActionResult Harita(int id)
+    
+    public IActionResult UrunEkle()
+    {
+        PublicModel pm = new PublicModel();
+        var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
+
+        if (usr != null)
+        {
+            var kategorilist = _websiteService.getCategoryList();
+            pm.kategoriler = kategorilist;
+            pm.urunler = _websiteService.getUrunlerList(usr.Id);
+            int a = _websiteService.getCompanyId(usr.Id);
+            if (a > 0)
+            {
+                HttpContext.Session.SetInt32("selectcompid", a);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            pm.user = usr;
+            return View(pm);
+        }
+
+        else
+        {
+            return RedirectToAction("Index", "Home");
+        }
+    }
+
+
+    [HttpPost]
+    public Task<JsonResult> createUrun(ProductCompanyDTO comp)
+    {
+        try
+        {
+            var sonuc = new { hata = true, mesaj = "Error", res = "" };
+            var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
+            var selectcompid = Convert.ToInt32(HttpContext.Session.GetInt32("selectcompid"));
+
+            comp.LastUpdateDate = DateTime.Now;
+            comp.LastUpdatedBy = usr.Id;
+
+
+            if (comp.Id <= 0)
+            {
+                comp.CreateDate = DateTime.Now;
+                comp.CreatedBy = usr.Id;
+                comp.LastIP = "";
+                comp.Status = 1;
+                comp.ProductBaseId = 1;
+                comp.CompanyId = selectcompid;
+                comp.RowNum = 1;
+            }
+
+            var result = _websiteService.createUrun(comp);
+            if (result != null)
+            {
+                sonuc = new { hata = false, mesaj = "İşlem Başarılı", res = "" };
+
+            }
+            else
+            {
+                sonuc = new { hata = true, mesaj = "Hata Oluştu", res = "" };
+            }
+
+
+            return Task.FromResult(Json(sonuc));
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    [HttpPost]
+    public Task<JsonResult> deleteUrun(ProductCompany comp)
+    {
+
+
+        var sonuc = new { hata = true, mesaj = "Error", res = "" };
+        try
+        {
+
+            if (comp != null)
+            {
+                var result = _websiteService.deleteUrun(comp.Id);
+                if (result)
+                {
+
+                    sonuc = new { hata = false, mesaj = "Başarılı", res = "" };
+                }
+                else
+                {
+                    sonuc = new { hata = true, mesaj = "Hata tespit edildi", res = "" };
+
+                }
+
+            }
+            else
+            {
+                sonuc = new { hata = true, mesaj = "Hata tespit edildi", res = "" };
+
+            }
+
+
+
+        }
+        catch (Exception e)
+        {
+            sonuc = new { hata = true, mesaj = "Hata tespit edildi", res = "" };
+        }
+
+        return Task.FromResult(Json(sonuc));
+
+    }
+    public IActionResult Harita(int id)
         {
 
             var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
@@ -54,6 +171,7 @@ namespace DFN2023.Web.Controllers
             pm.user = usr;
             return View(pm);
         }
+
         [HttpPost]
         public Task<JsonResult> favEkleCikar(int companyid, int durum)
         {
@@ -69,12 +187,13 @@ namespace DFN2023.Web.Controllers
                     {
                         if (durum > 0)
                         {
-                            sonuc = new { hata = false, mesaj = "Favorilere eklendi", res = "" };
+                            sonuc = new { hata = false, mesaj = "Favoriden çıkarıldı", res = "" };
+
 
                         }
                         else
                         {
-                            sonuc = new { hata = false, mesaj = "Favoriden çıkarıldı", res = "" };
+                            sonuc = new { hata = false, mesaj = "Favorilere eklendi", res = "" };
 
                         }
                     }
@@ -97,5 +216,6 @@ namespace DFN2023.Web.Controllers
 				throw;
 			}
         }
+
     }
 }
