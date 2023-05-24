@@ -31,6 +31,20 @@
                         <br><br>
                         </div>
 			            <div class="name-form">
+                        <label for="fname">Kurum Tipi:</label>
+                        <div class="nice-select-one">
+								<select id="kurumtip" class="nice-select Advice">
+                                   
+								  <option value="0">Kurum Tipi Seçiniz</option>
+                        @for (int i = 0; i < Model.sirkettipleri.Count; i++)
+                        {
+                            <option value="@Model.sirkettipleri[i].Id">@Model.sirkettipleri[i].TypeName</option>
+                        }
+								</select>
+						</div>
+                        <br><br>
+                        </div>
+			            <div class="name-form">
                         <label for="fname">Ülke:</label>
                         <div class="nice-select-one">
 								<select id="ulke" class="nice-select Advice">
@@ -47,7 +61,7 @@
 
 			            <div class="name-form">
                         <label for="fname">İl:</label>
-								<select id="il" >
+								<select class="dropdownlar" id="il" >
 								  <option value="0">İl seçmek için lütfen Ülke Seçiniz</option>
                       
 								</select>
@@ -56,7 +70,7 @@
                         </div>
 			            <div class="name-form">
                         <label for="fname">İlçe:</label>
-								<select id="ilce" >
+								<select class="dropdownlar" id="ilce" >
 								  <option value="0">İlçe seçmek için lütfen İl Seçiniz</option>
 								</select>
                         <br><br>
@@ -119,7 +133,7 @@
                         
 			            <div class="name-form">
                         <label for="fname">Harita İl:</label>
-								<select id="haritail" >
+								<select class="dropdownlar" id="haritail" >
 								  <option value="0">Harita İl seçmek için lütfen Ülke Seçiniz</option>
 								</select>
 						
@@ -128,7 +142,7 @@
 
 			            <div class="name-form">
                         <label for="fname">Harita İlçe:</label>
-								<select id="haritailce" >
+								<select class="dropdownlar" id="haritailce" >
 								  <option value="0">Harita İlçe seçmek için lütfen İl Seçiniz</option>
 								</select>
                         <br><br>
@@ -142,12 +156,12 @@
 
                         
 			            <div class="name-form">
-                        <label for="fname">KoordinatX:</label>
+                        <label for="fname">KoordinatX:<span style="color:gray;margin-left: 5px;">örn; 39.951088476192886</span></label>
                         <input type="text" name="fname" placeholder="KoordinatX giriniz." id="kx" >
                         <br><br>
                         </div>
 			            <div class="name-form">
-                        <label for="fname">KoordinatY:</label>
+                        <label for="fname">KoordinatY:,<span style="color:gray;margin-left: 5px;">örn; 32.86711973882527)</span></label>
                         <input type="text" name="fname" placeholder="KoordinatY giriniz." id="ky" >
                         <br><br>
                         </div>
@@ -165,14 +179,14 @@
 
 			              <div class="buttons">
                             <div class="upload-button">
-                              <input id="files" name="files" type="file" size="1" multiple onchange="uploadFiles('files');" />
+                              <input id="files" name="files" type="file" size="1" accept="image/*" multiple onchange="uploadFiles('files');" />
                             </div>
                              </div>
 
 
 			            <div class="buttons">
                             <div class="upload-button">
-                              <input id="files2" name="files" type="file" size="1" multiple onchange="uploadFilesPdf('files2');" />
+                              <input id="files2" name="files" type="file" size="1" accept=".pdf" multiple onchange="uploadFilesPdf('files2');" />
                             </div>
                              </div>
 

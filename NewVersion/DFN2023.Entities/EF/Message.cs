@@ -19,11 +19,12 @@ namespace DFN2023.Entities.EF
 
         public string? MessageContent { get; set; }
         public DateTime CreateDate { get; set; }
-        public int? LastIP { get; set; }
+        public string? LastIP { get; set; }
         public int Status { get; set; }
         public bool? IsShow { get; set; }
 
         public virtual User User { get; set; }
+        public virtual User UserT { get; set; }
 
 
 

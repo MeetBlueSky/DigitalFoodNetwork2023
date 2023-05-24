@@ -11,5 +11,6 @@ namespace DFN2023.Entities.DTO
         public List<MessageDTO>  yenigelenmesaj { get; set; } = new List<MessageDTO>();
         public List<MessageDTO>  mesajlar { get; set; } = new List<MessageDTO>();
         public int okunmamiscount { get; set; }
+        public int tumcount { get; set; }
     }
 }

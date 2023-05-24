@@ -70,6 +70,7 @@ namespace DFN2023.Web.Controllers
             {
                 user.CreateDate = DateTime.Now;
                 user.Password = XamarinUtils.Sifrele(user.Password);
+                user.LastIP = HttpContext.Connection.RemoteIpAddress?.ToString();
                 var usr = _websiteService.createUser(user);
                 if (usr!=null)
                 {
@@ -83,7 +84,7 @@ namespace DFN2023.Web.Controllers
                     }
                     else
                     {
-                        sonuc = new { hata = true, mesaj = "Bu kullanıcı adı veya mail daha önce kullanılmış", res = "tr" + "/" };
+                        sonuc = new { hata = true, mesaj = "Bu mail daha önce kullanılmış", res = "tr" + "/" };
                     }
 
                 }

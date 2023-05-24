@@ -25,5 +25,6 @@
     var hst = "@Url.Action("getMesajList", "Mesaj")";
     var hst2 = "@Url.Action("Detay", "Mesaj")";
 	var user=@Html.Raw(Json.Serialize(@Model.user));
+	var tedrol=@Model.tedarikcirol;
 </script>
 	<script src="~/assets/js/mesajlist.js"></script>

@@ -64,6 +64,7 @@ function haritaAc() {
         document.getElementById("urunler").style.display = "block";
         document.getElementById("harita").style.display = "none";
     } else {
+        initMap(1);
         harita = true;
         $("#textyazi").text("Ürünler");
         document.getElementById("urunler").style.display = "none";
@@ -72,6 +73,7 @@ function haritaAc() {
     }
   
 }
+var selectpro = 0;
 var loc = [];
 var desc = [];
 document.addEventListener("DOMContentLoaded", () => {
@@ -79,21 +81,38 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#kategoriid").val(skate).trigger('change');
     
 });
+function secKoordinat(id) {
+    selectpro = id;
+    haritaAc();
+    initMap(2);
+}
 
-function initMap() {
-    
-    for (var i = 0; i < maplist.length; i++) {
-        loc.push({ lat: parseFloat(maplist[i].MapX), lng: parseFloat(maplist[i].MapY) });
-        desc.push({ baslik: maplist[i].BrandName, desc: maplist[i].ShortDescription, unvan: maplist[i].OfficialName, adres: maplist[i].MapAddress, id: maplist[i].Id, userid: maplist[i].UserId, durum: maplist[i].Id, textfav: maplist[i].CompanyId, logo: maplist[i].Logo});
-  
+function initMap(control) {
+
+    var map;
+    loc = [];
+    if (control==1) {
+        for (var i = 0; i < maplist.length; i++) {
+            loc.push({ lat: parseFloat(maplist[i].MapX), lng: parseFloat(maplist[i].MapY) });
+            desc.push({ baslik: maplist[i].BrandName, desc: maplist[i].ShortDescription, unvan: maplist[i].OfficialName, adres: maplist[i].MapAddress, id: maplist[i].Id, userid: maplist[i].UserId, durum: maplist[i].Id, textfav: maplist[i].CompanyId, logo: maplist[i].Logo });
+
+        }
     }
+    if (control == 2 && selectpro>0) {
+       var map= maplist.filter(x => x.Id == selectpro);
+        loc.push({ lat: parseFloat(map[0].MapX), lng: parseFloat(map[0].MapY) });
+        desc.push({ baslik: map[0].BrandName, desc: map[0].ShortDescription, unvan: map[0].OfficialName, adres: map[0].MapAddress, id: map[0].Id, userid: map[0].UserId, durum: map[0].Id, textfav: map[0].CompanyId, logo: map[0].Logo });
+
+        
+    }
+   
 
     var myLatLng = loc[0],
         myOptions = {
             zoom: 11,
             center: myLatLng,
         },
-        map = new google.maps.Map(document.getElementById('map'), myOptions)
+        map = new google.maps.Map(document.getElementById('map'), myOptions);
     const positions = loc;
     let infowindow
     const markers = positions.map(position => {
@@ -146,5 +165,5 @@ function initMap() {
     })
 }
 
-window.initMap = initMap;
+window.initMap = initMap(1);
 

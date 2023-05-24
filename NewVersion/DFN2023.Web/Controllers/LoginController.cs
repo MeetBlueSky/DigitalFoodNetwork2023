@@ -29,10 +29,10 @@ namespace DFN2023.Web.Controllers
             var sonuc = new { hata = true, mesaj = "Teknik Ariza", res = "/" };
             try
             {
-                if (user.UserName != null && user.Password != null)
+                if (user.Email != null && user.Password != null)
                 {
 
-                    var usr = _websiteService.CheckUser(user.UserName, user.Password);
+                    var usr = _websiteService.CheckUser(user.Email, user.Password);
                     if (usr.Id==-1)
                     {
                         sonuc = new { hata = true, mesaj = "Firma bilgilerini giriniz", res =  "/Home/Index" };
@@ -113,7 +113,7 @@ namespace DFN2023.Web.Controllers
             PublicModel pm = new PublicModel();
             var usr = _websiteService.kayitKoduKontrol(code);
             
-                pm.user = new();
+                pm.user = null;
                 return View(pm);
             
 
@@ -128,6 +128,7 @@ namespace DFN2023.Web.Controllers
             if (usr != null)
             {
                 pm.ulkeler = _websiteService.getCountryList();
+                pm.sirkettipleri = _websiteService.getCompanyTypeList();
                 pm.userbilg = usr;
                 pm.user = usrses;
                 return View(pm);
@@ -168,7 +169,7 @@ namespace DFN2023.Web.Controllers
                 var email = HttpContext.Session.GetString("email");
                 var rol = HttpContext.Session.GetString("rol");
                 var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
-                if (rol == "2")
+                if (rol == EnumRol.Tedarikci.ToString())
                 {
                      mesaj = send(email, "Mail onaylamak için http://localhost:54803/Login/TedMailOnaylama?code=" + kod + " linkine tıklayarak onaylayabilirsiniz", "Mail Onaylama", kod);
                 }
@@ -251,7 +252,7 @@ namespace DFN2023.Web.Controllers
                 var webRootPath = config["AppSettings:publicPath"].ToString();
 
                 var filelist = file;
-                var yeniisim = ""; Guid.NewGuid().ToString();
+                var yeniisim = Guid.NewGuid().ToString();
 
                 if (filelist.Count > 0)
                 {
@@ -366,6 +367,46 @@ namespace DFN2023.Web.Controllers
             SelectList listDist = new SelectList(listDistrict, "Id", "Name");
             return Json(listDist);
         }
+        //[HttpPost]
+        //public async Task<JsonResult> ForgotPass(UserDTO user)
+        //{
 
+        //    var sonuc = new { hata = true, mesaj = "Teknik Ariza", res = "/" };
+        //    try
+        //    {
+        //        if (user.Email != null)
+        //        {
+
+        //            var usr = _websiteService.checkMail(user.Email);
+                    
+        //             if (usr != null)
+        //            {
+                        
+        //                  bool mesaj = send(usr.Email, "Mail onaylamak için http://localhost:54803/Login/TukMailOnaylama?code=" + kod + " linkine tıklayarak onaylayabilirsiniz", "Mail Onaylama", kod);
+
+                        
+        //                sonuc = new { hata = true, mesaj = "Böyle bir kullanıcı Bulunamadı", res = "/" };
+        //            }
+        //            else
+        //            {
+        //                sonuc = new { hata = true, mesaj = "Böyle bir kullanıcı Bulunamadı", res = "/" };
+        //            }
+
+
+        //        }
+        //        else
+        //        {
+        //            sonuc = new { hata = true, mesaj = "Mail Adresi girilmedi", res = "/" };
+        //        }
+
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //    }
+
+        //    return Json(sonuc);
+
+        //}
     }
 }

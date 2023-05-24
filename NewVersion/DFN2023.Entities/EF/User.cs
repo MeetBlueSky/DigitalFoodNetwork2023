@@ -11,6 +11,7 @@ namespace DFN2023.Entities.EF
         {
             UserUrunler = new HashSet<UserUrunler>();
             Message = new HashSet<Message>();
+            MessageT = new HashSet<Message>();
             //Message = new HashSet<Message>();
         }
 
@@ -38,9 +39,10 @@ namespace DFN2023.Entities.EF
 
         public virtual ICollection<UserUrunler> UserUrunler { get; set; }
         public virtual ICollection<Message> Message { get; set; }
+        public virtual ICollection<Message> MessageT { get; set; }
 
 
-       
+
 
     }
 }

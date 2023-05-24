@@ -63,7 +63,7 @@
 					<div class="aos-init aos-animate" data-aos="flip-up" data-aos-delay="200" data-aos-duration="300" style="margin-bottom: 10px;">
 					<div class="logos-card restaurant-page ">
 						@if(Model.tedariklist[i].Logo!=null){
-						<img alt="logo" src="~/assets/logo/@Model.tedariklist[i].Logo">
+						<img width="100" alt="logo" src="~/assets/logo/@Model.tedariklist[i].Logo">
 						}else{
 						
 							<img alt="logo" src="~/assets/img/stcontent/100x100.png">
@@ -85,7 +85,7 @@
 								<p>@Model.tedariklist[i].ShortDesc</p>						
 								<p class="location"><i class="fa-solid fa-location-dot"></i> @Model.tedariklist[i].CountyName, @Model.tedariklist[i].CityName </p>
 								
-										<a  href="@Url.Action("Harita", "Tedarikci")/@Model.tedariklist[i].Id"><i class="fa-solid fa-arrow-right"></i> Haritada Göster</a>
+										<a  onclick="secKoordinat(@Model.tedariklist[i].Id)" ><i class="fa-solid fa-arrow-right"></i> Haritada Göster</a>
 							</div>
 					</div>
 				</div>

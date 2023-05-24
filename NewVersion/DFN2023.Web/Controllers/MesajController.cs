@@ -20,6 +20,7 @@ namespace DFN2023.Web.Controllers
             PublicModel pm = new PublicModel(); if (usr != null)
             {
                 //var m= _websiteService.getMesajList(usr.Id, false);
+                pm.tedarikcirol = EnumRol.Tedarikci;
                 pm.user = usr;
 
             return View(pm);
@@ -37,7 +38,7 @@ namespace DFN2023.Web.Controllers
             PublicModel pm = new PublicModel();
             if (usr != null)
             {
-                var sonuc = _websiteService.getMesajList(usr.Id, start, finish);
+                var sonuc = _websiteService.getMesajList(usr.Id, start, finish, usr.Role,EnumRol.Tedarikci);
                 return Task.FromResult(Json(sonuc));
             }
             else
@@ -80,7 +81,7 @@ namespace DFN2023.Web.Controllers
                     mesaj.ToUser= touser;
                     mesaj.MessageContent = mesajtext;
                     mesaj.CreateDate = DateTime.Now;
-                    mesaj.LastIP =1;
+                    mesaj.LastIP = HttpContext.Connection.RemoteIpAddress?.ToString();
                     mesaj.Status = 1; 
                     mesaj.IsShow = false;
 

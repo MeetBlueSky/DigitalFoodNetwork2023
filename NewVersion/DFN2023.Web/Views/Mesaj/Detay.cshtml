@@ -17,6 +17,7 @@
 					  }
 	  			</div>
 	  			<ul class="comment gap no-top" id="messarea">
+					  @if(Model.mesajdetay.Count>0){
 					   @for (var i = 0; i < @Model.mesajdetay.Count; i++)
 					  {
 						  @if(@Model.mesajdetay[i].FromUser==@Model.user.Id){
@@ -27,7 +28,7 @@
 		  				<div class="author-name-comment">
 		  					<div>
 								<h6>Siz</h6>
-			  					<span>@Model.mesajdetay[i].CreateDate</span>
+			  					<span>@Model.mesajdetay[i].CreateDate.ToString().Replace("T"," ").Substring(0,16)</span>
 								   @if(@Model.mesajdetay[i].IsShow){
 									  
 								  <i class="fa fa-check" style="color: limegreen;"></i>
@@ -53,7 +54,7 @@
 		  					<img alt="man" src="~/assets/img/stcontent/50x50.png">
 		  					<div>
 								<h6>@Model.mesajdetay[i].UserFrom</h6>
-			  					<span>@Model.mesajdetay[i].CreateDate</span>
+			  					<span>@Model.mesajdetay[i].CreateDate.ToString().Replace("T"," ").Substring(0,16)</span>
 								
 		  					</div>
 			  					
@@ -62,20 +63,23 @@
 						  }
 	  				
 					  }
-	  			
+					 
 	  				
-	  				<li class="hide-button">
-	  					<a href="#"><h6>Hide<i class="fa-solid fa-angle-up"></i></h6></a>
-	  				</li>
-	  				
-	  				<li class="show-all-button">
-	  					<h6> <a onclick="mesajDetayGetir(1)"><span>4 Mesaj daha göster<i class="fa-solid fa-angle-down"></i></span></a></h6>
-	  				</li>
+	  				@*<li class="show-all-button">
+	  					<h6> <a onclick="mesajDetayGetir(1)" style="cursor:pointer"><span>4 Mesaj daha göster<i class="fa-solid fa-angle-down"></i></span></a></h6>
+	  				</li>*@
 	  				<li>
 	  					<div class="button-gap">
 							<a onclick="mesajDetayGetir(2)" class="button button-2 non">Hepsini göster<i class="fa-solid fa-angle-down"></i></a>
 						</div>
 					</li>
+	  			}else{
+					  <li class="show-all-button">
+	  					<h6> <span>Mesajlaşma bulunmamaktadır.</span></h6>
+	  				</li>
+				  }
+	  				
+	  				
 	  			</ul>
 	  			<div class="comment">
 	  				<h2>Mesajınızı Giriniz</h2>

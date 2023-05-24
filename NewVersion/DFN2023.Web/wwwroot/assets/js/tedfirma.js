@@ -103,6 +103,7 @@ function firmaKaydet() {
     var vkn = $("#vkn").val();
 
     var ul = $("#ulke").val();
+    var ktyp = $("#kurumtip").val();
     var il = $("#il").val();
     var ilc = $("#ilce").val();
     var adr = $("#adres").val();
@@ -117,8 +118,8 @@ function firmaKaydet() {
     var hilc = $("#haritailce").val();
     var hul = $("#haritaulke").val();
     var hadr = $("#hadres").val();
-    var kx = $("#kx").val();
-    var ky = $("#ky").val();
+    var kx = $("#kx").val().trim();
+    var ky = $("#ky").val().trim();
     var ddesc = $("#ddesc").val();
     var sdesc = $("#sdesc").val();
 
@@ -129,6 +130,10 @@ function firmaKaydet() {
     else if (srun.length < 1) {
 
         uyari("Şirket ünvanı boş geçilemez");
+    }
+    else if (ktyp <= 0) {
+
+        uyari("Şirket tipi seçiniz");
     }
     else if (adr.length < 1 && hadr.length < 1) {
 
@@ -158,7 +163,7 @@ function firmaKaydet() {
                 DetailDescription: ddesc  ,
                 TaxOffice: sdesc,
                 //TaxNo: " ",
-                CompanyTypeId : 1,
+                CompanyTypeId: ktyp,
                 OfficialAddress : adr,
          
                 OfficialCountryId: ul ,
@@ -199,7 +204,7 @@ function firmaKaydet() {
 
 
 
-                        window.location.href = '/Login/UrunEkle';
+                        window.location.href = '/Home/Index';
 
 
 
@@ -272,20 +277,51 @@ function uploadFiles(inputId) {
 
 
 var dosya1 = "";
-
 function uploadFilesPdf(inputId) {
-  
-    $.ajax({
-        paramName: "file",
-        maxFiles: 1,
-        maxFilesize: 10, // MB
-        addRemoveLinks: true,
-        acceptedFiles: "application/pdf",
-        accept: function (file, done) {
+    var input = document.getElementById(inputId);
+    var files = input.files;
+    var formData = new FormData();
 
-            dosya1 = file.name;
-            done();
-        },
-       
-    });
+    for (var i = 0; i !== files.length; i++) {
+        formData.append("file", files[i]);
+    }
+
+    $.ajax(
+        {
+            url: hst1,
+            data: formData,
+            processData: false,
+            contentType: false,
+            type: "POST",
+            success: function (data) {
+
+
+                    swal.fire({
+                        title: 'Dosya Yükleme Başarılı',
+                        type: 'success',
+                        buttonsStyling: false,
+                        confirmButtonText: 'OK',
+                        confirmButtonClass: 'btn btn-primary font-weight-bold'
+                    });
+               
+            }
+        }
+    );
 }
+//function uploadFilesPdf(inputId) {
+  
+//    $.ajax({
+//        paramName: "file",
+//        maxFiles: 1,
+//        url: hst1,
+//        maxFilesize: 10, // MB
+//        addRemoveLinks: true,
+//        acceptedFiles: "application/pdf",
+//        accept: function (file, done) {
+
+//            dosya1 = file.name;
+//            done();
+//        },
+       
+//    });
+//}

@@ -23,31 +23,48 @@ function mesajDetayGetir(control) {
                 
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].FromUser == user.Id) {
-                        a = a + '<li>'+
-                            '<div class= "comment-text" > ' +
-                          ' <p>' + data[i].MessageContent+'</p>' +
-                            '	</div> ' +
-                            '  <div class= "author-name-comment"> ' +
-                            '   <div> ' +
-                            ' <h6> Siz</h6 > ' +
-                          ' <span>' + data[i].CreateDate +'</span > ' +
+                        if (data[i].IsShow == true) {
+                            a = a + '<li>' +
+                                '<div class= "comment-text" > ' +
+                                ' <p>' + data[i].MessageContent + '</p>' +
+                                '	</div> ' +
+                                '  <div class= "author-name-comment"> ' +
+                                '   <div> ' +
+                                ' <h6> Siz</h6 > ' +
+                                ' <span>' + data[i].CreateDate.replace("T", " ").substring(0, 16) + '</span > ' +
 
-                            '  <i class="fa fa-check" style = "' + data[i].IsShow == true ?'color: limegreen;':'color:black' +'" ></i> ' +
-                            ' <i class="fa fa-check" ></i> ' +
+                                '  <i class="fa fa-check" style = "color: limegreen;" ></i> ' +
 
-                            '   </div> ' +
-                            '  <img alt = "man" src = "~/assets/img/stcontent/50x50.png"> ' +
+                                '   </div> ' +
+                                '  <img alt = "man" src = "/assets/img/stcontent/50x50.png"> ' +
                             '</div></li>';
+                        } else {
+                            a = a + '<li>' +
+                                '<div class= "comment-text" > ' +
+                                ' <p>' + data[i].MessageContent + '</p>' +
+                                '	</div> ' +
+                                '  <div class= "author-name-comment"> ' +
+                                '   <div> ' +
+                                ' <h6> Siz</h6 > ' +
+                                ' <span>' + data[i].CreateDate.replace("T", " ").substring(0, 16) + '</span > ' +
+
+                                '  <i class="fa fa-check" style = "color:black" ></i> ' +
+
+                                '   </div> ' +
+                                '  <img alt = "man" src = "/assets/img/stcontent/50x50.png"> ' +
+                            '</div></li>';
+                        }
+                       
                     }
                     if (data[i].FromUser != user.Id) {
                         a = a + '<li class="reply one"><div class= "comment-text">' +
                             ' <p>' + data[i].MessageContent + '</p>' +
                             '	</div> ' +
                             '  <div class= "author-name-comment"> ' +
-                            '  <img alt = "man" src = "~/assets/img/stcontent/50x50.png"> ' +
+                            '  <img alt = "man" src = "/assets/img/stcontent/50x50.png"> ' +
                             '   <div> ' +
                             ' <h6>' + tedarikciadi + '</h6> ' +
-                            ' <span>' + data[i].CreateDate + '</span > ' +
+                            ' <span>' + data[i].CreateDate.replace("T", " ").substring(0, 16) + '</span > ' +
 
 
                             '   </div> ' +

@@ -52,23 +52,33 @@ namespace DFN2023.Web.Controllers
         PublicModel pm = new PublicModel();
         var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
 
-        if (usr != null)
-        {
-            var kategorilist = _websiteService.getCategoryList();
-            pm.kategoriler = kategorilist;
-            pm.urunler = _websiteService.getUrunlerList(usr.Id);
-            int a = _websiteService.getCompanyId(usr.Id);
-            if (a > 0)
+            if (usr != null)
             {
-                HttpContext.Session.SetInt32("selectcompid", a);
-            }
-            else
-            {
+                int a = _websiteService.getCompanyId(usr.Id);
+                
+                if (a>0)
+                {
+                    var kategorilist = _websiteService.getCategoryList();
+                    pm.kategoriler = kategorilist;
+                    pm.urunler = _websiteService.getUrunlerList(usr.Id,a);
+                    if (a > 0)
+                    {
+                        HttpContext.Session.SetInt32("selectcompid", a);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    pm.user = usr;
+                    return View(pm);
+                }
+                else
+                {
+                    return RedirectToAction("TedMailOnaylama", "Login", new { code = usr.EmailConfirmed });
+                }
+
                 return RedirectToAction("Index", "Home");
             }
-            pm.user = usr;
-            return View(pm);
-        }
 
         else
         {
@@ -88,13 +98,15 @@ namespace DFN2023.Web.Controllers
 
             comp.LastUpdateDate = DateTime.Now;
             comp.LastUpdatedBy = usr.Id;
+            comp.LastUpdatedBy = usr.Id;
+            comp.LastIP = HttpContext.Connection.RemoteIpAddress?.ToString();
 
 
-            if (comp.Id <= 0)
+                if (comp.Id <= 0)
             {
                 comp.CreateDate = DateTime.Now;
                 comp.CreatedBy = usr.Id;
-                comp.LastIP = "";
+                comp.LastIP= HttpContext.Connection.RemoteIpAddress?.ToString();
                 comp.Status = 1;
                 comp.ProductBaseId = 1;
                 comp.CompanyId = selectcompid;
@@ -163,14 +175,7 @@ namespace DFN2023.Web.Controllers
         return Task.FromResult(Json(sonuc));
 
     }
-    public IActionResult Harita(int id)
-        {
 
-            var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
-            PublicModel pm = new PublicModel();
-            pm.user = usr;
-            return View(pm);
-        }
 
         [HttpPost]
         public Task<JsonResult> favEkleCikar(int companyid, int durum)

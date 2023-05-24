@@ -26,7 +26,7 @@
                          <div class="col-2"> 
 			            <div class="name-form">
                         <label for="fname">Ürün:</label>
-                        <input type="text" id="urun" placeholder="Ürün Adı Giriniz" />
+                        <input type="text"  id="urun" placeholder="Ürün Adı Giriniz" style="height: 40px;margin-top: 40px; border-radius: 5px; border: 1px solid #e9ecef;"/>
 
                         <br><br>
                         </div></div>
@@ -35,7 +35,7 @@
 			            <div class="name-form">
                         <label for="fname">Fiyat(TL):</label>
                         
-                        <input type="number" id="fiyat" placeholder="Fiyat Giriniz" />
+                        <input type="number" id="fiyat" placeholder="Fiyat Giriniz" style="height: 40px;margin-top: 40px; border-radius: 5px; border: 1px solid #e9ecef;"/>
                         <br><br>
                         </div></div>
                          <div class="col-2"> 
@@ -54,7 +54,7 @@
                            <div class="col-4"> 
 			            <div class="name-form">
                         <label for="fname">Açıklama:</label>
-                        <input type="text" id="aciklama" placeholder="Açıklama Giriniz" />
+                        <input type="text" id="aciklama" placeholder="Açıklama Giriniz" style="height: 40px;margin-top: 40px; border-radius: 5px; border: 1px solid #e9ecef;"/>
                         <br><br>
                         </div></div>
 
@@ -68,7 +68,7 @@
   		</div>
   	</div>
   </section>
-  <section class="hero-section about single-blog blog-content gap no-top">
+  <section style="margin-bottom: 40px;">
     <div class="container">
   <div class="card">
     <div class="card-body">
@@ -96,8 +96,8 @@
               <td>@Model.urunler[i].Price</td>
               <td>@Model.urunler[i].Unit</td>
               <td>@Model.urunler[i].Desc</td>
-              <td><button onclick="guncelleModal(@Model.urunler[i].Id,@Model.urunler[i].CategoryId,'@Model.urunler[i].Name',@Model.urunler[i].Price,@Model.urunler[i].UnitId,'@Model.urunler[i].Desc')">Güncelle</button></td>
-              <td><button onclick="urunSil(@Model.urunler[i].Id)">Sil</button></td>
+              <td><button style="width: 50%;" class="button-price mt-3" onclick="guncelleModal(@Model.urunler[i].Id,@Model.urunler[i].CategoryId,'@Model.urunler[i].Name',@Model.urunler[i].Price,@Model.urunler[i].UnitId,'@Model.urunler[i].Desc')">Güncelle</button></td>
+              <td><button style="width: 50%;" class="button-price mt-3" onclick="urunSil(@Model.urunler[i].Id)">Sil</button></td>
             </tr>
 			 }
           </thead>
@@ -111,19 +111,18 @@
     <div id="urunGuncelleModal" class="modal">
 
   <!-- Modal content -->
-  <div class="modal-content">
+  <div class="modal-content" style= "width: 40%;">
    <div style="margin-block: 60px;margin-inline: 60px;text-align: center;">
                    
-	   <span style="font-weight: bold;font-size: x-large;">Guncelle</span>
 	   
   			<div>
   				
-	  			<h1>Firma Bilgileri</h1>
+	  			<h1>Firma Guncelle</h1>
                   <form class="blog-form">
                       <div class="column">
 			            <div class="name-form">
                         <label for="fname">Kategori:</label>
-								<select id="gkategoriid" >
+								<select class="dropdownlar" style="width: 100%;" id="gkategoriid" >
                                    @for (var i = 0; i < Model.kategoriler.Count; i++)
 								    {
 									 <option value="@Model.kategoriler[i].Id">@Model.kategoriler[i].Name</option>
@@ -147,7 +146,7 @@
                         </div>
 			            <div class="name-form">
                         <label for="fname">Birim:</label>
-								<select id="gbirimid" class="nice-select Advice">
+								<select id="gbirimid" style="width: 100%;" class="dropdownlar">
 								  <option value="0">Birim Seçiniz</option>
 								  <option value="1">gr</option>
 								  <option value="2">kg</option>

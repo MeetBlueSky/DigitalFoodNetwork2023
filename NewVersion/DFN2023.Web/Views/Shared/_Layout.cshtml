@@ -121,86 +121,42 @@
 						}
 						else
 						{
-							  <a href="javascript:void(0)" id="desktop-menu" class="menu-btn"><i class="fa-solid fa-heart"></i></a>
+							  @*<a href="javascript:void(0)" id="desktop-menu" class="menu-btn"><i class="fa-solid fa-heart"></i></a>*@
+							  <a id="desktop-menu" style="margin-right: 10px;" class="menu-btn">@Model.user.Name @Model.user.Surname </a>
 							<a  onclick="cikisYap()" class="button button-2">Çıkış Yap</a>
 						}
 						
 					</div>
 				</div>
+				@if(@Model.user!=null){
 			 <div class="menu-wrap">
                <div class="menu-inner ps ps--active-x ps--active-y">
                  <span class="menu-cls-btn"><i class="cls-leftright"></i><i class="cls-rightleft"></i></span>
                  <div class="checkout-order">
 						<div class="title-checkout">
-							<h2>My Orders</h2>
+							<h2>Kullanıcı</h2>
 						</div>
 						<div class="banner-wilmington">
-							<img alt="logo" src="~/assets/img/stcontent/50x50.png">
-							<h6>Kennington Lane Cafe</h6>
+							<h6>@Model.user.Name @Model.user.Surname </h6>
 						</div>
 						<ul>
 							<li class="price-list">
-							<i class="closeButton fa-solid fa-xmark"></i>
 							<div class="counter-container">
 								<div class="counter-food">
-									<img alt="food" src="~/assets/img/stcontent/100x67.png">
-									<h4>Pasta, kiwi and sauce chilli</h4>
+									<h4>@Model.user.Email</h4>
 								</div>
-								<h3>$39</h3>
 							</div>
-							<div class="price">
-									<div>
-					              		<h2>$39</h2>
-					              		<span>Sum</span>
-					              	</div>
-					              		<div>
-						             	 	<div class="qty-input">
-												<button class="qty-count qty-count--minus" data-action="minus" type="button">-</button>
-												<input class="product-qty" type="number" name="product-qty" min="0" value="1">
-												<button class="qty-count qty-count--add" data-action="add" type="button">+</button>
-											</div>
-											<span>Quantity</span>
-										</div>
-										</div>
+							
 							</li>
-							<li class="price-list">
-							<i class="closeButton fa-solid fa-xmark"></i>
-							<div class="counter-container">
-								<div class="counter-food">
-									<img alt="food" src="~/assets/img/stcontent/100x67.png">
-									<h4>Rice with shrimps and kiwi</h4>
-								</div>
-								<h3>$49</h3>
-							</div>
-							<div class="price">
-									<div>
-					              		<h2>$49</h2>
-					              		<span>Sum</span>
-					              	</div>
-					              		<div>
-						             	 	<div class="qty-input">
-												<button class="qty-count qty-count--minus" data-action="minus" type="button">-</button>
-												<input class="product-qty" type="number" name="product-qty" min="0" value="1">
-												<button class="qty-count qty-count--add" data-action="add" type="button">+</button>
-											</div>
-											<span>Quantity</span>
-										</div>
-										</div>
-							</li>
+						
 						</ul>
-						<div class="totel-price">
-							<span>Total order:</span>
-							<h5>$137</h5>
-						</div>
-						<div class="totel-price">
-							<span>To pay:</span>
-							<h2>$137</h2>
-						</div>
-						<button class="button-price">Checkout</button>
+						
 
 					</div>
             	 </div>
          	 </div>
+
+				}
          	 <div class="mobile-nav hmburger-menu" id="mobile-nav" style="display:block;">
 
 
@@ -321,8 +277,26 @@
 		
 			
 			
-			  
+								<span style="text-decoration: underline;cursor: pointer;" onclick="sifremiUnuttum()">Şifremi unuttum</span>
 								<button style="margin-top: 20px;margin-bottom: 20px;" onclick="girisYap()" class="button-price">Giriş Yap</button>
+								
+          </div>
+  </div>
+
+</div>
+  <div id="sifreUModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+   <div style="margin-block: 60px;margin-inline: 60px;text-align: center;">
+                   
+	   <span style="font-weight: bold;font-size: x-large;">Şifremi Yenile</span>
+	   <div class="name-form">
+									<i class="fa fa-user"></i>
+									<input type="text" name="name" id="su_email" placeholder="E-mailinizi giriniz">
+								</div>
+								
+								<button style="margin-top: 20px;margin-bottom: 20px;" onclick="sifreMailGönder()" class="button-price">Mail Gönder</button>
 								
           </div>
   </div>
@@ -330,75 +304,6 @@
 </div>
 
 
-    <div class="modal fade" id="exampleModalSizeLg"  tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" id="auth" style="background-color:transparent; border:hidden ">
-
-
-                <div class="form-container" style="background-color:white">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="
-    float: right;
-    background-color: white;
-    border: hidden;">
-                        <span aria-hidden="true" style="  font-size: 30px;  padding: 10px;">×</span>
-                    
-                    </button>
-                    <div class="form-body">
-                        <div class="logo">
-                            <a href="#" alt="Pera Müzesi Artshop" title="Pera Müzesi Artshop">
-                                <strong>Pera Müzesi</strong> Artshop
-                            </a>
-                        </div>
-                        <div class="form">
-                            <div class="item">
-                                <input class="textbox" type="text" placeholder="Kullanıcı adı / E posta adresi" />
-                            </div>
-                            <div class="item">
-                                <input class="textbox" type="password" placeholder="Şifre" />
-                            </div>
-                            <div class="item with-selection">
-                                <div class="selection-item checkbox">
-                                    <input class="form-check-input" type="checkbox" id="remember">
-                                    <label class="form-check-label" for="remember">Şifremi hatırla</label>
-                                </div>
-                                <div class="selection-item">
-                                    <a href="#" title="Şifremi Unuttum">Şifremi Unuttum</a>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <button type="button">Giriş yap</button>
-                            </div>
-                        </div>
-                        <div class="text-divider">
-                            <span>yada</span>
-                        </div>
-                        <div class="other-auth">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/assets/images/icons/login-facebook.png" alt="" title="" />
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/assets/images/icons/login-google.png" alt="" title="" />
-                                    </a>
-                                </li>
-                            </ul>
-                            <span>ile giriş yap</span>
-                        </div>
-                    </div>
-                    <div class="form-footer">
-                        <span> Üye değil misiniz?</span>
-                        <a onclick="yeniKayitac()" href="#"> Üye ol</a>
-                    </div>
-
-
-                </div>
-
-            </div>
-        </div>
-    </div>
 
 	<!-- footer -->
 	<footer class="gap no-bottom" style="background-color: #363636;">
@@ -499,6 +404,7 @@
 
 	}
 	var modal = document.getElementById("myModal");
+	var sumodal = document.getElementById("sifreUModal");
 	var uguncmodal = document.getElementById("urunGuncelleModal");
 
 // Get the button that opens the modal
@@ -513,6 +419,7 @@ var kayitmodal = document.getElementById("kayitModal");
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
+  sumodal.style.display = "none";
   kmodal.style.display = "none";
     kayitmodal.style.display = "none";
     uguncmodal.style.display = "none";
@@ -522,6 +429,9 @@ span.onclick = function() {
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
+  }
+  if (event.target == sumodal) {
+    sumodal.style.display = "none";
   } if (event.target == kmodal) {
     kmodal.style.display = "none";
   } if (event.target == kayitmodal) {
@@ -531,16 +441,25 @@ window.onclick = function(event) {
     }
 }
 function girisYapModal(){
+    $(':input').val('');
 	
   modal.style.display = "block";
 }
 	var kmodal = document.getElementById("modalKayitOl");
 function kayitOlModal(){
 	
+    $(':input').val('');
     modal.style.display = "none";
   kmodal.style.display = "block";
 }
 
+  function sifremiUnuttum(){
+	  
+  modal.style.display = "none";
+  sumodal.style.display = "block";
+   
+
+            }
   function cikisYap(){
 	  
     $('#exampleModalSizeLg').pleaseWait();
@@ -563,6 +482,43 @@ function kayitOlModal(){
             }
 
 
+function sifreMailGönder(){
+	
+	 $.ajax({
+                type: "POST",
+                async : true,
+                url: "@Url.Action("ForgotPass", "Login")",
+                data: { Email: $("#email").val()},
+                dataType: 'json',
+                success: function (data) {
+
+						if (!data.hata) {
+					Swal.fire(
+						'Başarılı',
+						data.mesaj,
+						'success'
+					);
+					 modal.style.display = "none";
+					 
+                window.location.href = data.res;
+				}
+				else {
+					Swal.fire(
+						'HATA',
+						data.mesaj,
+						'error'
+					)
+				}
+                  },
+        complete: function (data2) {
+
+            $('#exampleModalSizeLg').pleaseWait('stop');
+
+        },
+
+            });
+
+            }
 function girisYap(){
 	
     $('#exampleModalSizeLg').pleaseWait();
@@ -570,7 +526,7 @@ function girisYap(){
                 type: "POST",
                 async : true,
                 url: "@Url.Action("GirisYap", "Login")",
-                data: { UserName: $("#email").val(), Password: $("#password").val()},
+                data: { Email: $("#email").val(), Password: $("#password").val()},
                 dataType: 'json',
                 success: function (data) {
 

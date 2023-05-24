@@ -1,4 +1,23 @@
-﻿
+﻿var recaptcha_response = '';
+var response;
+function submitUserForm() {
+    response = grecaptcha.getResponse();
+
+    if (recaptcha_response.length == 0) {
+        document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">Robot değilim onaylanmadı.</span>';
+        return false;
+    }
+    return true;
+}
+
+function verifyCaptcha(token) {
+    response = grecaptcha.getResponse();
+
+    recaptcha_response = token;
+    document.getElementById('g-recaptcha-error').innerHTML = '';
+}
+
+
 function filter() {
         $.ajax({
             data: {
@@ -22,12 +41,16 @@ function filter() {
 // Get the <span> element that closes the modal
 var rol = 0;
 function kayitOl(role) {
+    $(':input').val('');
     rol = role;
     kayitmodal.style.display = "block";
 }
 
 
 function kayitOlFunction() {
+
+    response = grecaptcha.getResponse();
+    if (response.length > 0) {
     if ($("#kayitpassword").val() != $("#kayitpassword2").val()) {
         uyari("Şifrreler aynı değil");
     }
@@ -38,10 +61,6 @@ function kayitOlFunction() {
     else if ($("#kayitsoyad").val().length < 1) {
 
         uyari("Soyad Alanı boş geçilemez");
-    }
-    else if ($("#kayitkullaniciadi").val().length < 1) {
-
-        uyari("Kullanıcı Alanı boş geçilemez");
     }
     else if ($("#kayittel").val().length < 1) {
 
@@ -64,7 +83,6 @@ function kayitOlFunction() {
             data: {
                 Name: $("#kayitname").val(),
                 Surname: $("#kayitsoyad").val(),
-                UserName: $("#kayitkullaniciadi").val(),
                 Email: $("#kayitemail").val(),
                 CitizenId: $("#kayittckn").val(),
                 Phone: $("#kayittel").val(),
@@ -106,6 +124,12 @@ function kayitOlFunction() {
 
         });
     }
+}
+    else {
+    document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">Robot değilim onaylanmadı.</span>';
+
+}
+
    
 
 }

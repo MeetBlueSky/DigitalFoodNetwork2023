@@ -3431,3 +3431,31 @@ li.menu-item-has-children.active {
     width: 960px;
     height: 450px;
 }
+
+
+.dropdownlar {
+    color: #CFCFCF;
+    border: 0;
+    box-shadow: -1px 15px 26px -4px rgba(161,151,151,0.15);
+    -webkit-box-shadow: -1px 15px 26px -4px rgba(161,151,151,0.15);
+    -moz-box-shadow: -1px 15px 26px -4px rgba(161,151,151,0.15);
+    height: 55px;
+    width: 60%;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    width: 80%;
+    padding-left: 20px;
+}
+    .dropdownlar .option:hover,
+    .dropdownlar .option.focus,
+    .dropdownlar .option.selected.focus {
+        background: #f29f05;
+        color: black;
+    }
+
+    .dropdownlar.open .list {
+        width: 100%;
+    }
+
