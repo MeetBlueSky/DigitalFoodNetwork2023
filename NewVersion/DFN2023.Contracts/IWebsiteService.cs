@@ -33,6 +33,6 @@ namespace DFN2023.Contracts
         public bool deleteUrun(int id);
         int getCompanyId(int userid);
         List<CompanyTypeDTO> getCompanyTypeList();
-        UserDTO checkMail(string email);
+        User sifreYenile(string email, string code);
     }
 }

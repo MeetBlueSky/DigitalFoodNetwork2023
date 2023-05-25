@@ -157,6 +157,23 @@ namespace DFN2023.Web.Controllers
             }
 
         }//var kod= HttpContext.Session.GetString("emailkodu");
+        public IActionResult MailHata()
+        {
+            PublicModel pm = new PublicModel();
+            var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
+
+            if (usr == null)
+            {
+                pm.user = usr;
+                return View(pm);
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
         [HttpPost]
         public async Task<JsonResult> tekrarMailYolla()
         {
@@ -171,11 +188,11 @@ namespace DFN2023.Web.Controllers
                 var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
                 if (rol == EnumRol.Tedarikci.ToString())
                 {
-                     mesaj = send(email, "Mail onaylamak için http://localhost:54803/Login/TedMailOnaylama?code=" + kod + " linkine tıklayarak onaylayabilirsiniz", "Mail Onaylama", kod);
+                     mesaj = send(email, "Mail onaylamak için http://localhost:54803/Login/TedMailOnaylama?code=" + kod + " linkine tıklayarak onaylayabilirsiniz", "Mail Onaylama");
                 }
                 else
                 {
-                     mesaj = send(email, "Mail onaylamak için http://localhost:54803/Login/TukMailOnaylama?code=" + kod + " linkine tıklayarak onaylayabilirsiniz", "Mail Onaylama", kod);
+                     mesaj = send(email, "Mail onaylamak için http://localhost:54803/Login/TukMailOnaylama?code=" + kod + " linkine tıklayarak onaylayabilirsiniz", "Mail Onaylama");
 
                 }
                 if (mesaj)
@@ -200,7 +217,7 @@ namespace DFN2023.Web.Controllers
         }
 
 
-        public static bool send(string pTo, string pBody, string pSubject,string kod)
+        public static bool send(string pTo, string pBody, string pSubject)
         {
             // var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
@@ -367,46 +384,69 @@ namespace DFN2023.Web.Controllers
             SelectList listDist = new SelectList(listDistrict, "Id", "Name");
             return Json(listDist);
         }
-        //[HttpPost]
-        //public async Task<JsonResult> ForgotPass(UserDTO user)
-        //{
+        [HttpPost]
+        public async Task<JsonResult> ForgotPass(UserDTO user)
+        {
 
-        //    var sonuc = new { hata = true, mesaj = "Teknik Ariza", res = "/" };
-        //    try
-        //    {
-        //        if (user.Email != null)
-        //        {
+            var sonuc = new { hata = true, mesaj = "Teknik Ariza", res = "/" };
+            try
+            {
+                if (user.Email != null)
+                {
+                    if (user.Id==-1)
+                    {
+                        user.Id = 0;
+                        user.Email = HttpContext.Session.GetString("email");
+                    }
+                    Random generator = new Random();
+                    String r = generator.Next(0, 1000000).ToString("D6");
 
-        //            var usr = _websiteService.checkMail(user.Email);
-                    
-        //             if (usr != null)
-        //            {
-                        
-        //                  bool mesaj = send(usr.Email, "Mail onaylamak için http://localhost:54803/Login/TukMailOnaylama?code=" + kod + " linkine tıklayarak onaylayabilirsiniz", "Mail Onaylama", kod);
+                    user.Password = XamarinUtils.Sifrele(r);
+                    var usr = _websiteService.sifreYenile(user.Email, user.Password);
 
-                        
-        //                sonuc = new { hata = true, mesaj = "Böyle bir kullanıcı Bulunamadı", res = "/" };
-        //            }
-        //            else
-        //            {
-        //                sonuc = new { hata = true, mesaj = "Böyle bir kullanıcı Bulunamadı", res = "/" };
-        //            }
+                    if (usr != null)
+                    {
+
+                        if (usr.Id>0)
+                        {
+                            bool mesaj = send(usr.Email, "Merhaba " + usr.Name + " yeni şifreniz <b>" + r + "</b>", "Şifre Yenileme");
+                            if (mesaj)
+                            {
+                                sonuc = new { hata = false, mesaj = "Şifreniz güncellendi. Yeni şifrenizi gönderdiğimiz mailden öğrenebilirsiniz.", res = "/" };
+
+                            }
+                            else
+                            {
+                                sonuc = new { hata = false, mesaj = "Böyle bir kullanıcı Bulunamadı", res = "/" };
+                            }
+
+                        }
+                        else
+                        {
+                            sonuc = new { hata = true, mesaj = "Böyle bir kullanıcı Bulunamadı", res = "/" };
+                        }
+
+                    }
+                    else
+                    {
+                        sonuc = new { hata = true, mesaj = "Hata oluştu", res = "/" };
+                    }
 
 
-        //        }
-        //        else
-        //        {
-        //            sonuc = new { hata = true, mesaj = "Mail Adresi girilmedi", res = "/" };
-        //        }
+                }
+                else
+                {
+                    sonuc = new { hata = true, mesaj = "Mail Adresi girilmedi", res = "/" };
+                }
 
-        //    }
-        //    catch (Exception e)
-        //    {
+            }
+            catch (Exception e)
+            {
 
-        //    }
+            }
 
-        //    return Json(sonuc);
+            return Json(sonuc);
 
-        //}
+        }
     }
 }

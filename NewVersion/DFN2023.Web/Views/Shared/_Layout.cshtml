@@ -488,7 +488,7 @@ function sifreMailGönder(){
                 type: "POST",
                 async : true,
                 url: "@Url.Action("ForgotPass", "Login")",
-                data: { Email: $("#email").val()},
+                data: { Email: $("#su_email").val()},
                 dataType: 'json',
                 success: function (data) {
 

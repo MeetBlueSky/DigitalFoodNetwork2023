@@ -112,6 +112,9 @@ function kayitOlFunction() {
                     });
                 } else {
                     uyari(data.mesaj);
+                    if (data.res!="/") {
+                        window.location.href = data.res;
+                    }
                 }
                 
                

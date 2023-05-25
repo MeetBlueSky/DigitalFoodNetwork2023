@@ -782,16 +782,22 @@ namespace DFN2023.Business
 
             }
         }
-        public UserDTO checkMail(string email)
+        public User sifreYenile(string email,string code)
         {
             try
             {
-                var a = _mapper.Map<List<UserDTO>>(_fkRepositoryUser.Entities.Where(p => p.Email == email).ToList());
+                var a = _fkRepositoryUser.Entities.Where(p => p.Email == email).ToList();
                 if (a.Count > 0)
                 {
+                    a[0].Password = code;
+                    var result = _fkRepositoryUser.Update(a[0]);
+                    _unitOfWork.SaveChanges();
                     return a[0];
                 }
-                return null;
+                return new User
+                {
+                    Id = -1,
+                };
             }
             catch (Exception)
             {
@@ -800,7 +806,7 @@ namespace DFN2023.Business
             }
            
         }
-
+        
 
     }
 }
