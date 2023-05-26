@@ -26,6 +26,7 @@ namespace DFN2023.Web.Models
         public List<CountryDTO>? ulkeler { get; set; }
         public List<ProductCompanyDTO>? urunler { get; set; }
         public List<CompanyTypeDTO>? sirkettipleri { get; set; }
+        public CompanyDTO sirket { get; set; }
 
 
     }

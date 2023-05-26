@@ -1,4 +1,5 @@
 ﻿ @model DFN2023.Web.Models.PublicModel
+ @using DFN2023.Web.Helpers;
 @{
     ViewData["Title"] = "Tedarikçi Listesi";
 } 
@@ -9,8 +10,8 @@
 						<div class="col-lg-6" data-aos="fade-up"  data-aos-delay="200" data-aos-duration="300">
 							<div class="about-text">
 								<ul class="crumbs d-flex">
-									<li><a href="index.html">Home</a></li>
-									<li class="two"><a href="index.html"><i class="fa-solid fa-right-long"></i>Restaurants</a></li>
+									<li><a href="index.html">Anasayfa</a></li>
+									<li class="two"><a href="index.html"><i class="fa-solid fa-right-long"></i>Firmalar</a></li>
 								</ul>
 								<h2>Ürün / Tedarikçi Bulun</h2>
 								<p>Egestas sed tempus urna et pharetra pharetra massa. Fermentum posuere urna nec tincidunt praesent semper.</p>
@@ -31,7 +32,7 @@
 									<div class="restaurant">
 										<div class="name-form">
 											<i class="fa-regular fa-user"></i>
-											<input type="text" id="urunadi" value="@Model.tedarikciadi" placeholder="Ürün Adı Giriniz" />
+							<input type="text" name="urunadi" autocomplete="on" id="urunadi" value="@Model.tedarikciadi" placeholder="Ürün Adı Giriniz" />
 										</div>
 									</div>	
 									
@@ -69,7 +70,7 @@
 							<img alt="logo" src="~/assets/img/stcontent/100x100.png">
 						}
 							<div class="cafa">
-								<h4><a href="#">@Model.tedariklist[i].Name</a></h4>
+							<h4><a href="@Url.Action("Detay","Firma")/@UrlCleaner.GetSanitizedTextForURL(Model.tedariklist[i].Name)/@Model.tedariklist[i].CompanyId">@Model.tedariklist[i].Name</a></h4>
 								<div class="cafa-button">
 								@if(Model.tedariklist[i].FavDurum==true){
 									

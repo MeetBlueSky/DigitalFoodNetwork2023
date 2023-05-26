@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DFN2023.Entities.EF;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,6 +59,8 @@ namespace DFN2023.Entities.DTO
 
         public string? CompanyTypeName { get; set; }
         public int? UserId { get; set; }
+        public bool? Fav { get; set; }
+		public List<CompanyImage>? CompanyImage { get; set; }
 
-    }
+	}
 }

@@ -66,7 +66,7 @@ function haritaAc() {
     } else {
         initMap(1);
         harita = true;
-        $("#textyazi").text("Ürünler");
+        $("#textyazi").text("Liste Görünümü");
         document.getElementById("urunler").style.display = "none";
         document.getElementById("harita").style.display = "block";
 

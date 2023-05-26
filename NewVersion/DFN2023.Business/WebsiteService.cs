@@ -91,9 +91,18 @@ namespace DFN2023.Business
 
         public List<CategoryDTO> getCategoryList()
         {
-            return _mapper.Map<List<CategoryDTO>>(_fkRepositoryCategory.Entities.Where(p => p.Status == 1).OrderBy(p => p.RowNum).ToList());
+            try
+            {
+                return _mapper.Map<List<CategoryDTO>>(_fkRepositoryCategory.Entities.Where(p => p.Status == 1).OrderBy(p => p.RowNum).ToList());
+
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
         }
-        
+
         public List<CompanyTypeDTO> getCompanyTypeList()
         {
             try
@@ -528,12 +537,12 @@ namespace DFN2023.Business
                     return new User
                     {
                         Id = -1,
+                        EmailConfirmed = a[0].EmailConfirmed,
                     };
                 }
                 else
                 {
-                    Random generator = new Random();
-                    String r = generator.Next(0, 1000000000).ToString("D9");
+                    String r = Guid.NewGuid().ToString();
 
                     var body = "Mail Onaylama";
                     var mesaj = false;
@@ -607,12 +616,21 @@ namespace DFN2023.Business
 
 
 
-        public User kayitKoduKontrol(string code)
+        public User kayitKoduKontrol(string code,int rol)
         {
             try
             {
                 var a = _fkRepositoryUser.Entities.Where(p => p.EmailConfirmed == code && p.Status!=1).ToList();
-                return a[0];
+                if (a[0].Role!=rol)//Tedarikçi ise
+				{
+					a[0].Status = 1;
+					var result = _fkRepositoryUser.Update(a[0]);
+					_unitOfWork.SaveChanges();
+
+				}
+				return a[0];
+
+				return a[0];
 
             }
             catch (Exception)
@@ -646,19 +664,29 @@ namespace DFN2023.Business
             {
                 var a = _fkRepositoryCompany.Entities.Where(p => p.UserId == cm.UserId).ToList();
 
-                if (a.Count() > 0)
+				var company = _mapper.Map<Company>(cm);
+				if (a.Count() > 0)
                 {
-                    return new Company
-                    {
-                        Id = -1,
-                    };
+					
+						if (cm.Attachment == "" && cm.Logo == "")
+						{
+						 //   cm.Attachment =
+							//cm.Logo =
+						}
+						var result = _fkRepositoryCompany.Update(company);
+						_unitOfWork.SaveChanges();
+
+					return result;
                 }
                 else
                 {
-                    var company = _mapper.Map<Company>(cm);
-                    company.TaxNo = "";
-                    var result = _fkRepositoryCompany.Add(company);
-                    _unitOfWork.SaveChanges();
+
+					
+                    
+
+						 var result = _fkRepositoryCompany.Add(company);
+						_unitOfWork.SaveChanges();
+					
                     var us = _fkRepositoryUser.Entities.Where(p => p.Id == company.UserId).ToList();
                     if (us.Count > 0)
                     {
@@ -666,10 +694,10 @@ namespace DFN2023.Business
                         us[0].Status = 1;
                         _fkRepositoryUser.Update(us[0]);
                         _unitOfWork.SaveChanges();
-                    }
-                    return result;
+					}
+					return result;
 
-                }
+				}
             }
             catch (Exception e)
             {
@@ -677,7 +705,7 @@ namespace DFN2023.Business
             }
         }
 
-        public List<ProductCompanyDTO> getUrunlerList(int userid,int sirketid)
+        public List<ProductCompanyDTO> getUrunlerList(int sirketid)
         {
             try
             {
@@ -806,7 +834,46 @@ namespace DFN2023.Business
             }
            
         }
-        
 
-    }
+
+        public CompanyDTO getCompanyDetay(int id,int userid)
+        {
+            try
+            {
+
+				var a = _mapper.Map<List<CompanyDTO>>(_fkRepositoryCompany.Entities.Include(p => p.CompanyImage).Where(x => x.Id == id).ToList());
+				if (a.Count > 0)
+                {
+                    a[0].Fav=_fkRepositoryUserUrunler.Entities.Where(x => x.CompanyId == a[0].Id && x.UserId==userid).ToList().Count>0?true:false;
+					return a[0];
+                }
+
+                return null;
+
+            }
+            catch (Exception)
+            {
+                return null;
+
+
+            }
+        }
+
+		public CompanyDTO getCompanyInfo(int userid)
+		{
+			try
+			{
+				var a = _mapper.Map<List<CompanyDTO>>(_fkRepositoryCompany.Entities.Where(p => p.UserId == userid && p.Status == 1).ToList());
+				
+				return a[0];
+
+			}
+			catch (Exception)
+			{
+
+				return null;
+			}
+
+		}
+	}
 }

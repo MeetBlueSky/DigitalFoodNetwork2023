@@ -1,4 +1,5 @@
-﻿@{
+﻿@using DFN2023.Web.Helpers;
+@{
     ViewData["Title"] = "Anasayfa";
 }
 
@@ -29,7 +30,7 @@
 									<div class="restaurant">
 										<div class="name-form">
 											<i class="fa fa-th-list"></i>
-											<input type="text" id="urunadi" placeholder="Ürün/Tedarikçi Adı" />
+								<input type="text" name="urunadi" id="urunadi" placeholder="Ürün/Tedarikçi Adı" />
 										</div>
 									</div>	
 									
@@ -123,7 +124,7 @@
 					<div class="logos-card two">
 						<img alt="logo" width="50px" src="~/assets/logo/@Model.sirketler[i].Logo">
 							<div class="cafa">
-								<h4><a href="restaurant-card.html">@Model.sirketler[i].OfficialName</a></h4>
+								<h4><a href="@Url.Action("Detay","Firma")/@UrlCleaner.GetSanitizedTextForURL(Model.sirketler[i].OfficialName)/@Model.sirketler[i].Id">@Model.sirketler[i].OfficialName</a></h4>
 								
 								<p>@Model.sirketler[i].ShortDescription</p>
 							</div>
@@ -162,20 +163,20 @@
 								</div>
 								 <div class="name-form">
 								<i class="fa fa-user"></i>
-									<input type="text" name="name" id="kayittckn" placeholder="TCKN giriniz">
+				<input type="number" name="name" id="kayittckn" placeholder="TCKN giriniz">
 								</div>
 								 <div class="name-form">
 								<i class="fa fa-user"></i>
-									<input type="text" name="name" id="kayittel" placeholder="Telefon numaranızı giriniz">
+				<input type="number" name="name" id="kayittel" placeholder="Telefon numaranızı giriniz">
 								</div>
 								
 								  <div class="name-form">
 									<i class="fa fa-key"></i>
-									<input type="password" name="name" id="kayitpassword" placeholder="Şifrenizi giriniz">@*type="password" yazınca buzuluyor bakılcak*@
+									<input type="password" name="name" id="kayitpassword" placeholder="Şifrenizi giriniz">
 								</div>
 								  <div class="name-form">
 									<i class="fa fa-key"></i>
-									<input type="password" name="name" id="kayitpassword2" placeholder="Şifrenizi giriniz">@*type="password" yazınca buzuluyor bakılcak*@
+				<input type="password" style="bottom: 10px;" name="name" id="kayitpassword2" placeholder="Şifrenizi giriniz">
 								</div>
 								
 			   <form method="post" onsubmit="return submitUserForm();">

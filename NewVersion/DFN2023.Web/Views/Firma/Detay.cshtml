@@ -1,0 +1,143 @@
+﻿<!-- blog-content -->
+<section class="best-restaurants gap" style="padding-bottom: 0px;">
+	<div class="container">
+
+		<div class="column" id="urunler" style="display:block">
+
+			@if (Model.sirket != null)
+			{
+				<div class="aos-init aos-animate" data-aos="flip-up" data-aos-delay="200" data-aos-duration="300" style="margin-bottom: 10px;">
+					<div class="logos-card restaurant-page ">
+						@if (Model.sirket.Logo != null)
+						{
+							<img width="100" alt="logo" src="~/assets/logo/@Model.sirket.Logo">
+						}
+						else
+						{
+
+							<img alt="logo" src="~/assets/img/stcontent/100x100.png">
+						}
+						<div class="cafa">
+							<h4><a href="#">@Model.sirket.BrandName</a></h4>
+
+							<p>@Model.sirket.OfficialName</p>
+							<p>@Model.sirket.DetailDescription</p>
+
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+		
+	</div>
+</section>
+<section>
+	<div class="container">
+	<div class="col-lg-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="300" data-aos-duration="400">
+		<div class="img-restaurant">
+			@if (Model.sirket != null)
+				{
+					@if (Model.sirket.CompanyImage != null)
+					{
+						@for (int i = 0; i < Model.sirket.CompanyImage.Count; i++)
+						{
+
+							<img alt="img" style="width: 1380px;height: 500px;" src="/assets/logo/@Model.sirket.CompanyImage[i].Path">
+						}
+					}
+				}
+
+
+
+		</div>
+	</div>
+	</div>
+</section>
+<section class="hero-section about single-blog blog-content gap no-top" style="margin-bottom: 40px;">
+    <div class="container">
+            <div class="row card-body">
+			<div class="col-4 cafa-button">
+				@if (Model.sirket.Fav ==true)//Model.tedariklist[i].FavDurum ==
+				{
+
+					<a onclick="favEkleCikar(@Model.sirket.Id,1)"><i class="fas fa-heart-broken"></i> Favoriden Çıkart</a>
+				}
+				else
+				{
+
+					<a onclick="favEkleCikar(@Model.sirket.Id,0)"><i class="fa-solid fa-heart"></i> Favorilere Ekle</a>
+				}
+				<a href="@Url.Action("Detay", "Mesaj")/@Model.sirket.UserId"><i class="fa-solid fa-comment-dots"></i> Mesaj Gönder</a>
+			</div>
+			<div class="col-8 table-responsive hidden">
+                    <table id="tableurun" class="table table-striped table-bordered" style="width: 100%">
+                        <thead>
+
+                            
+                            @for (var i = 0; i < Model.urunler.Count; i++)
+                            {
+                            <tr style="border: none;">
+                                    <td>@Model.urunler[i].CategoryName</td>
+                                    <td>@Model.urunler[i].Name</td>
+                                    <td>@Model.urunler[i].Price</td>
+                                    <td>@Model.urunler[i].Unit</td>
+                                    <td>@Model.urunler[i].Desc</td>
+                                  </tr>
+                            }
+                        </thead>
+                    </table>
+                </div>
+            </div>
+    </div>
+</section>
+
+<section class="hero-section about single-blog blog-content gap no-top" style="margin-bottom: 10px;">
+	<div class="container">
+<a href="/assets/pdf/c92acc2e-9e2c-4d3b-ac8c-e4acfe5d07f3Rapor.pdf" target="_blank" class="button-price mt-3" download>Broşürü İndir</a>
+	</div>
+</section>
+<script>
+	var hst = "@Url.Action("favEkleCikar", "Tedarikci")";
+	var user = "@Model.user"
+
+</script>
+<script>
+
+	function favEkleCikar(cid, durum) {
+		if (user.length > 0) {
+			$.ajax({
+				data: {
+					companyid: cid,
+					durum: durum,
+				},
+				type: "POST",
+				url: hst,
+				success: function (data) {
+					if (!data.hata) {
+
+						swal.fire({
+							text: data.mesaj,
+							icon: "success",
+
+						});
+
+						window.location.reload();
+					}
+					else {
+						Swal.fire(
+							'HATA',
+							data.mesaj,
+							'error'
+						)
+					}
+					//   window.location.href = '/Tedarikci/List';
+				},
+
+			});
+		} else {
+			girisYapModal();
+		}
+
+	}
+</script>
+

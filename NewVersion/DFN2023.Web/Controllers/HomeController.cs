@@ -85,6 +85,7 @@ namespace DFN2023.Web.Controllers
                     else
                     {
                         HttpContext.Session.SetString("email", user.Email);
+                        HttpContext.Session.SetString("emailkodu", usr.EmailConfirmed);
                         sonuc = new { hata = true, mesaj = "Bu mail daha önce kullanılmış", res = "" + "/Login/MailHata" };
                     }
 

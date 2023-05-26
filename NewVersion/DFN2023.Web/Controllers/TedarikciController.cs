@@ -14,7 +14,39 @@ namespace DFN2023.Web.Controllers
         {
             _websiteService = parametreService;
         }
-        public IActionResult List()
+
+		public IActionResult Duzenle()
+		{
+			var usrses = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
+			PublicModel pm = new PublicModel();
+
+
+			if (usrses != null)
+			{
+				var companyinfo = _websiteService.getCompanyInfo(usrses.Id);
+                if (companyinfo!=null)
+				{
+					pm.ulkeler = _websiteService.getCountryList();
+					pm.sirkettipleri = _websiteService.getCompanyTypeList();
+					pm.userbilg = usrses;
+					pm.user = usrses;
+					pm.sirket = companyinfo;
+					return View(pm);
+
+                }
+                else
+                {
+					return RedirectToAction("TedMailOnaylama", "Login", new { code = usrses.EmailConfirmed });
+				}
+			}
+
+			else
+			{
+				return RedirectToAction("Index", "Home");
+			}
+
+		}
+		public IActionResult List()
         {
             int kid = Convert.ToInt32(HttpContext.Session.GetInt32("kategoriid"));
             string ürün = HttpContext.Session.GetString("tedarikciadi");
@@ -60,7 +92,7 @@ namespace DFN2023.Web.Controllers
                 {
                     var kategorilist = _websiteService.getCategoryList();
                     pm.kategoriler = kategorilist;
-                    pm.urunler = _websiteService.getUrunlerList(usr.Id,a);
+                    pm.urunler = _websiteService.getUrunlerList(a);
                     if (a > 0)
                     {
                         HttpContext.Session.SetInt32("selectcompid", a);

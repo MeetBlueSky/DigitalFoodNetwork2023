@@ -23,16 +23,19 @@ namespace DFN2023.Contracts
         bool mesajYazUser(Message m);
         string sirketOzelligi(int id, int role);
         User createUser(User user);
-        User kayitKoduKontrol(string code);
+        User kayitKoduKontrol(string code,int rol);
         List<CountryDTO> getCountryList();
         List<City> listCities(int id);
         List<County> listDistrict(int id);
         Company createFirma(CompanyDTO cm);
-        public List<ProductCompanyDTO> getUrunlerList(int userid,int sirketid);
+        public List<ProductCompanyDTO> getUrunlerList(int sirketid);
         public ProductCompany createUrun(ProductCompanyDTO comp);
         public bool deleteUrun(int id);
         int getCompanyId(int userid);
         List<CompanyTypeDTO> getCompanyTypeList();
         User sifreYenile(string email, string code);
-    }
+        CompanyDTO getCompanyDetay(int id, int userid);
+        CompanyDTO getCompanyInfo(int userid);
+
+	}
 }

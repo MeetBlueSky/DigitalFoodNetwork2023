@@ -2,6 +2,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
 
+
     $("#haritaulke").change(function () {
         var id = $(this).val();
         $("#haritail").empty();
@@ -95,8 +96,11 @@ var hgelendist = [];
 
 var hgelencity = [];
 
-function firmaKaydet() {
-
+function firmaKaydet(cntl) {
+    var pid = 0;
+    if (cntl==2 && sirket!=null) {
+        pid = sirket.Id;
+    } 
     var mr = $("#marka").val();
     var srun = $("#sirkerunvani").val();
     var vd = $("#vergidairesi").val();
@@ -126,6 +130,10 @@ function firmaKaydet() {
     if (mr.length < 1) {
 
         uyari("Marka Adı boş geçilemez");
+    }
+    else if (vkn.length < 1) {
+
+        uyari("VKN boş geçilemez");
     }
     else if (srun.length < 1) {
 
@@ -157,12 +165,13 @@ function firmaKaydet() {
             async: true,
             url: hst2,
             data: {
+                Id=pid,
                 BrandName:mr,
                 OfficialName: srun ,
                 ShortDescription: sdesc ,
                 DetailDescription: ddesc  ,
-                TaxOffice: sdesc,
-                //TaxNo: " ",
+                TaxOffice: vd,
+                TaxNo: vkn,
                 CompanyTypeId: ktyp,
                 OfficialAddress : adr,
          
@@ -295,6 +304,7 @@ function uploadFilesPdf(inputId) {
             type: "POST",
             success: function (data) {
 
+                dosya1 = data;
 
                     swal.fire({
                         title: 'Dosya Yükleme Başarılı',

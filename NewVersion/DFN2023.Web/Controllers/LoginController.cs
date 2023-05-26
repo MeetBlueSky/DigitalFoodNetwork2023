@@ -111,7 +111,7 @@ namespace DFN2023.Web.Controllers
         public IActionResult TukMailOnaylama(string code)
         {
             PublicModel pm = new PublicModel();
-            var usr = _websiteService.kayitKoduKontrol(code);
+            var usr = _websiteService.kayitKoduKontrol(code,EnumRol.Tedarikci);
             
                 pm.user = null;
                 return View(pm);
@@ -123,7 +123,7 @@ namespace DFN2023.Web.Controllers
             var usrses = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
             PublicModel pm = new PublicModel();
 
-            var usr = _websiteService.kayitKoduKontrol(code);
+            var usr = _websiteService.kayitKoduKontrol(code,EnumRol.Tedarikci);
 
             if (usr != null)
             {
@@ -345,14 +345,14 @@ namespace DFN2023.Web.Controllers
                 var com = _websiteService.createFirma(c);
                 if (com != null)
                 {
-                    if (com.Id > 0)
+                    if (c.Id > 0)
                     {
 
-                        sonuc = new { hata = false, mesaj = "Firma bilgileri kaydedildi. Hesabınız aktif edildi ", res = "" + "/" };
+                        sonuc = new { hata = false, mesaj = "Firma bilgileri güncellendi. Hesabınız aktif edildi ", res = "" + "/" };
                     }
                     else
                     {
-                        sonuc = new { hata = true, mesaj = "Bu kullanıcı adı veya mail daha önce kullanılmış", res =  "/" };
+                        sonuc = new { hata = false, mesaj = "Firma bilgileri kaydedildi. Hesabınız aktif edildi", res =  "/" };
                     }
 
                 }
