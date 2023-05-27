@@ -575,7 +575,7 @@ namespace DFN2023.Business
         }
         public static bool send(string pTo, string pBody, string pSubject)
         {
-            // var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
             MailMessage mm = new MailMessage();
             mm.To.Add(pTo);
@@ -583,26 +583,26 @@ namespace DFN2023.Business
             mm.Subject = pSubject;
             mm.IsBodyHtml = true;
             mm.Sender = new MailAddress(
-                       "hbeyzakgl@yandex.com"
+                config["AppSettings:SendMailMessagesFromAddress"].ToString()
                );
             mm.From = new MailAddress(
-                       "hbeyzakgl@yandex.com"
+
+                config["AppSettings:SendMailMessagesFromAddress"].ToString()
                );
             try
             {
                 SmtpClient sc = new SmtpClient();
-                sc.Host = "smtp.yandex.com";
+                sc.Host = config["AppSettings:SendMailSMTPHostAddress"].ToString();
                 sc.DeliveryMethod = SmtpDeliveryMethod.Network;
-                sc.UseDefaultCredentials = false;
-                sc.EnableSsl = true;
-                //sc.EnableSsl = Convert.ToBoolean(config["AppSettings:SendMailSMTPSSL"].ToString());
+                sc.UseDefaultCredentials = Convert.ToBoolean(config["AppSettings:SendMailUseDefaultCredentials"]);
+                sc.EnableSsl = Convert.ToBoolean(config["AppSettings:SendMailSMTPSSL"]);
                 sc.Port = 587;
-                //sc.Port = 587;
-                /*sc.Port = Convert.ToInt32(config["AppSettings:SendMailSMTPPort"].ToString()); */// gmail 587
+                sc.Port = Convert.ToInt32(config["AppSettings:SendMailSMTPPort"].ToString());
 
                 sc.Credentials = new System.Net.NetworkCredential(
-                      "hbeyzakgl@yandex.com.tr",
-                         "pera123456."
+
+                config["AppSettings:SendMailSMTPUserName"].ToString(),
+                config["AppSettings:SendMailSMTPUserPassword"].ToString()
                 );
 
                 sc.Send(mm);
@@ -664,28 +664,61 @@ namespace DFN2023.Business
             {
                 var a = _fkRepositoryCompany.Entities.Where(p => p.UserId == cm.UserId).ToList();
 
-				var company = _mapper.Map<Company>(cm);
 				if (a.Count() > 0)
                 {
-					
-						if (cm.Attachment == "" && cm.Logo == "")
-						{
-						 //   cm.Attachment =
-							//cm.Logo =
-						}
-						var result = _fkRepositoryCompany.Update(company);
-						_unitOfWork.SaveChanges();
+                    a[0].Id = cm.Id;
+                    a[0].BrandName = cm.BrandName;
+                    a[0].OfficialName = cm.OfficialName;
+                    a[0].ShortDescription = cm.ShortDescription;
+                    a[0].DetailDescription = cm.DetailDescription;
+                    a[0].TaxOffice= cm.TaxOffice;
+                    a[0].TaxNo = cm.TaxNo;
+                    a[0].CompanyTypeId = cm.CompanyTypeId;
+                    a[0].OfficialAddress = cm.OfficialAddress;
+                    a[0].MapCountryId = cm.MapCountryId;
+                    a[0].MapCityId = cm.MapCityId;
+                    a[0].MapCountyId = cm.MapCountyId;
+                    a[0].MapAddress = cm.MapAddress;
+                    a[0].MapCountryId=cm.MapCountryId;
+                    a[0].MapCityId=cm.MapCityId;
+                    a[0].MapCountyId=cm.MapCountyId;
+                    a[0].MapX = cm.MapX;
+                    a[0].MapY=cm.MapY;
+                    a[0].Email = cm.Email;
+                    a[0].Phone = cm.Phone;
+                    a[0].Mobile = cm.Mobile;
+                    a[0].YearFounded = cm.YearFounded;
+					a[0].Logo = cm.Logo==null? a[0].Logo: cm.Logo;
+                    a[0].Attachment = cm.Attachment==null? a[0].Attachment: cm.Attachment;
+                    a[0].Facebook = cm.Facebook;
+                    a[0].Instagram = cm.Instagram;
+                    a[0].Tiktok = cm.Tiktok;
+                    a[0].Youtube = cm.Youtube;
+                    a[0].Whatsapp = cm.Whatsapp;
+                    a[0].Website = cm.Website;
+                    a[0].AdminNotes = cm.AdminNotes;
+                    a[0].CreateDate = cm.CreateDate;
+                    a[0].CreatedBy = cm.CreatedBy;
+                    a[0].LastIP = cm.LastIP;
+                    a[0].LastUpdateDate = cm.LastUpdateDate;
+                    a[0].LastUpdatedBy = cm.LastUpdatedBy;
+                    a[0].Status = cm.Status;
+                    a[0].UserId = cm.UserId;
+						
+					var result = _fkRepositoryCompany.Update(a[0]);
+					_unitOfWork.SaveChanges();
 
 					return result;
                 }
                 else
                 {
 
-					
-                    
 
-						 var result = _fkRepositoryCompany.Add(company);
-						_unitOfWork.SaveChanges();
+					var company = _mapper.Map<Company>(cm);
+
+
+					var result = _fkRepositoryCompany.Add(company);
+					_unitOfWork.SaveChanges();
 					
                     var us = _fkRepositoryUser.Entities.Where(p => p.Id == company.UserId).ToList();
                     if (us.Count > 0)

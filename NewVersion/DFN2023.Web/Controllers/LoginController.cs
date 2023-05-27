@@ -219,7 +219,7 @@ namespace DFN2023.Web.Controllers
 
         public static bool send(string pTo, string pBody, string pSubject)
         {
-            // var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
             MailMessage mm = new MailMessage();
             mm.To.Add(pTo);
@@ -227,26 +227,26 @@ namespace DFN2023.Web.Controllers
             mm.Subject = pSubject;
             mm.IsBodyHtml = true;
             mm.Sender = new MailAddress(
-                       "hbeyzakgl@yandex.com"
-               );
+                 config["AppSettings:SendMailMessagesFromAddress"].ToString()
+                );
             mm.From = new MailAddress(
-                       "hbeyzakgl@yandex.com"
+
+                config["AppSettings:SendMailMessagesFromAddress"].ToString()
                );
             try
             {
                 SmtpClient sc = new SmtpClient();
-                sc.Host = "smtp.yandex.com";
+                sc.Host = config["AppSettings:SendMailSMTPHostAddress"].ToString();
                 sc.DeliveryMethod = SmtpDeliveryMethod.Network;
-                sc.UseDefaultCredentials = false;
-                sc.EnableSsl = true;
-                //sc.EnableSsl = Convert.ToBoolean(config["AppSettings:SendMailSMTPSSL"].ToString());
+                sc.UseDefaultCredentials = Convert.ToBoolean(config["AppSettings:SendMailUseDefaultCredentials"]);
+                sc.EnableSsl = Convert.ToBoolean(config["AppSettings:SendMailSMTPSSL"]);
                 sc.Port = 587;
-                //sc.Port = 587;
-                /*sc.Port = Convert.ToInt32(config["AppSettings:SendMailSMTPPort"].ToString()); */// gmail 587
+                sc.Port = Convert.ToInt32(config["AppSettings:SendMailSMTPPort"].ToString());
 
                 sc.Credentials = new System.Net.NetworkCredential(
-                      "hbeyzakgl@yandex.com.tr",
-                         "pera123456."
+
+                config["AppSettings:SendMailSMTPUserName"].ToString(),
+                config["AppSettings:SendMailSMTPUserPassword"].ToString()
                 );
 
                 sc.Send(mm);
@@ -338,17 +338,22 @@ namespace DFN2023.Web.Controllers
             var sonuc = new { hata = true, mesaj = "Teknik Ariza", res = "/" };
             try
             {
+                if (c.Id<=0)
+                {
                 c.CreateDate = DateTime.Now;
-                c.LastUpdateDate = DateTime.Now;
                 c.CreatedBy = c.UserId;
+
+                }
+                c.LastUpdateDate = DateTime.Now;
                 c.LastUpdatedBy = c.UserId;
-                var com = _websiteService.createFirma(c);
+				c.LastIP = HttpContext.Connection.RemoteIpAddress?.ToString();
+				var com = _websiteService.createFirma(c);
                 if (com != null)
                 {
                     if (c.Id > 0)
                     {
 
-                        sonuc = new { hata = false, mesaj = "Firma bilgileri güncellendi. Hesabınız aktif edildi ", res = "" + "/" };
+                        sonuc = new { hata = false, mesaj = "Firma bilgileri güncellendi. ", res = "" + "/" };
                     }
                     else
                     {

@@ -165,7 +165,7 @@ function firmaKaydet(cntl) {
             async: true,
             url: hst2,
             data: {
-                Id=pid,
+                Id:pid,
                 BrandName:mr,
                 OfficialName: srun ,
                 ShortDescription: sdesc ,
