@@ -11,13 +11,13 @@
                       <div class="row">
                       <div class="col-2"> 
 			            <div class="name-form">
-                        <label for="fname">Kategori:</label>
+                        <label for="fname">Üst Ürün:</label>
                         <div class="nice-select-one">
 								<select id="kategoriid" class="nice-select Advice">
-								  <option value="0">Kategori Seçiniz</option>
-                                   @for (var i = 0; i < Model.kategoriler.Count; i++)
+                                        <option value="0">Üst Ürün Seçiniz</option>
+                                   @for (var i = 0; i < Model.usturun.Count; i++)
 								    {
-									 <option value="@Model.kategoriler[i].Id">@Model.kategoriler[i].Name</option>
+                                            <option value="@Model.usturun[i].Id">@Model.usturun[i].Name</option>
 									}
 								</select>
 						</div>
@@ -42,16 +42,33 @@
 			            <div class="name-form">
                         <label for="fname">Birim:</label>
                         <div class="nice-select-one">
-								<select id="birimid" class="nice-select Advice">
-								  <option value="0">Birim Seçiniz</option>
-								  <option value="1">gr</option>
-								  <option value="2">kg</option>
-								  <option value="3">Adet</option>
+                                    <select id="birimid" class="nice-select Advice">
+                                        <option value="0">Birim Seçiniz</option>
+                                        @for (int i = 0; i < Model.unitlist.Count; i++)
+                                        {
+                                            <option value="@Model.unitlist[i].Value">@Model.unitlist[i].Name</option>
+
+                                        }
 								</select>
 						</div>
                         <br><br>
                         </div></div>
-                           <div class="col-4"> 
+                         <div class="col-2"> 
+			            <div class="name-form">
+                        <label for="fname">Paara Birimi:</label>
+                        <div class="nice-select-one">
+                                    <select id="fiyatbirimid" class="nice-select Advice">
+                                        <option value="0">Para Birimini Seçiniz</option>
+                                        @for (int i = 0; i < Model.currencylist.Count; i++)
+                                        {
+                                            <option value="@Model.currencylist[i].Value">@Model.currencylist[i].Name</option>
+
+                                        }
+								</select>
+						</div>
+                        <br><br>
+                        </div></div>
+                           <div class="col-2"> 
 			            <div class="name-form">
                         <label for="fname">Açıklama:</label>
                         <input type="text" id="aciklama" placeholder="Açıklama Giriniz" style="height: 40px;margin-top: 40px; border-radius: 5px; border: 1px solid #e9ecef;"/>
@@ -96,7 +113,7 @@
               <td>@Model.urunler[i].Price</td>
               <td>@Model.urunler[i].Unit</td>
               <td>@Model.urunler[i].Desc</td>
-              <td><button style="width: 100px" class="button-price mt-3" onclick="guncelleModal(@Model.urunler[i].Id,@Model.urunler[i].CategoryId,'@Model.urunler[i].Name',@Model.urunler[i].Price,@Model.urunler[i].UnitId,'@Model.urunler[i].Desc')">Güncelle</button></td>
+                                    <td><button style="width: 100px" class="button-price mt-3" onclick="guncelleModal(@Model.urunler[i].Id,@Model.urunler[i].CategoryId,'@Model.urunler[i].Name',@Model.urunler[i].Price,@Model.urunler[i].UnitId,'@Model.urunler[i].Desc',@Model.urunler[i].Currency)">Güncelle</button></td>
               <td><button style="width: 100px;" class="button-price mt-3" onclick="urunSil(@Model.urunler[i].Id)">Sil</button></td>
             </tr>
 			 }
@@ -121,11 +138,11 @@
                   <form class="blog-form">
                       <div class="column">
 			            <div class="name-form">
-                        <label for="fname">Kategori:</label>
+                        <label for="fname">Üst Ürünü:</label>
 								<select class="dropdownlar" style="width: 100%;" id="gkategoriid" >
-                                   @for (var i = 0; i < Model.kategoriler.Count; i++)
+                                @for (var i = 0; i < Model.usturun.Count; i++)
 								    {
-									 <option value="@Model.kategoriler[i].Id">@Model.kategoriler[i].Name</option>
+                                    <option value="@Model.usturun[i].Id">@Model.usturun[i].Name</option>
 									}
 								</select>
 						
@@ -144,17 +161,40 @@
                         <input type="number" id="gfiyat" placeholder="Fiyat Giriniz" />
                         <br><br>
                         </div>
-			            <div class="name-form">
-                        <label for="fname">Birim:</label>
-								<select id="gbirimid" style="width: 100%;" class="dropdownlar">
-								  <option value="0">Birim Seçiniz</option>
-								  <option value="1">gr</option>
-								  <option value="2">kg</option>
-								  <option value="3">Adet</option>
-								</select>
-						
-                        <br><br>
-                        </div>
+
+
+                            <div class="name-form">
+                                <label for="fname">Birim:</label>
+                            <div class="nice-select-one" style="justify-content: space-evenly;">
+                                    <select id="gbirimid" class="nice-select2 Advice">
+                                        <option value="0">Birim Seçiniz</option>
+                                        @for (int i = 0; i < Model.unitlist.Count; i++)
+                                        {
+                                            <option value="@Model.unitlist[i].Value">@Model.unitlist[i].Name</option>
+
+                                        }
+                                    </select>
+                                </div>
+                                <br><br>
+                            </div>
+                        
+                            <div class="name-form">
+                                <label for="fname">Para Birimi:</label>
+                            <div class="nice-select-one" style="justify-content: space-evenly;">
+                                <select id="gfiyatbirimid" class="nice-select2 Advice">
+                                        <option value="0">Para Birimini Seçiniz</option>
+                                        @for (int i = 0; i < Model.currencylist.Count; i++)
+                                        {
+                                            <option value="@Model.currencylist[i].Value">@Model.currencylist[i].Name</option>
+
+                                        }
+                                    </select>
+                                </div>
+                                <br><br>
+                            </div>
+
+
+
 			            <div class="name-form">
                         <label for="fname">Açıklama:</label>
                         <input type="text" id="gaciklama" placeholder="Açıklama Giriniz" />

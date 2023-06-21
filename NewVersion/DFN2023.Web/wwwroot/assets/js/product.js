@@ -1,7 +1,7 @@
 var update = false;
 var sid = 0;
 
-function guncelleModal(id,c,n,p,u,d) {
+function guncelleModal(id,c,n,p,u,d,cr) {
 	update = true;
 	sid = id;
 	uguncmodal.style.display = "block";
@@ -10,6 +10,7 @@ function guncelleModal(id,c,n,p,u,d) {
     $('#gfiyat').val(p),
 	$('#gbirimid').val(u).trigger('change');
 	$('#gaciklama').val(d);
+	$('#gfiyatbirimid').val(cr).trigger('change');
 
 }
 function urunGuncelle() {
@@ -20,11 +21,12 @@ function urunGuncelle() {
 	} else {
 		var product = {
 			'Id': sid,
-			'CategoryId': $('#gkategoriid').val(),
+			'ProductBaseId': $('#gkategoriid').val(),
 			'Name': $('#gurun').val(),
 			'Price': $('#gfiyat').val(),
 			'UnitId': $('#gbirimid').val(),
 			'Desc': $('#gaciklama').val(),
+			'Currency': $('#gfiyatbirimid').val(),
 		};
 
 
@@ -86,11 +88,12 @@ function urunKaydet() {
 		uyari("Urun adi giriniz")
 	} else {
 		var product = {
-			'CategoryId': $('#kategoriid').val(),
+			'ProductBaseId': $('#kategoriid').val(),
 			'Name': $('#urun').val(),
 			'Price': $('#fiyat').val(),
 			'UnitId': $('#birimid').val(),
 			'Desc': $('#aciklama').val(),
+			'Currency': $('#fiyatbirimid').val(),
 		};
 
 

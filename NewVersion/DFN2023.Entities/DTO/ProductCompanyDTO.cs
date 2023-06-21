@@ -16,6 +16,7 @@ namespace DFN2023.Entities.DTO
         public string? Code { get; set; }
         public float? Price { get; set; }
         public int? Currency { get; set; }
+        public string? CurrencyName { get; set; }
         public int RowNum { get; set; }
         public int? CreatedBy { get; set; }
         public int? LastUpdatedBy { get; set; }

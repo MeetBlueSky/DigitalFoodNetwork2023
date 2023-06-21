@@ -106,7 +106,29 @@ namespace DFN2023.Web.Controllers
             return Json(sonuc);
 
         }
-      
 
-    }
+
+		[HttpPost]
+		public Task<JsonResult> seeAll()
+		{
+			var sonuc = new { hata = true, mesaj = "Error", res = "" };
+			try
+			{
+
+				HttpContext.Session.SetInt32("kategoriid",0);
+				HttpContext.Session.SetString("tedarikciadi","");
+
+
+			    sonuc = new { hata = false, mesaj = "Error", res = "/Tedarikci/List" };
+				return Task.FromResult(Json(sonuc));
+			}
+			catch (Exception)
+			{
+
+
+				return Task.FromResult(Json(sonuc));
+			}
+		}
+
+	}
 }

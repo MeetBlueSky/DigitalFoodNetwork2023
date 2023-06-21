@@ -60,7 +60,11 @@ namespace DFN2023.Entities.DTO
         public string? CompanyTypeName { get; set; }
         public int? UserId { get; set; }
         public bool? Fav { get; set; }
+        public bool? FavDurum { get; set; }
 		public List<CompanyImage>? CompanyImage { get; set; }
+		public List<ProductCompany>? ProductCompany { get; set; }
+		public string? CityName { get; set; }
+		public string? CountyName { get; set; }
 
 	}
 }

@@ -8,7 +8,8 @@ namespace DFN2023.Web.Models
         public User? user { get; set; }
         public User? userbilg { get; set; }
         public List<CategoryDTO>? kategoriler { get; set; }
-        public List<ProductCompanyDTO>? tedariklist { get; set; }
+        public List<ProductBaseDTO>? usturun { get; set; }
+        public List<CompanyDTO>? tedariklist { get; set; }
         public List<CompanyDTO>? sirketler { get; set; }
         public List<StaticContentGrupPageDTO>? stanasayfa { get; set; }
         public StaticContentGrupPageDTO? stanasayfatuk { get; set; }
@@ -26,6 +27,8 @@ namespace DFN2023.Web.Models
         public List<CountryDTO>? ulkeler { get; set; }
         public List<ProductCompanyDTO>? urunler { get; set; }
         public List<CompanyTypeDTO>? sirkettipleri { get; set; }
+        public List<DropDownDT>? unitlist { get; set; }
+        public List<DropDownDT>? currencylist { get; set; }
         public CompanyDTO sirket { get; set; }
 
 

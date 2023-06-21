@@ -320,6 +320,7 @@ header {
     transition: background 300ms ease-in-out;
     line-height: 51px;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 .button-2:hover {
   background-position: 100%;
@@ -3432,6 +3433,11 @@ li.menu-item-has-children.active {
     height: 450px;
 }
 
+.recaptcha {
+    text-align: -webkit-center;
+    margin-block: 20px;
+}
+
 
 .dropdownlar {
     color: #CFCFCF;
@@ -3459,3 +3465,23 @@ li.menu-item-has-children.active {
         width: 100%;
     }
 
+
+
+
+    /*Email Vald*/
+.message {
+    font-size: 15px;
+    font-style: italic;
+    
+}
+.valid {
+    color:blue;
+    
+}
+.invalid {
+    color: red;
+}
+.textapprovals {
+    text-decoration: revert;
+}
+    /*Email Vald*/

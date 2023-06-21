@@ -105,11 +105,17 @@ function initMap(control) {
 
         
     }
-   
 
-    var myLatLng = loc[0],
+    var center;
+    if (loc.length == 1) {
+        center = loc[0];
+    } else {
+        //39.514110953704744, 35.32080729153706
+        center = { lat: 39.514110953704744, lng: 35.32080729153706 };
+    }
+    var myLatLng = center,
         myOptions = {
-            zoom: 11,
+            zoom: 6.5,
             center: myLatLng,
         },
         map = new google.maps.Map(document.getElementById('map'), myOptions);
@@ -133,7 +139,7 @@ function initMap(control) {
                     '<div id="siteNotice">' +
                     "</div>" +
                     '<div style="width: 60%;" class="row"><div class="col-4"><img alt="man" src="/assets/logo/' + desc[index].logo + '" style=" width: 100px "></div>'+
-                    '<div class="col-6" style="width: inherit;"><h1 id="firstHeading" class="firstHeading" style="line-height:0">' + desc[index].baslik + '</h1>' +
+                    '<div class="col-6" style="width: inherit;"><a id="firstHeading" href="/Firma/Detay/' + UrlCleanerJS(desc[index].baslik) + '/' + desc[index].id + '" class="firstHeading" style="font-size: 22px;text-decoration: underline;font-weight: 400;cursor: pointer;">' + desc[index].baslik + '</a>' +
                     '<p id="firstHeading" class= "firstHeading" style="font-size: 12px;" > ' + desc[index].unvan + '</p>' +
                     ' <p id="firstHeading" class="firstHeading" style="font-size: 12px;">' + desc[index].desc + '</p>' +
                     '</div><div class= "cafa-button" >' +
@@ -148,7 +154,7 @@ function initMap(control) {
                     '<div id="siteNotice">' +
                     "</div>" +
                     '<div style="width: 60%;" class="row"><div class="col-4"><img alt="man" src="/assets/logo/' + desc[index].logo + '" style=" width: 100px "></div>' +
-                    '<div class="col-6" style="width: inherit;"><h1 id="firstHeading" class="firstHeading" style="line-height:0">' + desc[index].baslik + '</h1>' +
+                    '<div class="col-6" style="width: inherit;"><a id="firstHeading" href="/Firma/Detay/' + UrlCleanerJS(desc[index].baslik) + '/' + desc[index].id + '" class="firstHeading" style="font-size: 22px;text-decoration: underline;font-weight: 400;cursor: pointer;">' + desc[index].baslik + '</a>' +
                     '<p id="firstHeading" class= "firstHeading" style="font-size: 12px;" > ' + desc[index].unvan + '</p>' +
                     ' <p id="firstHeading" class="firstHeading" style="font-size: 12px;">' + desc[index].desc + '</p>' +
                     '</div><div class= "cafa-button" >' +
@@ -167,3 +173,24 @@ function initMap(control) {
 
 window.initMap = initMap(1);
 
+
+function UrlCleanerJS(inputtext) {
+    result = inputtext;
+    result = result.replace(/ /g, "-");
+    result = result.replace(/:/g, "");
+    result = result.replace(/ /g, "-");
+    result = result.replace(/\//g, "-");
+    result = result.replace(/<br>/g, "");
+    result = result.replace(/</g, "");
+    result = result.replace(/>/g, "")
+    result = result.replace(/ı/g, "i");
+    result = result.replace(/ş/g, "s");
+    result = result.replace(/ö/g, "o");
+    result = result.replace(/ü/g, "u");
+    result = result.replace(/ğ/g, "g");
+    result = result.replace(/ç/g, "c");
+    result = result.replace("(", "");
+    result = result.replace(")", "");
+
+    return result;
+}

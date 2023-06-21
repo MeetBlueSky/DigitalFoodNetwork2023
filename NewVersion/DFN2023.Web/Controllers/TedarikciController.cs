@@ -4,6 +4,7 @@ using DFN2023.Entities.EF;
 using DFN2023.Web.Helpers;
 using DFN2023.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.Design;
 
 namespace DFN2023.Web.Controllers
 {
@@ -50,7 +51,7 @@ namespace DFN2023.Web.Controllers
         {
             int kid = Convert.ToInt32(HttpContext.Session.GetInt32("kategoriid"));
             string ürün = HttpContext.Session.GetString("tedarikciadi");
-            List<ProductCompanyDTO> filtersonuc = new();
+            List<CompanyDTO> filtersonuc = new();
            
                 var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
                 PublicModel pm = new PublicModel();
@@ -84,14 +85,16 @@ namespace DFN2023.Web.Controllers
         PublicModel pm = new PublicModel();
         var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
 
-            if (usr != null)
+           
+
+			if (usr != null)
             {
                 int a = _websiteService.getCompanyId(usr.Id);
                 
                 if (a>0)
                 {
-                    var kategorilist = _websiteService.getCategoryList();
-                    pm.kategoriler = kategorilist;
+                    var usturun = _websiteService.getUstUrunList();
+                    pm.usturun = usturun;
                     pm.urunler = _websiteService.getUrunlerList(a);
                     if (a > 0)
                     {
@@ -102,7 +105,71 @@ namespace DFN2023.Web.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                     pm.user = usr;
-                    return View(pm);
+					List<DropDownDT> currency = new();
+					List<DropDownDT> unit = new();
+					currency.Add(new()
+					{
+						Value = CurrencyType.TL,
+						Name = "TL"
+					});
+					currency.Add(new()
+					{
+						Value = CurrencyType.USD,
+						Name = "USD"
+					});
+					currency.Add(new()
+					{
+						Value = CurrencyType.EUR,
+						Name = "EUR"
+					});
+
+
+					unit.Add(new()
+					{
+						Value = UnitType.Gr,
+						Name = "Gr"
+					});
+					unit.Add(new()
+					{
+						Value = UnitType.Kg,
+						Name = "Kg"
+					});
+					unit.Add(new()
+					{
+						Value = UnitType.Adet,
+						Name = "Adet"
+					});
+
+                    for (int i = 0; i < pm.urunler.Count; i++)
+                    {
+                        if (pm.urunler[i].Currency != 0)
+                        {
+                            pm.urunler[i].CurrencyName = currency.FirstOrDefault(x => x.Value == pm.urunler[i].Currency).Name;
+
+                        }
+                        else
+                        {
+                            pm.urunler[i].CurrencyName = "";
+                        }
+
+                    }
+                    for (int i = 0; i < pm.urunler.Count; i++)
+                    {
+                        if (pm.urunler[i].UnitId != 0)
+                        {
+                            pm.urunler[i].Unit = unit.FirstOrDefault(x => x.Value == pm.urunler[i].UnitId).Name;
+
+                        }
+                        else
+                        {
+                            pm.urunler[i].CurrencyName = "";
+                        }
+
+                    }
+
+                    pm.currencylist = currency;
+					pm.unitlist = unit;
+					return View(pm);
                 }
                 else
                 {
@@ -128,6 +195,7 @@ namespace DFN2023.Web.Controllers
             var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
             var selectcompid = Convert.ToInt32(HttpContext.Session.GetInt32("selectcompid"));
 
+            comp.CategoryId = 1;//İlişki kaldırılınca silinecek
             comp.LastUpdateDate = DateTime.Now;
             comp.LastUpdatedBy = usr.Id;
             comp.LastUpdatedBy = usr.Id;
@@ -140,7 +208,6 @@ namespace DFN2023.Web.Controllers
                 comp.CreatedBy = usr.Id;
                 comp.LastIP= HttpContext.Connection.RemoteIpAddress?.ToString();
                 comp.Status = 1;
-                comp.ProductBaseId = 1;
                 comp.CompanyId = selectcompid;
                 comp.RowNum = 1;
             }

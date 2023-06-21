@@ -26,7 +26,72 @@ namespace DFN2023.Web.Controllers
             {
                 pm.sirket = a;
                 pm.urunler = _websiteService.getUrunlerList(a.Id);
-                    pm.user = usr;
+				List<DropDownDT> currency = new();
+				List<DropDownDT> unit = new();
+				currency.Add(new()
+				{
+					Value = CurrencyType.TL,
+					Name = "TL"
+				});
+				currency.Add(new()
+				{
+					Value = CurrencyType.USD,
+					Name = "USD"
+				});
+				currency.Add(new()
+				{
+					Value = CurrencyType.EUR,
+					Name = "EUR"
+				});
+                
+				for (int i = 0; i < pm.urunler.Count; i++)
+                {
+                    if (pm.urunler[i].Currency!=0)
+					{
+						pm.urunler[i].CurrencyName = currency.FirstOrDefault(x => x.Value == pm.urunler[i].Currency).Name;
+
+                    }
+                    else
+                    {
+                        pm.urunler[i].CurrencyName = "";
+                    }
+
+				}
+
+
+
+				unit.Add(new()
+				{
+					Value = UnitType.Gr,
+					Name = "Gr"
+				});
+				unit.Add(new()
+				{
+					Value = UnitType.Kg,
+					Name = "Kg"
+				});
+				unit.Add(new()
+				{
+					Value = UnitType.Adet,
+					Name = "Adet"
+				});
+
+
+				for (int i = 0; i < pm.urunler.Count; i++)
+                {
+                    if (pm.urunler[i].UnitId!=0)
+					{
+						pm.urunler[i].Unit = unit.FirstOrDefault(x => x.Value == pm.urunler[i].UnitId).Name;
+
+                    }
+                    else
+                    {
+                        pm.urunler[i].CurrencyName = "";
+                    }
+
+				}
+                
+                pm.user = usr;
                     return View(pm);
                 }
                 else

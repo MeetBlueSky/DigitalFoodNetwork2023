@@ -135,22 +135,20 @@
 			
 			</div>
 			<div class="button-gap">
-				<a  class="button button-2 non">Tümünü Gör<i class="fa-solid fa-arrow-right"></i></a>
+			<a class="button button-2 non" onclick="seeAll()">Tümünü Gör<i class="fa-solid fa-arrow-right"></i></a>
 			</div>
 		</div>
 	</section>
-
-<section style="background-color:#FFFFFF;">
+	<section style="background-color:#FFFFFF;">
 	<div class="container">
 		<div class="row align-items-center">
 			<div class="col-lg-12 align-items-center" style="text-align:center;">
 				<img src="/assets/logo/destekleyenler.jpg" />
 			</div>
-			
+
 		</div>
 	</div>
 </section>
-
 	
   <div id="kayitModal" class="modal">
 
@@ -170,15 +168,19 @@
 								</div>
 								 <div class="name-form">
 								<i class="fa fa-user"></i>
-									<input type="text" name="name" id="kayitemail" placeholder="E-mailinizi giriniz">
+								<input type="text" name="email" id="kayitemail" placeholder="E-mailinizi giriniz">
+
+									<p class="message"></p>
+								</div>
+
+								 <div class="name-form">
+								<i class="fa fa-user"></i>
+								<input type="number" name="name" id="kayittckn" placeholder="TCKN giriniz">
 								</div>
 								 <div class="name-form">
 								<i class="fa fa-user"></i>
-				<input type="number" name="name" id="kayittckn" placeholder="TCKN giriniz">
-								</div>
-								 <div class="name-form">
-								<i class="fa fa-user"></i>
-				<input type="number" name="name" id="kayittel" placeholder="Telefon numaranızı giriniz">
+								@*<input type="number" name="name" id="kayittel" placeholder="Telefon numaranızı giriniz" >*@
+				                <input placeholder="(123)456-7890" id="kayittel" type="text" type="name" name="txtInput" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);">
 								</div>
 								
 								  <div class="name-form">
@@ -190,7 +192,7 @@
 				<input type="password" style="bottom: 10px;" name="name" id="kayitpassword2" placeholder="Şifrenizi giriniz">
 								</div>
 								
-			   <form method="post" onsubmit="return submitUserForm();">
+			   <form method="post" onsubmit="return submitUserForm();" class="recaptcha">
                 <div  class="column">
                         <div class="col">
                         <div class="form-item">
@@ -205,12 +207,12 @@
                     </form>
 								 <div class="name-form">
                                     <input class="form-check-input" type="checkbox" id="kvkk">
-                                    <label class="form-check-label" for="remember">KVKK Onayı</label>
+				<label class="form-check-label" for="remember"><a href="#" class="textapprovals">KVKK Onayı </a>metni onaylıyorum</label>
                                
 							  </div>
 								 <div class="name-form">
                                     <input class="form-check-input" type="checkbox" id="kullanimsartlari">
-                                    <label class="form-check-label" for="remember">Kullanım Şartları Onayı</label>
+				<label class="form-check-label" for="remember"><a href="#" class="textapprovals">Kullanım Şartları</a> Onayı</label>
                                
 							  </div>
 			
@@ -229,5 +231,6 @@
 <script>
     var hst = "@Url.Action("filterTedarik", "Home")";
     var hst2 = "@Url.Action("kayitOl", "Home")";
+    var hst3 = "@Url.Action("seeAll", "Home")";
 </script>
 	<script src="~/assets/js/home.js"></script>

@@ -12,4 +12,10 @@
         public const int Kg = 2;
         public const int Adet = 3;
     }
+    public struct CurrencyType
+    {
+        public const int TL = 1;
+        public const int USD = 2;
+        public const int EUR = 3;
+    }
 }

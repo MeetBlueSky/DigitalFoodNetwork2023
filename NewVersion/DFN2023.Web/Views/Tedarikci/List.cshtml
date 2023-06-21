@@ -55,42 +55,57 @@
 	<!-- best-restaurants -->
 	<section class="best-restaurants gap">
 		<div class="container">
-			
-	        <a onclick="haritaAc()"  class="button button-2"><span id="textyazi"></span></a>
+		@if (Model.tedariklist.Count > 0)
+		{
+			<a onclick="haritaAc()"  class="button button-2"><span id="textyazi"></span></a>
+		}
 			<div class="column" id="urunler" style="display:block">
-				
+			@if (Model.tedariklist.Count>0)
+			{
 				@for (var i = 0; i < @Model.tedariklist.Count; i++)
 				{
 					<div class="aos-init aos-animate" data-aos="flip-up" data-aos-delay="200" data-aos-duration="300" style="margin-bottom: 10px;">
-					<div class="logos-card restaurant-page ">
-						@if(Model.tedariklist[i].Logo!=null){
-						<img width="100" alt="logo" src="~/assets/logo/@Model.tedariklist[i].Logo">
-						}else{
-						
-							<img alt="logo" src="~/assets/img/stcontent/100x100.png">
-						}
+						<div class="logos-card restaurant-page ">
+							@if (Model.tedariklist[i].Logo != null)
+							{
+								<img width="100" alt="logo" src="~/assets/logo/@Model.tedariklist[i].Logo">
+							}
+							else
+							{
+
+								<img alt="logo" src="~/assets/img/stcontent/100x100.png">
+							}
 							<div class="cafa">
-							<h4><a href="@Url.Action("Detay","Firma")/@UrlCleaner.GetSanitizedTextForURL(Model.tedariklist[i].Name)/@Model.tedariklist[i].CompanyId">@Model.tedariklist[i].Name</a></h4>
+								<h4><a href="@Url.Action("Detay","Firma")/@UrlCleaner.GetSanitizedTextForURL(Model.tedariklist[i].OfficialName)/@Model.tedariklist[i].Id">@Model.tedariklist[i].OfficialName</a></h4>
 								<div class="cafa-button">
-								@if(Model.tedariklist[i].FavDurum==true){
-									
-								<a onclick="favEkleCikar(@Model.tedariklist[i].CompanyId,1)"><i class="fas fa-heart-broken"></i> Favoriden Çıkart</a>
-								}
-								else
-								{
-									
-								<a onclick="favEkleCikar(@Model.tedariklist[i].CompanyId,0)"><i class="fa-solid fa-heart"></i> Favorilere Ekle</a>
-								}
-										<a href="@Url.Action("Detay", "Mesaj")/@Model.tedariklist[i].UserId"><i class="fa-solid fa-comment-dots"></i> Mesaj Gönder</a>
-								</div>								
-								<p>@Model.tedariklist[i].ShortDesc</p>						
+									@if (Model.tedariklist[i].FavDurum == true)
+									{
+
+										<a onclick="favEkleCikar(@Model.tedariklist[i].Id,1)"><i class="fas fa-heart-broken"></i> Favoriden Çıkart</a>
+									}
+									else
+									{
+
+										<a onclick="favEkleCikar(@Model.tedariklist[i].Id,0)"><i class="fa-solid fa-heart"></i> Favorilere Ekle</a>
+									}
+									<a href="@Url.Action("Detay", "Mesaj")/@Model.tedariklist[i].UserId"><i class="fa-solid fa-comment-dots"></i> Mesaj Gönder</a>
+								</div>
+								<p>@Model.tedariklist[i].ShortDescription</p>
 								<p class="location"><i class="fa-solid fa-location-dot"></i> @Model.tedariklist[i].CountyName, @Model.tedariklist[i].CityName </p>
-								
-										<a  onclick="secKoordinat(@Model.tedariklist[i].Id)" ><i class="fa-solid fa-arrow-right"></i> Haritada Göster</a>
+
+								<a onclick="secKoordinat(@Model.tedariklist[i].Id)"><i class="fa-solid fa-arrow-right"></i> Haritada Göster</a>
 							</div>
+						</div>
 					</div>
-				</div>
 				}
+
+			}
+			else
+			{
+				<div class="aos-init aos-animate" data-aos="flip-up" data-aos-delay="200" data-aos-duration="300" style="margin-bottom: 10px;">
+					<h1>Bu ürünü tedarik eden firma bulunamadı</h1>
+				</div>
+			}
 				</div>
 				<div class="column" id="harita" style="display:none">
 					<!-- partial:index.partial.html -->
@@ -121,16 +136,15 @@
 						<h6>The Wilmington</h6>
 					</div>
 				</div>
-
 				<div class="row">
 					<div class="col-xl-6 col-lg-12">
 						<div class="choose-lunches">
-
 							<h2>Choose 2 lunches</h2>
 							<h3>pay for one</h3>
 							<a href="#" class="button button-2 non">Order Now<i class="fa-solid fa-arrow-right"></i></a>
 						</div>
 					</div>
+				</div>
 				</div>-->
 			</div>
 		</div>

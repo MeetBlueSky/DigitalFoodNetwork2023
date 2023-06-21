@@ -26,6 +26,7 @@ namespace DFN2023.Business
 
         IRepository<User> _fkRepositoryUser;
         IRepository<Category> _fkRepositoryCategory;
+        IRepository<CategoryProductBase> _fkRepositoryCategoryProductBase;
         IRepository<ProductCompany> _fkRepositoryProductCompany;
         IRepository<Company> _fkRepositoryCompany;//StaticContentGrupPageDTO
         IRepository<StaticContentGrupPage> _fkRepositoryStaticContentGrupPage;
@@ -35,6 +36,7 @@ namespace DFN2023.Business
         IRepository<Message> _fkRepositoryMessage;
         IRepository<Country> _fkRepositoryCountry;
         IRepository<CompanyType> _fkRepositoryCompanyType;
+        IRepository<ProductBase> _fkRepositoryProductBase;
 
         IMapper _mapper;
 
@@ -46,6 +48,7 @@ namespace DFN2023.Business
 
             _fkRepositoryUser = _unitOfWork.GetRepostory<User>();
             _fkRepositoryCategory = _unitOfWork.GetRepostory<Category>();
+			_fkRepositoryCategoryProductBase = _unitOfWork.GetRepostory<CategoryProductBase>();
             _fkRepositoryProductCompany = _unitOfWork.GetRepostory<ProductCompany>();
             _fkRepositoryCompany = _unitOfWork.GetRepostory<Company>();
             _fkRepositoryStaticContentGrupPage = _unitOfWork.GetRepostory<StaticContentGrupPage>();
@@ -55,6 +58,7 @@ namespace DFN2023.Business
             _fkRepositoryMessage = _unitOfWork.GetRepostory<Message>();
             _fkRepositoryCountry = _unitOfWork.GetRepostory<Country>();
             _fkRepositoryCompanyType = _unitOfWork.GetRepostory<CompanyType>();
+            _fkRepositoryProductBase = _unitOfWork.GetRepostory<ProductBase>();
 
             //_fkRepositoryStaticContentPage = _unitOfWork.GetRepostory<StaticContentPage>();
             //_fkRepositoryStaticContentGrupPage = _unitOfWork.GetRepostory<StaticContentGrupPage>();
@@ -102,6 +106,20 @@ namespace DFN2023.Business
                 return null;
             }
         }
+        
+        public List<ProductBaseDTO> getUstUrunList()
+        {
+            try
+            {
+                return _mapper.Map<List<ProductBaseDTO>>(_fkRepositoryProductBase.Entities.Where(p => p.Status == 1).OrderBy(p => p.RowNum).ToList());
+
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
 
         public List<CompanyTypeDTO> getCompanyTypeList()
         {
@@ -117,61 +135,83 @@ namespace DFN2023.Business
         }
 
 
-        public List<ProductCompanyDTO> getTedarik(int kid, string? urun, int? userid)
-        {
-            Expression<Func<ProductCompany, bool>> expProductCompany = c => true;
-            expProductCompany = expProductCompany.And(p => p.Status == 1);
-            if (kid != 0)
-            {
-                expProductCompany = expProductCompany.And(p => p.CategoryId == kid);
-            }
-            if (urun != "" && urun != null)
-            {
-                expProductCompany = expProductCompany.And(p => p.Name.ToUpper().Contains(urun.ToUpper()));
 
-            }
+		public List<CompanyDTO> getTedarik(int kid, string? urun, int? userid)
+		{
+			Expression<Func<ProductCompany, bool>> expProductCompany = c => true;
+			expProductCompany = expProductCompany.And(p => p.Status == 1);
+			if (kid != 0)
+			{
+				var list = _fkRepositoryCategoryProductBase.Include().Include(p => p.ProductBase).ThenInclude(p => p.ProductCompany).ThenInclude(p => p.Company)
+			   .Where(p => p.CategoryId == kid)
+			   .Select(p => p.ProductBase.Id).ToList();
 
-            var sql = _fkRepositoryProductCompany.Entities
-               .Where(expProductCompany)
-               .Select(p => new ProductCompanyDTO
-               {
-                   Id = p.Id,
-                   Name = p.Name,
-                   CategoryId = p.CategoryId,
-                   CategoryName = p.Category.Name,
-                   Code = p.Code,
-                   CompanyId = p.CompanyId,
-                   CompanyName = p.Company.OfficialName,
-                   CreateDate = p.CreateDate,
-                   LastUpdateDate = p.LastUpdateDate,
-                   CreatedBy = p.CreatedBy,
-                   LastUpdatedBy = p.LastUpdatedBy,
-                   LastIP = p.LastIP,
-                   Currency = p.Currency,
-                   Price = p.Price,
-                   RowNum = p.RowNum,
-                   Status = p.Status,
-                   ShortDesc = p.Company.ShortDescription,
-                   CityName = _fkRepositoryCity.Entities.Count() > 0 ? _fkRepositoryCity.Entities.First(c => c.Id == p.Company.OfficialCityId).Name : "",
-                   CountyName = _fkRepositoryCounty.Entities.Count() > 0 ? _fkRepositoryCounty.Entities.First(c => c.Id == p.Company.OfficialCountyId).Name : "",
-                   FavDurum = _fkRepositoryUserUrunler.Entities.Count() > 0 ? _fkRepositoryUserUrunler.Entities.Where(c => c.CompanyId == p.CompanyId && c.UserId == userid).Count() > 0 ? true : false : false,
-                   UserId = Convert.ToInt32(p.Company.UserId),
-                   BrandName = p.Company.BrandName,
-                   OfficialName=p.Company.OfficialName,
-                   MapAddress=p.Company.MapAddress,
-                   ShortDescription = p.Company.ShortDescription,
-                   Logo = p.Company.Logo,
-                   MapX=p.Company.MapX,
-                   MapY=p.Company.MapY,
+				expProductCompany = expProductCompany.And(p => list.Contains(p.ProductBaseId));
+			}
+			if (urun != "" && urun != null)
+			{
+				expProductCompany = expProductCompany.And(p => p.Name.ToUpper().Contains(urun.ToUpper()));
 
-               }).ToList();
+			}
 
-            return sql;
-        }
+			List<CompanyDTO> s = new List<CompanyDTO>();
 
 
+			s = _fkRepositoryProductCompany.Entities.Where(expProductCompany).Select(p => new CompanyDTO
+			{
+				Id = p.Company.Id,
+				BrandName = p.Company.BrandName,
+				OfficialName = p.Company.OfficialName,
+				ShortDescription = p.Company.ShortDescription,
+				DetailDescription = p.Company.DetailDescription,
+				TaxOffice = p.Company.TaxOffice,
+				TaxNo = p.Company.TaxNo,
+				CompanyTypeId = p.Company.CompanyTypeId,
+				CompanyTypeName = p.Company.CompanyType.TypeName,
+				OfficialAddress = p.Company.OfficialAddress,
+				OfficialCityId = p.Company.OfficialCityId,
+				OfficialCountryId = p.Company.OfficialCountryId,
+				OfficialCountyId = p.Company.OfficialCountyId,
+				MapAddress = p.Company.MapAddress,
+				MapCountryId = p.Company.MapCountryId,
+				MapCityId = p.Company.MapCityId,
+				MapCountyId = p.Company.MapCountyId,
+				MapX = p.Company.MapX,
+				MapY = p.Company.MapY,
+				Email = p.Company.Email,
+				Phone = p.Company.Phone,
+				Mobile = p.Company.Mobile,
+				YearFounded = p.Company.YearFounded,
+				Logo = p.Company.Logo,
+				Attachment = p.Company.Attachment,
+				Facebook = p.Company.Facebook,
+				Instagram = p.Company.Instagram,
+				Tiktok = p.Company.Tiktok,
+				Youtube = p.Company.Youtube,
+				Whatsapp = p.Company.Whatsapp,
+				Website = p.Company.Website,
+				AdminNotes = p.Company.AdminNotes,
+				CreatedBy = p.CreatedBy,
+				LastUpdatedBy = p.LastUpdatedBy,
+				CreateDate = p.CreateDate,
+				LastUpdateDate = p.LastUpdateDate,
+				LastIP = p.LastIP,
+				Status = p.Status,
+				FavDurum = _fkRepositoryUserUrunler.Entities.Count() > 0 ? _fkRepositoryUserUrunler.Entities.Where(c => c.CompanyId == p.Id && c.UserId == userid).Count() > 0 ? true : false : false,
+				CityName = _fkRepositoryCity.Entities.Count() > 0 ? _fkRepositoryCity.Entities.First(c => c.Id == p.Company.OfficialCityId).Name : "",
+				CountyName = _fkRepositoryCounty.Entities.Count() > 0 ? _fkRepositoryCounty.Entities.First(c => c.Id == p.Company.OfficialCountyId).Name : "",
+				ProductCompany = p.Company.ProductCompany.ToList(),
 
-        public List<CompanyDTO> getCompanyList()
+			}).ToList();
+			s = s.DistinctBy(p => p.Id).ToList();
+
+
+			return s;
+
+		}
+
+
+		public List<CompanyDTO> getCompanyList()
         {
             List<CompanyDTO> a = new();
             try
@@ -754,10 +794,10 @@ namespace DFN2023.Business
                                         Code = p.Code,
                                         CompanyId = p.CompanyId,
                                         UnitId = p.UnitId,
-                                        Unit = p.UnitId == 1 ? "Gr" : p.UnitId == 2 ? "Kg" : "Adet",
+                                       // Unit = p.UnitId == 1 ? "Gr" : p.UnitId == 2 ? "Kg" : "Adet",
                                         Price = p.Price,
                                         Desc = p.Desc,
-
+                                        Currency = p.Currency==null?0: p.Currency,  
                                     }).ToList();
 
 

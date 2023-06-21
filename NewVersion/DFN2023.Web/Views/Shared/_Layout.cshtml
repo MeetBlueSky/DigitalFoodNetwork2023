@@ -1,4 +1,4 @@
-﻿@using DFN2023.Web.Helpers;
+﻿﻿@using DFN2023.Web.Helpers;
 @model DFN2023.Web.Models.PublicModel
 <!DOCTYPE html>
 <html lang="zxx">
@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="~/assets/css/color.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<!-- Font Awesome 5 -->
 	<script src="https://kit.fontawesome.com/27a041baf1.js" crossorigin="anonymous"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
@@ -391,13 +391,7 @@ var kayitmodal = document.getElementById("kayitModal");
 
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-  sumodal.style.display = "none";
-  kmodal.style.display = "none";
-    kayitmodal.style.display = "none";
-    uguncmodal.style.display = "none";
-}
+ 
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {

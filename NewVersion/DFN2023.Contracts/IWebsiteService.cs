@@ -11,7 +11,7 @@ namespace DFN2023.Contracts
     {
         UserDTO CheckUser(string email, string pass);
         List<CategoryDTO> getCategoryList();
-        List<ProductCompanyDTO> getTedarik(int kid, string? ürün,int? userid);
+        List<CompanyDTO> getTedarik(int kid, string? ürün,int? userid);
         //getCompanyList
         List<CompanyDTO> getCompanyList();
         List<StaticContentGrupPageDTO> getAnasayfaList();
@@ -36,6 +36,8 @@ namespace DFN2023.Contracts
         User sifreYenile(string email, string code);
         CompanyDTO getCompanyDetay(int id, int userid);
         CompanyDTO getCompanyInfo(int userid);
+        List<ProductBaseDTO> getUstUrunList();
 
-	}
+
+    }
 }
