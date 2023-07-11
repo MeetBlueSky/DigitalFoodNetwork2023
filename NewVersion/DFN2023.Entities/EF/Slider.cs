@@ -21,5 +21,8 @@ namespace DFN2023.Entities.EF
         public string? LastIP { get; set; }
         public int Status { get; set; }
         public int LangId { get; set; }
+
+
+        public virtual SliderHeader? SliderHeader { get; set; }
     }
 }

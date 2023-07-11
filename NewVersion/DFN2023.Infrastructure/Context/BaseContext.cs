@@ -19,10 +19,12 @@ namespace DFN2023.Infrastructure.Context
         public virtual DbSet<CompanyType> CompanyType { get; set; }
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<County> County { get; set; }
+        public virtual DbSet<MenuManagement> MenuManagement { get; set; }
         public virtual DbSet<Message> Message { get; set; }
         public virtual DbSet<ProductBase> ProductBase { get; set; }
         public virtual DbSet<ProductCompany> ProductCompany { get; set; }
         public virtual DbSet<Slider> Slider { get; set; }
+        public virtual DbSet<SliderHeader> SliderHeader { get; set; }
         public virtual DbSet<StaticContentGrupPage> StaticContentGrupPage { get; set; }
         public virtual DbSet<StaticContentGrupTemp> StaticContentGrupTemp { get; set; }
         public virtual DbSet<StaticContentPage> StaticContentPage { get; set; }
@@ -163,6 +165,16 @@ namespace DFN2023.Infrastructure.Context
                     .HasForeignKey(d => d.ProductBaseId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProductBase_ProductCompany");
+            });
+
+            modelBuilder.Entity<Slider>(entity =>
+            {
+
+                entity.HasOne(d => d.SliderHeader)
+                    .WithMany(p => p.Slider)
+                    .HasForeignKey(d => d.Type)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Slider_SliderHeader");
             });
 
             modelBuilder.Entity<StaticContentPage>(entity =>

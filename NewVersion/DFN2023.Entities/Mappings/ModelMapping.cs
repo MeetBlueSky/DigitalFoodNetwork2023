@@ -35,6 +35,9 @@ namespace DFN2023.Entities.Mappings
             CreateMap<County, CountyDTO>();
             CreateMap<CountyDTO, Country>();
 
+            CreateMap<MenuManagement, MenuManagementDTO>();
+            CreateMap<MenuManagementDTO, MenuManagement>();
+
             CreateMap<ProductBase, ProductBaseDTO>();
             CreateMap<ProductBaseDTO, ProductBase>();
 
@@ -42,6 +45,12 @@ namespace DFN2023.Entities.Mappings
             CreateMap<ProductCompanyDTO, ProductCompany>(); 
             CreateMap<StaticContentGrupPage, StaticContentGrupPageDTO>();
             CreateMap<Message, MessageDTO>();
+
+            CreateMap<Slider, SliderDTO>();
+            CreateMap<SliderDTO, Slider>();
+            CreateMap<SliderHeader, SliderHeaderDT>();
+            CreateMap<SliderHeaderDT, SliderHeader>();
+
         }
     }
 }

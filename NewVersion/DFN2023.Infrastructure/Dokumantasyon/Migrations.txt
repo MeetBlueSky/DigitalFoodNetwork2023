@@ -3,4 +3,5 @@ SQL
 -------------------------------------------------------------------------------------------------------------------------
 Add-Migration 01012020.1 -Context SqlContext -OutputDir Migrations\Sql
 Update-Database -Context SqlContext
+Remove-Migration -force -Context SqlContext
 -------------------------------------------------------------------------------------------------------------------------
