@@ -1,0 +1,257 @@
+﻿@model DFN2023.Admin.Models.MenuPageModel
+@{
+    ViewData["Title"] = "Menü Yönetim Sayfası";
+}
+
+<!--begin::Container-->
+<div class="container">
+    <div class="card card-custom">
+        <div class="card-header">
+            <div class="card-title">
+                <span class="card-icon">
+
+                </span>
+                <h3 class="card-label"> </h3>
+            </div>
+            <div class="card-toolbar">
+
+                <!--begin::Button-->
+                <a href="#" onclick="kayitModalOpen()" class="btn btn-primary font-weight-bolder">
+                    <span class="svg-icon svg-icon-md">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24" />
+                                <circle fill="#000000" cx="9" cy="15" r="6" />
+                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>Yeni Kayıt
+                </a>
+                <!--end::Button-->
+            </div>
+        </div>
+        <div class="card-body">
+            <!--begin: Datatable-->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-checkable" id="kt_datatable" style="margin-top: 13px !important">
+                    <thead>
+                        <tr>
+                            <th>Ayarlar</th>
+                            <th>ID</th>
+                            <th>Görsel</th>
+                            <th>Name</th>
+                            <th>Üst Id</th>
+                            <th>Alt Id</th>
+                            <th>Menü Özellik</th>
+                            <th>Tıklama Tip</th>
+                            <th>Açılış Tipi</th>
+                            <th>Menü Katmanı</th>
+                            <th>Menü Katman Kodu</th>
+                            <th>Linki</th>
+                            <th>Sıralama</th>
+                            <th>Aktif/Pasif</th>
+                            <th>Dil</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <!--end: Datatable-->
+        </div>
+    </div>
+    <!--end::Card-->
+</div>
+
+
+<div class="modal fade" id="exampleModalSizeLg" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Menü Ekle/Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="form-group">
+                    <label>
+                        İsim
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input class="form-control" rows="5" id="p_Name"></input>
+                </div>
+                <label>Menü Özellik</label>
+
+                <div class="form-group row">
+                    <div class="dropdown bootstrap-select form-control dropup">
+                        <select id="p_MenuFeatureId" class="form-control selectpicker" data-size="7" data-live-search="true" tabindex="null">
+                            <option value="0">Menü Özellik Seçiniz..</option>
+
+                            <option value="1">Tüm Tekneler</option>
+                            <option value="2">Markalar</option>
+                            <option value="3">Blog</option>
+                            <option value="4">TrioTech</option>
+                            <option value="5">Kurumsal</option>
+                            <option value="6">İletişim</option>
+                            <option value="7">Kariyer</option>
+
+                        </select>
+                    </div>
+                </div>
+                <label>Tıklama Tip</label>
+
+                <div class="form-group row">
+                    <div class="dropdown bootstrap-select form-control dropup">
+                        <select id="p_ClickType" class="form-control selectpicker" data-size="7" data-live-search="true" tabindex="null">
+                            <option value="0">Tıklama Tipi Seçiniz..</option>
+
+                            <option value="1">Onclick</option>
+                            <option value="2">Link</option>
+
+                        </select>
+                    </div>
+                </div>
+                <label>Açılış Tip</label>
+
+                <div class="form-group row">
+                    <div class="dropdown bootstrap-select form-control dropup">
+                        <select id="p_OpeningType" class="form-control selectpicker" data-size="7" data-live-search="true" tabindex="null">
+                            <option value="0">Açılış Tipi Seçiniz..</option>
+
+                            <option value="1">Yeni Sayfa</option>
+                            <option value="2">Aynı Sayfa</option>
+
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label>
+                        Menü Katmanı
+                    </label>
+                    <input class="form-control" rows="5" id="p_MenuLayer"></input>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Menü Katman Kodu
+                    </label>
+                    <input class="form-control" rows="5" id="p_MenuLayerCode"></input>
+                </div>
+
+                <label>
+                    Üst Katman
+                    <span class="text-danger">Katmanı 3 veya 4 olan veri ekleyecekseniz lütfen seçiniz</span>
+                </label>
+
+                <div class="form-group row">
+                    <div class="dropdown bootstrap-select form-control dropup">
+                        <select id="p_ParentId" class="form-control selectpicker" data-size="7" data-live-search="true" tabindex="null">
+                            <option value="0">Üst Katman Seçiniz..</option>
+
+                            @for (int i = 0; i < Model.ParentList.Count; i++)
+                            {
+                                <option value="@Model.ParentList[i].Id">@Model.ParentList[i].Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <label>
+                    Alt Katman
+                    <span class="text-danger">Aynı sayfada katmanı 4 olan veri ekleyecekseniz lütfen seçiniz</span>
+                </label>
+                <div class="form-group row">
+                    <div class="dropdown bootstrap-select form-control dropup">
+                        <select id="p_ChildId" class="form-control selectpicker" data-size="7" data-live-search="true" tabindex="null">
+                            <option value="0">Üst Katman Seçiniz..</option>
+
+                            @for (int i = 0; i < Model.ChildList.Count; i++)
+                            {
+                                <option value="@Model.ChildList[i].Id">@Model.ChildList[i].Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Link
+                    </label>
+                    <input class="form-control" rows="5" id="p_Link"></input>
+                </div>
+
+
+                <div class="form-group">
+                    <label>
+                        Görsel
+                    </label>
+                    <br />
+                    <div class="image-input image-input-outline" id="p_Image" style="  ">
+                        <div class="image-input-wrapper" style=""></div>
+                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="profile_avatar" id="p_Imagex" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="profile_avatar_remove" />
+                        </label>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Sıralaması
+                    </label>
+                    <input type="number" class="form-control" rows="5" id="p_RowNum"></input>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Pasif/Aktif
+                    </label>
+
+                    <span class="switch">
+                        <label>
+                            <input type="checkbox" name="select" id="p_Status" checked>
+                            <span></span>
+                        </label>
+                    </span>
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button id="btnSubmit" type="button" class="btn btn-primary font-weight-bold" onclick="menuKaydet()">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--end::Container-->
+@section Scripts{
+
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script>
+        var hst = "@Url.Action("getMenuManagement", "Menu")";
+        var hst2 = "@Url.Action("CreatedMenu", "Menu")";
+        var hst3 = "@Url.Action("UploderImage", "Menu")";
+        var hst4 = "@Url.Action("DeleteMenu", "Menu")";
+        var website = "@ViewData["website"]";
+    </script>
+
+    <script src="~/assets/custom/common.js"></script>
+    <script src="~/assets/custom/menu.js"></script>
+
+}

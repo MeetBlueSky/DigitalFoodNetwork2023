@@ -57,6 +57,16 @@ namespace DFN2023.Contracts
         bool updateCounty(County county);
         bool deleteCounty(County county);
 
+
+        //MenuManagement
+        public DtResult<MenuManagementDTO> getMenuManagement(DtParameters dtParameters, int lang);
+        public MenuManagement createMenuManagement(MenuManagement menu);
+        public bool deleteMenuManagement(int id);
+        public List<MenuManagementDTO> getMenuParentList();
+        public List<MenuManagementDTO> getMenuChildList();
+
+
+
         //Message
 
         DtResult<MessageDTO> getContactForms(DtParameters dtParameters, int lang);
@@ -111,7 +121,11 @@ namespace DFN2023.Contracts
         bool deleteSlider(Slider slider);
 
 
-
+        //SliderHeader
+        SliderHeader createSliderHeader(SliderHeader pro);
+        DtResult<SliderHeaderDT> getSliderHeader(DtParameters dtParameters, int lang);
+        bool deleteSliderHeader(SliderHeader slider);
+        List<SliderHeader> listSliderHeader(int lang);
 
     }
 }

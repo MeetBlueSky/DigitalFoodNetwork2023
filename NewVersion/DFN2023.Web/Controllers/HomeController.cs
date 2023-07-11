@@ -5,10 +5,11 @@ using DFN2023.Web.Helpers;
 using DFN2023.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace DFN2023.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         
         private readonly IWebsiteService _websiteService;
@@ -130,5 +131,15 @@ namespace DFN2023.Web.Controllers
 			}
 		}
 
-	}
+        [HttpGet]
+        public Task<JsonResult> getMenuLayer()
+        {
+            //if (start < 1) { start = 1; }
+            //start = start - 1;
+            int lang = getLang(CultureInfo.CurrentCulture.Name);
+            var sonuc = _websiteService.getMenuLayer1(lang);
+            return Task.FromResult(Json(sonuc));
+        }
+
+    }
 }

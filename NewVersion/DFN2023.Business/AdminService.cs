@@ -36,10 +36,12 @@ namespace DFN2023.Business
         IRepository<CompanyType> _fkRepositoryCompanyType;
         IRepository<Country> _fkRepositoryCountry;
         IRepository<County> _fkRepositoryCounty;
+        IRepository<MenuManagement> _fkRepositoryMenuManagement;
         IRepository<Message> _fkRepositoryMessage;
         IRepository<ProductBase> _fkRepositoryProductBase;
         IRepository<ProductCompany> _fkRepositoryProductCompany;
         IRepository<Slider> _fkRepositorySlider;
+        IRepository<SliderHeader> _fkRepositorySliderHeader;
         IRepository<StaticContentGrupPage> _fkRepositoryStaticContentGrupPage;
         IRepository<StaticContentGrupTemp> _fkRepositoryStaticContentGrupTemp;
         IRepository<StaticContentPage> _fkRepositoryStaticContentPage;
@@ -62,10 +64,12 @@ namespace DFN2023.Business
             _fkRepositoryCompanyType = _unitOfWork.GetRepostory<CompanyType>();
             _fkRepositoryCountry = _unitOfWork.GetRepostory<Country>();
             _fkRepositoryCounty = _unitOfWork.GetRepostory<County>();
+            _fkRepositoryMenuManagement = _unitOfWork.GetRepostory<MenuManagement>();
             _fkRepositoryMessage = _unitOfWork.GetRepostory<Message>();
             _fkRepositoryProductBase = _unitOfWork.GetRepostory<ProductBase>();
             _fkRepositoryProductCompany = _unitOfWork.GetRepostory<ProductCompany>();
             _fkRepositorySlider = _unitOfWork.GetRepostory<Slider>();
+            _fkRepositorySliderHeader = _unitOfWork.GetRepostory<SliderHeader>();
             _fkRepositoryStaticContentGrupPage = _unitOfWork.GetRepostory<StaticContentGrupPage>();
             _fkRepositoryStaticContentGrupTemp = _unitOfWork.GetRepostory<StaticContentGrupTemp>();
             _fkRepositoryStaticContentPage = _unitOfWork.GetRepostory<StaticContentPage>();
@@ -1081,6 +1085,121 @@ namespace DFN2023.Business
             }
             return true;
         }
+
+
+        //Menu
+        public DtResult<MenuManagementDTO> getMenuManagement(DtParameters dtParameters, int lang)
+        {
+            try
+            {
+                Expression<Func<MenuManagement, bool>> expMenuManagement = c => true;
+                expMenuManagement = expMenuManagement.And(p => p.LangId == lang);
+
+                var searchBy = dtParameters.Search?.Value;
+                if (!string.IsNullOrEmpty(searchBy))
+                {
+                    expMenuManagement = expMenuManagement.And(r => r.Name != null && r.Name.ToUpper().Contains(searchBy.ToUpper())
+                    || r.MenuLayerCode != null && r.MenuLayerCode.ToUpper().Contains(searchBy.ToUpper()));
+                }
+
+                var sql = _fkRepositoryMenuManagement.Entities
+                .Where(expMenuManagement)
+                .Select(p => new MenuManagementDTO
+                {
+                    Id = p.Id,
+                    Link = p.Link,
+                    Image = p.Image,
+                    ClickType = p.ClickType,
+                    MenuFeatureId = p.ClickType,
+                    MenuLayer = p.MenuLayer,
+                    MenuLayerCode = p.MenuLayerCode,
+                    Name = p.Name,
+                    OpeningType = p.OpeningType,
+                    ParentId = p.ParentId,
+                    ChildId = p.ChildId,
+                    RowNum = p.RowNum,
+                    Status = p.Status,
+                    LangId = p.LangId,
+
+                }).AsQueryable();
+
+                var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                sql = orderAscendingDirection ? sql.OrderByDynamic(orderCriteria, DtOrderDir.Asc) : sql.OrderByDynamic(orderCriteria, DtOrderDir.Desc);
+
+
+                var count = sql.Count();
+
+                var sonuc = sql.Skip(dtParameters.Start).Take(dtParameters.Length).ToList();
+
+                return new DtResult<MenuManagementDTO>
+                {
+                    Draw = dtParameters.Draw,
+                    RecordsTotal = count,
+                    RecordsFiltered = count,
+                    Data = sonuc
+                };
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public MenuManagement createMenuManagement(MenuManagement menu)
+        {
+            try
+            {
+                if (menu.Image == null)
+                {
+                    menu.Image = " ";
+                }
+                //var menuu = _mapper.Map<MenuManagement>(menu);
+                if (menu.Id > 0)
+                {
+                    var result = _fkRepositoryMenuManagement.Update(menu);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+                else
+                {
+
+                    var result = _fkRepositoryMenuManagement.Add(menu);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public bool deleteMenuManagement(int id)
+        {
+            try
+            {
+                var menuu = _fkRepositoryMenuManagement.GetById(id);
+                _fkRepositoryMenuManagement.Delete(menuu);
+                _unitOfWork.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+
+            }
+        }
+        public List<MenuManagementDTO> getMenuParentList()
+        {
+            return _mapper.Map<List<MenuManagementDTO>>(_fkRepositoryMenuManagement.Entities.Where(p => p.Status == 1 && p.MenuLayer == 2).ToList());
+        }
+        public List<MenuManagementDTO> getMenuChildList()
+        {
+            return _mapper.Map<List<MenuManagementDTO>>(_fkRepositoryMenuManagement.Entities.Where(p => p.Status == 1 && p.MenuLayer == 3).ToList());
+        }
+
 
 
         //Message
@@ -2240,7 +2359,7 @@ namespace DFN2023.Business
                                                r.Target != null && r.Target.ToUpper().Contains(searchBy.ToUpper()));
                 }
 
-                var sql = _fkRepositorySlider.Include()
+                var sql = _fkRepositorySlider.Include(p=>p.SliderHeader)
                 .Where(expProducts)
                 .Select(p => new SliderDT
                 {
@@ -2254,6 +2373,8 @@ namespace DFN2023.Business
                     RowNum = p.RowNum,
                     Status = p.Status,
                     LangId = p.LangId,
+
+                    SliderHeaderName = p.SliderHeader.SliderName
 
                     /**/
 
@@ -2325,6 +2446,108 @@ namespace DFN2023.Business
                 return false;
             }
             return true;
+        }
+
+
+        //SliderHeader
+
+        public DtResult<SliderHeaderDT> getSliderHeader(DtParameters dtParameters, int lang)
+        {
+            try
+            {
+
+                Expression<Func<SliderHeader, bool>> expProducts = c => true;
+                //expProducts = expProducts.And(p => p.LangId == lang);
+                // expProducts = expProducts.And(p => p.Status == 1);
+
+                var searchBy = dtParameters.Search?.Value;
+                if (!string.IsNullOrEmpty(searchBy))
+                {
+                    expProducts = expProducts.And(r => r.SliderName != null && r.SliderName.ToUpper().Contains(searchBy.ToUpper()));
+                }
+
+                var sql = _fkRepositorySliderHeader.Include()
+                .Where(expProducts)
+                .Select(p => new SliderHeaderDT
+                {
+                    Id = p.Id,
+                    SliderName = p.SliderName,
+                    CreateDate = p.CreateDate,
+                    CreatedBy = p.CreatedBy,
+                    Status = p.Status
+
+                    /**/
+
+                }).AsQueryable();
+
+                var orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                var orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                sql = orderAscendingDirection ? sql.OrderByDynamic(orderCriteria, DtOrderDir.Asc) : sql.OrderByDynamic(orderCriteria, DtOrderDir.Desc);
+
+
+                var count = sql.Count();
+
+                var sonuc = sql.Skip(dtParameters.Start).Take(dtParameters.Length).ToList();
+
+                return new DtResult<SliderHeaderDT>
+                {
+                    Draw = dtParameters.Draw,
+                    RecordsTotal = count,
+                    RecordsFiltered = count,
+                    Data = sonuc
+                };
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+
+        public SliderHeader createSliderHeader(SliderHeader pro)
+        {
+            try
+            {
+
+                if (pro.Id > 0)
+                {
+                    var result = _fkRepositorySliderHeader.Update(pro);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    var result = _fkRepositorySliderHeader.Add(pro);
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+        public bool deleteSliderHeader(SliderHeader sliderHeader)
+        {
+            try
+            {
+                _fkRepositorySliderHeader.Delete(sliderHeader);
+                _unitOfWork.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
+        }
+
+        public List<SliderHeader> listSliderHeader(int lang)
+        {
+            var getSliderHeader = _fkRepositorySliderHeader.Entities.Where(p => p.Status == 1).ToList();
+            return getSliderHeader;
         }
 
 

@@ -45,6 +45,11 @@ namespace DFN2023.Admin.Controllers
 
             ViewData["website"] = anadizin;
             int lang = getLang(CultureInfo.CurrentCulture.Name);
+
+            var getSliderHeaderList = _adminService.listSliderHeader(lang);
+            SelectList listSliderHeader = new SelectList(getSliderHeaderList, "Id", "SliderName");
+            ViewBag.sliderHeaderList = listSliderHeader;
+
             WepPageModel spm = new WepPageModel();
             spm.lang = lang;
             spm.language = CultureInfo.CurrentCulture.Name.ToLower();

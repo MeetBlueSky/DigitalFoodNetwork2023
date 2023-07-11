@@ -38,6 +38,8 @@ namespace DFN2023.Contracts
         CompanyDTO getCompanyInfo(int userid);
         List<ProductBaseDTO> getUstUrunList();
 
+        List<MenuManagementDTO> getMenuLayer1(int lang);
+
 
     }
 }

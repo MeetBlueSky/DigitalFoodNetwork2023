@@ -37,6 +37,7 @@ namespace DFN2023.Business
         IRepository<Country> _fkRepositoryCountry;
         IRepository<CompanyType> _fkRepositoryCompanyType;
         IRepository<ProductBase> _fkRepositoryProductBase;
+        IRepository<MenuManagement> _fkRepositoryMenuManagement;
 
         IMapper _mapper;
 
@@ -59,6 +60,7 @@ namespace DFN2023.Business
             _fkRepositoryCountry = _unitOfWork.GetRepostory<Country>();
             _fkRepositoryCompanyType = _unitOfWork.GetRepostory<CompanyType>();
             _fkRepositoryProductBase = _unitOfWork.GetRepostory<ProductBase>();
+            _fkRepositoryMenuManagement = _unitOfWork.GetRepostory<MenuManagement>();
 
             //_fkRepositoryStaticContentPage = _unitOfWork.GetRepostory<StaticContentPage>();
             //_fkRepositoryStaticContentGrupPage = _unitOfWork.GetRepostory<StaticContentGrupPage>();
@@ -948,5 +950,42 @@ namespace DFN2023.Business
 			}
 
 		}
-	}
+
+        public List<MenuManagementDTO> getMenuLayer1(int lang)
+        {
+            try
+            {
+
+                var result = _mapper.Map<List<MenuManagementDTO>>(_fkRepositoryMenuManagement.Entities.Where(p => p.Status == 1 && p.MenuLayer == 1 && p.LangId == lang).OrderBy(p => p.RowNum).ToList());
+
+                for (int i = 0; i < result.Count; i++)
+                {
+                    result[i].Layer2 = _mapper.Map<List<MenuManagementDTO>>(_fkRepositoryMenuManagement.Entities.Where(p => p.Status == 1 && p.MenuLayer == 2 && p.MenuLayerCode == result[i].MenuLayerCode && p.LangId == lang).OrderBy(p => p.RowNum).ToList());
+                    for (int j = 0; j < result[i].Layer2.Count; j++)
+                    {
+                        result[i].Layer2[j].Layer3 = _mapper.Map<List<MenuManagementDTO>>(_fkRepositoryMenuManagement.Entities.Where(p => p.Status == 1 && p.MenuLayer == 3 && p.MenuLayerCode == result[i].MenuLayerCode && result[i].Layer2[j].Id == p.ParentId && p.LangId == lang).OrderBy(p => p.RowNum).ToList());
+                        for (int k = 0; k < result[i].Layer2[j].Layer3.Count; k++)
+                        {
+                            result[i].Layer2[j].Layer3[k].Layer4 = _mapper.Map<List<MenuManagementDTO>>(_fkRepositoryMenuManagement.Entities.Where(p => p.Status == 1 && p.MenuLayer == 4 && p.MenuLayerCode == result[i].MenuLayerCode && result[i].Layer2[j].Id == p.ParentId && result[i].Layer2[j].Layer3[k].Id == p.ChildId && p.LangId == lang).OrderBy(p => p.RowNum).ToList());
+
+                        }
+                    }
+
+
+                }
+
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+
+                return new();
+            }
+        }
+
+
+
+    }
 }

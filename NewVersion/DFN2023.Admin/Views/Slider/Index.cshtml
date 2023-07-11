@@ -138,14 +138,19 @@
                 </select>
                 </div>
 
-
+@*
                 <div class="form-group">
                     <label>
                         Tip
                     </label>
                     <input type="number" class="form-control" placeholder="...." id="Type" >
+                </div>*@
+                <div class="form-group">
+                    <label class="control-label"> Tip Seçiniz</label>
+                    <select id="Type" class="form-control" asp-items="@ViewBag.sliderHeaderList">
+                        <option value="" selected disabled hidden>....</option>
+                    </select>
                 </div>
-
               
 
                 <div class="form-group">
@@ -187,7 +192,7 @@
         var lngg = "@Model.language";
         var lng = "@Model.lang";
     </script> 
-    <script src="~/assets/custom/slider.js"></script>
+    <script src="~/assets/custom/slider/slider.js"></script>
 }
 
  

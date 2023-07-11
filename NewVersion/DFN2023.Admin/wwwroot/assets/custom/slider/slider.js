@@ -33,7 +33,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
 				{ data: 'Name' },
 				{ data: 'Link' },
 				{ data: 'Target' },
-				{ data: 'Type' },
+				{ data: 'SliderHeaderName' },
 				{ data: 'RowNum' },
 				{ data: 'Status' },
 				{ data: 'LangId' }

@@ -16,5 +16,8 @@ namespace DFN2023.Entities.DTO
         public int RowNum { get; set; }
         public int Status { get; set; }
         public int LangId { get; set; }
+
+
+        public string? SliderHeaderName { get; set; } 
     }
 }
