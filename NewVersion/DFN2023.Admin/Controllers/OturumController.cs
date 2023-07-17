@@ -51,9 +51,9 @@ namespace DFN2023.Admin.Controllers
                             TempData["username"] = usr[0].UserName;
                             TempData["rol"] = usr[0].Role;
 
-                            //string defaultCulture = _adminService.setDefaultLanguage();
-                            //System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(defaultCulture);
-                            //HttpContext.Session.SetString("culture", defaultCulture);
+                            string defaultCulture = _adminService.setDefaultLanguage();
+                            System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(defaultCulture);
+                            HttpContext.Session.SetString("culture", defaultCulture);
 
                             //LoginDTO ldto = new LoginDTO
                             //{

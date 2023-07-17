@@ -58,6 +58,12 @@ namespace DFN2023.Contracts
         bool deleteCounty(County county);
 
 
+        //Language 
+        public string setDefaultLanguage();
+        public List<LanguageDTO> getLanguageList();
+
+
+
         //MenuManagement
         public DtResult<MenuManagementDTO> getMenuManagement(DtParameters dtParameters, int lang);
         public MenuManagement createMenuManagement(MenuManagement menu);

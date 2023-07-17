@@ -36,6 +36,7 @@ namespace DFN2023.Business
         IRepository<CompanyType> _fkRepositoryCompanyType;
         IRepository<Country> _fkRepositoryCountry;
         IRepository<County> _fkRepositoryCounty;
+        IRepository<Language> _fkRepositoryLanguage;
         IRepository<MenuManagement> _fkRepositoryMenuManagement;
         IRepository<Message> _fkRepositoryMessage;
         IRepository<ProductBase> _fkRepositoryProductBase;
@@ -64,6 +65,7 @@ namespace DFN2023.Business
             _fkRepositoryCompanyType = _unitOfWork.GetRepostory<CompanyType>();
             _fkRepositoryCountry = _unitOfWork.GetRepostory<Country>();
             _fkRepositoryCounty = _unitOfWork.GetRepostory<County>();
+            _fkRepositoryLanguage = _unitOfWork.GetRepostory<Language>();
             _fkRepositoryMenuManagement = _unitOfWork.GetRepostory<MenuManagement>();
             _fkRepositoryMessage = _unitOfWork.GetRepostory<Message>();
             _fkRepositoryProductBase = _unitOfWork.GetRepostory<ProductBase>();
@@ -1084,6 +1086,24 @@ namespace DFN2023.Business
                 return false;
             }
             return true;
+        }
+
+
+        //Language
+        public string setDefaultLanguage()
+        {
+            return _fkRepositoryLanguage.Entities.Where(p => p.DefaultLang == true).FirstOrDefault().ShortName.ToLower();
+        }
+
+        public List<LanguageDTO> getLanguageList()
+        {
+            string currentLanguage = System.Globalization.CultureInfo.CurrentCulture.Name.ToUpper();
+
+            List<LanguageDTO> languageList = new List<LanguageDTO>();
+            languageList.Add(_mapper.Map<LanguageDTO>(_fkRepositoryLanguage.Entities.Where(p => p.Status == 1 && p.ShortName.ToUpper() == currentLanguage).FirstOrDefault()));
+            languageList.AddRange(_mapper.Map<List<LanguageDTO>>(_fkRepositoryLanguage.Entities.Where(p => p.Status == 1 && p.ShortName.ToUpper() != currentLanguage).ToList()));
+
+            return languageList;
         }
 
 

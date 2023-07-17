@@ -94,11 +94,11 @@ namespace DFN2023.Admin.Controllers
             return LocalRedirect(r);
         }
 
-        //[HttpPost]
-        //public List<LanguageDTO> getLanguages()
-        //{
-        //    return _adminService.getLanguageList();
-        //}
+        [HttpPost]
+        public List<LanguageDTO> getLanguages()
+        {
+            return _adminService.getLanguageList();
+        }
 
         //[HttpPost]
         //public Task<JsonResult> getLogins([FromBody] DtParameters dtParameters)

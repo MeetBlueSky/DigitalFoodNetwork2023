@@ -737,7 +737,7 @@
                         <div class="topbar">
                             <!--begin::Languages-->
                             <div class="topbar-item" style=" float: left; margin-right: 20px;">
-                                <span data-toggle="dropdown">
+                                @*<span data-toggle="dropdown">
                                     @System.Globalization.CultureInfo.CurrentCulture.Name.ToUpper()
                                     @if (System.Globalization.CultureInfo.CurrentCulture.Name.ToUpper().Equals("TR"))
                                     {
@@ -753,7 +753,7 @@
                                     <a class="dropdown-item" href="@Url.Action("SetLanguage","Home")?c=tr&r=@Context.Request.Path@Context.Request.QueryString">TR</a>
                                     <a class="dropdown-item" href="@Url.Action("SetLanguage","Home")?c=en&r=@Context.Request.Path@Context.Request.QueryString">EN</a>
 
-                                </div>
+                                </div>*@
                             </div>
 
                             <!--end::Languages-->
@@ -884,30 +884,30 @@
             $('#' + slct).addClass('menu-item-active');
             $('#' + slct2).addClass('menu-item-open');
 
-            //$.ajax({
-            //    type: "POST",
-            //    url: '@Url.Action("getLanguages", "Home")',
-            //    success: function (data) {
-            //        console.log(data);
-            //        console.log("@System.Globalization.CultureInfo.CurrentCulture.Name.ToUpper()");
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("getLanguages", "Home")',
+                success: function (data) {
+                    console.log(data);
+                    console.log("@System.Globalization.CultureInfo.CurrentCulture.Name.ToUpper()");
 
-            //        var contentList = ' <span data-toggle="dropdown">';
+                    var contentList = ' <span data-toggle="dropdown">';
 
-            //        contentList += '<img class="h-20px w-20px rounded-sm" src="../../assets/media/svg/flags/' + data[0].Icon + ' " alt=""> ';
+                    contentList += '<img class="h-20px w-20px rounded-sm" src="../../assets/media/svg/flags/' + data[0].Icon + ' " alt=""> ';
                     
-            //        contentList += ' </span>';
-            //        contentList += ' <div class="dropdown-menu">';
+                    contentList += ' </span>';
+                    contentList += ' <div class="dropdown-menu">';
 
-            //        for (i = 0; i < data.length; i++) {
-            //            contentList += '<a class="dropdown-item" href="' + "@Url.Action("SetLanguage","Home")?c=" + data[i].ShortName.toLowerCase() + "&r=@Context.Request.Path@Context.Request.QueryString" + '"><img class="h-20px w-20px rounded-sm" src="../../assets/media/svg/flags/' + data[i].Icon + ' " alt="">&nbsp;' + data[i].ShortName + '</a>';
-            //        }
+                    for (i = 0; i < data.length; i++) {
+                        contentList += '<a class="dropdown-item" href="' + "@Url.Action("SetLanguage","Home")?c=" + data[i].ShortName.toLowerCase() + "&r=@Context.Request.Path@Context.Request.QueryString" + '"><img class="h-20px w-20px rounded-sm" src="../../assets/media/svg/flags/' + data[i].Icon + ' " alt="">&nbsp;' + data[i].ShortName + '</a>';
+                    }
 
-            //        contentList += ' </div>';
+                    contentList += ' </div>';
 
-            //        $('.topbar-item').first().append(contentList);
+                    $('.topbar-item').first().append(contentList);
 
-            //    }
-            //});
+                }
+            });
         });
 
 
