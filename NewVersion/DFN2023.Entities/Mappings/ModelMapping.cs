@@ -35,6 +35,9 @@ namespace DFN2023.Entities.Mappings
             CreateMap<County, CountyDTO>();
             CreateMap<CountyDTO, Country>();
 
+            CreateMap<Language, LanguageDTO>();
+            CreateMap<LanguageDTO, Language>();
+
             CreateMap<MenuManagement, MenuManagementDTO>();
             CreateMap<MenuManagementDTO, MenuManagement>();
 

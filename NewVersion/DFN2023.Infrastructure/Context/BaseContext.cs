@@ -19,6 +19,7 @@ namespace DFN2023.Infrastructure.Context
         public virtual DbSet<CompanyType> CompanyType { get; set; }
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<County> County { get; set; }
+        public virtual DbSet<Language> Language { get; set; }
         public virtual DbSet<MenuManagement> MenuManagement { get; set; }
         public virtual DbSet<Message> Message { get; set; }
         public virtual DbSet<ProductBase> ProductBase { get; set; }
