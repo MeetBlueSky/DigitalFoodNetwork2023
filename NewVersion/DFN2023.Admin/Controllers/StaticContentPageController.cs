@@ -34,7 +34,7 @@ namespace DFN2023.Admin.Controllers
 
             ViewData["page"] = "Static Content Page";
             int lang = getLang(CultureInfo.CurrentCulture.Name);
-            var getStaticContentGrupPageList = _adminService.listStaticContentGrupPage(lang);
+            var getStaticContentGrupPageList = _adminService.listStaticContentGrupPage(lang).OrderBy(p => p.OrderNo).ToList();
             SelectList listStaticContentGrupPage = new SelectList(getStaticContentGrupPageList, "Id", "Title");
             ViewBag.staticContentGrupPage = listStaticContentGrupPage;
 
@@ -74,7 +74,7 @@ namespace DFN2023.Admin.Controllers
 
             ViewData["page"] = "Static Content Page";
             int lang = getLang(CultureInfo.CurrentCulture.Name);
-            var getStaticContentGrupPageList = _adminService.listStaticContentGrupPage(lang);
+            var getStaticContentGrupPageList = _adminService.listStaticContentGrupPage(lang).OrderBy(p => p.OrderNo).ToList();
             SelectList listStaticContentGrupPage = new SelectList(getStaticContentGrupPageList, "Id", "Title");
             ViewBag.staticContentGrupPage = listStaticContentGrupPage;
 
