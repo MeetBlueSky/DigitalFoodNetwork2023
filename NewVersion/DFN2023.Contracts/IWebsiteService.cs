@@ -40,6 +40,33 @@ namespace DFN2023.Contracts
 
         List<MenuManagementDTO> getMenuLayer1(int lang);
 
+        /* Deep Blue Packages */
+        // List<SlaytDTO> getSlaytForHome(int langId);
+
+        StaticContentGrupPageDTO getStaticGrup(int pid, int lang);
+        List<StaticContentPageDTO> getStaticContentPageList(int langId, int start, int grupID, int adet);
+        List<StaticContentPageDTO> getStaticContentPageListMultiple(int langId, int start, int grupID, int grupID2, int adet);
+        StaticContentPageDTO getStaticPage(int pid, int lang);
+
+        List<StaticContentGrupPageDTO> getStaticContentPublications();
+        List<StaticContentPageDTO> getStaticPageListByTempId(int tempID, int langId);
+
+        List<StaticContentPageDTO> getStaticContentByGrupId(int groupId, int lang);
+        StaticContentPageDTO getStaticContentByGrupIdLatest(int groupId, int lang);
+        List<StaticContentPageDTO> getStaticContentByTempId(int tempId, int lang);
+
+
+        // List<SlaytDTO> getSlayt();
+
+        public List<StaticContentPageDTO> getNewsDetail(int newsId, int lang);
+
+
+        // public List<MenuManagementDTO> getMenuLayer1(int lang);
+
+
+        // public CommunicationForm createContantMessage(CommunicationFormDTO com);
+        // public NewsLetter createNewsletter(NewsLetterDTO nl);
+
 
     }
 }

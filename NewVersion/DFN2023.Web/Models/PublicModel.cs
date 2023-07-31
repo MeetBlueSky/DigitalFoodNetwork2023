@@ -31,6 +31,15 @@ namespace DFN2023.Web.Models
         public List<DropDownDT>? currencylist { get; set; }
         public CompanyDTO sirket { get; set; }
 
+        public StaticContentGrupPageDTO? StaticContentGrupPage { get; set; }
+        public StaticContentPageDTO? StaticContentPage { get; set; }
+
+        public List<StaticContentGrupPageDTO>? StaticContentGrupPageList { get; set; }
+        public List<StaticContentPageDTO>? StaticContentPageList { get; set; }
+        public List<StaticContentPageDTO>? StaticContentPageList2 { get; set; }
+
+        public List<SliderDTO>? SlaytList { get; set; }
+
 
     }
 }

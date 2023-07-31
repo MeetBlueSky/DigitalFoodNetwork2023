@@ -54,6 +54,35 @@ namespace DFN2023.Entities.Mappings
             CreateMap<SliderHeader, SliderHeaderDT>();
             CreateMap<SliderHeaderDT, SliderHeader>();
 
-        }
+			// **   DeepBlue Mappings for Content
+
+			// CreateMap<CommunicationForm, CommunicationFormDTO>();
+			// CreateMap<CommunicationFormDTO, CommunicationForm>();
+
+			CreateMap<User, UserDTO>();
+			// CreateMap<UserAccount, UserAccountDTO>();
+			// CreateMap<Slayt, SlaytDTO>();
+
+			CreateMap<StaticContentGrupPage, StaticContentGrupPageDTO>();
+			CreateMap<StaticContentPage, StaticContentPageDTO>();
+
+			// CreateMap<NewsLetter, NewsLetterDTO>();
+			// CreateMap<NewsLetterDTO, NewsLetter>();
+
+			CreateMap<MenuManagement, MenuManagementDTO>();
+			CreateMap<MenuManagementDTO, MenuManagement>();
+
+			CreateMap<Language, LanguageDTO>();
+			CreateMap<LanguageDTO, Language>();
+
+			// CreateMap<Login, LoginDTO>();
+			// CreateMap<LoginDTO, Login>();
+
+			// CreateMap<Slayt, SlaytDTO>();
+			// CreateMap<SlaytDTO, Slayt>();
+			CreateMap<SliderHeader, SliderHeaderDT>();
+			CreateMap<SliderHeaderDT, SliderHeader>();
+
+		}
     }
 }

@@ -34,6 +34,22 @@ namespace DFN2023.Web.Controllers
         }
 
 
+        public void setLang(string langname)
+        {
+            if (langname == "tr")
+            {
+                CultureInfo.CurrentCulture = new CultureInfo("tr");
+                CultureInfo.CurrentUICulture = new CultureInfo("tr");
+
+            }
+            else
+            {
+                CultureInfo.CurrentCulture = new CultureInfo("en");
+                CultureInfo.CurrentUICulture = new CultureInfo("en");
+
+            }
+        }
+
         public int getLang(string langname)
         {
 

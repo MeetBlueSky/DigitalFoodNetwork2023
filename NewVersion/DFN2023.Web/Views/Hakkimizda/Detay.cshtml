@@ -1,0 +1,58 @@
+
+
+    @for (int i=0; i < @Model.StaticContentPageList.Count; i++ )
+    {
+
+	if (Model.StaticContentPageList[i].TempId == 2) // resim sağda
+	{
+
+		<!-- hero-section -->
+		<section class="hero-section about gap" style="background-image: url(/assets/img/background.png);">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-6 col-md-12 col-sm-12" data-aos="fade-up"  data-aos-delay="300" data-aos-duration="400">
+						<div class="about-text">
+							<h2>@Model.StaticContentPageList[i].Title</h2>
+							@Html.Raw(@Model.StaticContentPageList[i].Html)
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-12 col-sm-12" data-aos="fade-up"  data-aos-delay="400" data-aos-duration="500">
+						<div class="about-img">
+							<img alt="man" src="/assets/static/@Model.StaticContentPageList[i].Image1">
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	}
+
+	if (Model.StaticContentPageList[i].TempId == 3) // resim sağda
+	{
+
+
+		<!-- our-mission-section -->
+		<section class="our-mission-section gap">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-6 col-md-12 col-sm-12" data-aos="flip-up"  data-aos-delay="300" data-aos-duration="400">
+						<div class="our-mission-img">
+							<img alt="Illustration" src="/assets/static/@Model.StaticContentPageList[i].Image1">
+						</div>
+					</div>
+					<div class="offset-xl-1 col-lg-5 col-md-12 col-sm-12" data-aos="flip-up"  data-aos-delay="400" data-aos-duration="500">
+						<div class="our-mission-text">
+							<h2>@Model.StaticContentPageList[i].Title</h2>
+							@Html.Raw(@Model.StaticContentPageList[i].Html)
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	}
+}
+
+
+
+
+
