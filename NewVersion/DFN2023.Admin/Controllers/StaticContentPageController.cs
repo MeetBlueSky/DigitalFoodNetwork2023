@@ -122,8 +122,8 @@ namespace DFN2023.Admin.Controllers
 
                 if (pro != null)
                 {
-
-                    pro.Link = ln.ToLower()+"/static/detay/" + UrlCleaner.GetSanitizedTextForURL(pro.Title) + "/";
+                    if (string.IsNullOrEmpty(pro.Link))
+                        pro.Link = ln.ToLower() + "/static/Grup/" + UrlCleaner.GetSanitizedTextForURL(pro.Title) + "/";
                     var result = _adminService.createStaticContentPage(pro);
                     if (result != null)
                     {
