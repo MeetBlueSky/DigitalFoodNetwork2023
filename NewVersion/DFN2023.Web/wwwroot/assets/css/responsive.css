@@ -742,6 +742,18 @@
     }
 }
 @media(max-width: 768px){
+    .mobile-nav { text-align: center; }
+    .button-2 {
+        margin-top: 20px; 
+        width: 80%;
+    }
+
+    .button-3 {
+        margin-top: 20px;
+        width: 80%;
+    }
+
+    .modal-content { width: 90% !important; }
     .error-page form input[type="text"],.mobile-nav,.menu-inner{
         width: 100%;
     }

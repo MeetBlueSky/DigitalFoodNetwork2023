@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-5">
                     <nav class="navbar">
                         <ul class="navbar-links" id="mainMenuHeader">
                             @*<li class="navbar-dropdown">
@@ -104,7 +104,7 @@
                         </ul>
                     </nav>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-5">
                     <div class="extras bag">
 
 
@@ -112,7 +112,10 @@
                         @if (Model.user == null)
                         {
 
-                            <a onclick="girisYapModal()" class="button button-2">Giriş Yap</a>
+                            <a onclick="girisYapModal()" class="signupbutton button-2">GİRİŞ YAPINIZ</a>
+                            <a onclick="kayitOl(3)" class="signupbutton button-3" >TÜKETİCİ ÜYELİĞİ</a>
+                            <a onclick="kayitOl(2)" class="signupbutton button-3" >KURUM ÜYELİĞİ</a>
+
                         }
                         else
                         {
@@ -179,7 +182,7 @@
                         <li class="menu-item-has-children">
                             <a href="/Home/Index">Firmalar</a>
 
-                            <ul class="sub-menu">
+                            @*<ul class="sub-menu">
 
                                 <li><a href="/Home/Index">Blog</a></li>
                                 <li><a href="/Home/Index">Single Blog</a></li>
@@ -188,7 +191,7 @@
                                 <li><a href="/Home/Index">Pricing Table</a></li>
                                 <li><a href="/Home/Index">Become A Partner</a></li>
                                 <li><a href="/Home/Index">404</a></li>
-                            </ul>
+                            </ul>*@
 
                         </li>
 
@@ -197,6 +200,30 @@
                     </ul>
 
                     <a href="/Home/Index" id="res-cross"></a>
+
+                    @if (Model.user == null)
+                    {
+
+                        <a onclick="girisYapModal()" class="signupbutton button-2">GİRİŞ YAPINIZ</a>
+                        <a onclick="kayitOl(3)" class="signupbutton button-3">TÜKETİCİ ÜYELİĞİ</a>
+                        <a onclick="kayitOl(2)" class="signupbutton button-3">KURUM ÜYELİĞİ</a>
+
+                    }
+                    else
+                    {
+                        @*<a href="javascript:void(0)" id="desktop-menu" class="menu-btn"><i class="fa-solid fa-heart"></i></a>*@
+                        @if (Model.user.Role == EnumRol.Tuketici)
+                        {
+                            <a style="margin-right: 10px;">@Model.user.Name @Model.user.Surname </a>
+                        }
+                        else
+                        {
+
+                            <a href="/Tedarikci/Duzenle" style="margin-right: 10px;">@Model.user.Name @Model.user.Surname </a>
+                        }
+                        <a onclick="cikisYap()" class="button button-2">Çıkış Yap</a>
+                    }
+
                 </div>
             </div>
         </div>
@@ -375,11 +402,15 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 
+    <script src="~/assets/js/signup.js"></script>
+
 </body>
 
 <script>
 
+
     var span = document.getElementsByClassName("close")[0];
+    var hst2 = "@Url.Action("kayitOl", "Home")";
 
 
 

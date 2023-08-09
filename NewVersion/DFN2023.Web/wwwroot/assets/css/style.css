@@ -308,11 +308,23 @@ header {
     height: 55px;
     line-height: 55px;
 }
+
+.signupbutton {
+    text-align: center;
+    color: #000;
+    text-transform: uppercase;
+    display: inline-block;
+    font-size: 12px;
+    padding: 0 25px;
+    border-radius: 10px;
+    height: 55px;
+    line-height: 55px;
+}
 .button-2 {
     color: #fff;
     border: 2px solid #F29F05;
-    background-image: -webkit-linear-gradient(30deg, #F29F05 50%, transparent 50%);
-    background-image: linear-gradient(30deg, #F29F05 50%, transparent 50%);
+    /* background-image: -webkit-linear-gradient(30deg, #F29F05 50%, transparent 50%);
+    background-image: linear-gradient(30deg, #F29F05 50%, transparent 50%); */
     background-size: 500px;
     background-repeat: no-repeat;
     background-position: 0%;
@@ -321,11 +333,32 @@ header {
     line-height: 51px;
     cursor: pointer;
     margin-bottom: 10px;
+    background-color: #F29F05;
 }
 .button-2:hover {
   background-position: 100%;
   background-color: transparent;
 }
+.button-3 {
+    color: #fff;
+    border: 2px solid #0c4316;
+    /* background-image: -webkit-linear-gradient(30deg, #19812b 50%, transparent 50%);
+    background-image: linear-gradient(30deg, #19812b 50%, transparent 50%); */
+    background-size: 500px;
+    background-repeat: no-repeat;
+    background-position: 0%;
+    -webkit-transition: background 300ms ease-in-out;
+    transition: background 300ms ease-in-out;
+    line-height: 51px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    background-color: #19812b;
+}
+
+    .button-3:hover {
+        background-position: 100%;
+        background-color: transparent;
+    }
 /*------------- button end --------*/
 .bag i {
     background-color: white;
