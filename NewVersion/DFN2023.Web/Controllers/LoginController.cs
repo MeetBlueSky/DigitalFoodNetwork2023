@@ -188,11 +188,11 @@ namespace DFN2023.Web.Controllers
                 var usr = HttpContext.Session.GetObjectFromJson<User>("AktifKullanici");
                 if (rol == EnumRol.Tedarikci.ToString())
                 {
-                     mesaj = send(email, "Mail onaylamak için http://localhost:54803/Login/TedMailOnaylama?code=" + kod + " linkine tıklayarak onaylayabilirsiniz", "Mail Onaylama");
+                     mesaj = send(email, "Üyeliğinizi başlatmak için tıklayınız: https://www.dijitalgidaagi.com/Login/TedMailOnaylama?code=" + kod + " ", "Mail Onaylama");
                 }
                 else
                 {
-                     mesaj = send(email, "Mail onaylamak için http://localhost:54803/Login/TukMailOnaylama?code=" + kod + " linkine tıklayarak onaylayabilirsiniz", "Mail Onaylama");
+                     mesaj = send(email, "Üyeliğinizi başlatmak için tıklayınız: https://www.dijitalgidaagi.com/Login/TukMailOnaylama?code=" + kod + " ", "Mail Onaylama");
 
                 }
                 if (mesaj)

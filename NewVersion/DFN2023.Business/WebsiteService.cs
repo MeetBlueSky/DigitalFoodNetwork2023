@@ -598,12 +598,12 @@ namespace DFN2023.Business
                     var mesaj = false;
                     if (user.Role == 2)
                     {
-                        mesaj = send(user.Email, "Mail onaylamak için http://localhost:54803/Login/TedMailOnaylama?code=" + r + " linkine tıklayarak onaylayabilirsiniz", body);
+                        mesaj = send(user.Email, "Üyeliğinizi başlatmak için tıklayınız: https://www.dijitalgidaagi.com/Login/TedMailOnaylama?code=" + r + " ", body);
 
                     }
                     else
                     {
-                        mesaj = send(user.Email, "Mail onaylamak için http://localhost:54803/Login/TukMailOnaylama?code=" + r + " linkine tıklayarak onaylayabilirsiniz", body);
+                        mesaj = send(user.Email, "Üyeliğinizi başlatmak için tıklayınız: https://www.dijitalgidaagi.com/Login/TukMailOnaylama?code=" + r + " linkine tıklayarak onaylayabilirsiniz", body);
 
                     }
                     if (mesaj)
