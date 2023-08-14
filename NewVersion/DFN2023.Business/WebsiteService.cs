@@ -646,7 +646,7 @@ namespace DFN2023.Business
                 sc.DeliveryMethod = SmtpDeliveryMethod.Network;
                 sc.UseDefaultCredentials = Convert.ToBoolean(config["AppSettings:SendMailUseDefaultCredentials"]);
                 sc.EnableSsl = Convert.ToBoolean(config["AppSettings:SendMailSMTPSSL"]);
-                sc.Port = 587;
+                // sc.Port = 587;
                 sc.Port = Convert.ToInt32(config["AppSettings:SendMailSMTPPort"].ToString());
 
                 sc.Credentials = new System.Net.NetworkCredential(

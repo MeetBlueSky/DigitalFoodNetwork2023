@@ -160,6 +160,7 @@ function firmaKaydet(cntl) {
         uyari("Koordinat alanları boş geçilemez");
     }
     else {
+        alert("posting data...");
         $.ajax({
             type: "POST",
             async: true,
@@ -275,7 +276,7 @@ function uploadFiles(inputId) {
             }
         },
         complete: function (data2) {
-            $('#' + ths).pleaseWait('stop');
+            $('#' + this).pleaseWait('stop');
         },
         error: function (data2) {
 
