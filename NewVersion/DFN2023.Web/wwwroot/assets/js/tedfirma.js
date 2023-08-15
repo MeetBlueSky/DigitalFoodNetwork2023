@@ -159,12 +159,11 @@ function firmaKaydet(cntl) {
 
         uyari("Koordinat alanları boş geçilemez");
     }
-    else {
-        alert("posting data...");
+    else { 
         $.ajax({
             type: "POST",
             async: true,
-            url: hst2,
+            url: hstfkyt,
             data: {
                 Id:pid,
                 BrandName:mr,
