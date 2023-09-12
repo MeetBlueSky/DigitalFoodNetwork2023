@@ -2390,6 +2390,8 @@ namespace DFN2023.Business
                     Link = p.Link,
                     Target = p.Target,
                     Type = p.Type,
+                    Header = p.Header,
+                    Text = p.Text,
                     RowNum = p.RowNum,
                     Status = p.Status,
                     LangId = p.LangId,
