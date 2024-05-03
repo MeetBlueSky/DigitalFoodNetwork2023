@@ -14,7 +14,9 @@ namespace DFN2023.Entities.DTO
         public string? Name { get; set; }
         public string? Link { get; set; }
         public string? Target { get; set; }
-        public int Type { get; set; }
+        public int? Type { get; set; }
+        public string? Header { get; set; }
+        public string? Text { get; set; }
         public int RowNum { get; set; }
         public int? CreatedBy { get; set; }
         public int? LastUpdatedBy { get; set; }

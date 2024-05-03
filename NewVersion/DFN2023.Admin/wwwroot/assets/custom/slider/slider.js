@@ -34,6 +34,8 @@ var KTDatatablesDataSourceAjaxServer = function () {
 				{ data: 'Link' },
 				{ data: 'Target' },
 				{ data: 'SliderHeaderName' },
+				{ data: 'Header' },
+				{ data: 'Text' },
 				{ data: 'RowNum' },
 				{ data: 'Status' },
 				{ data: 'LangId' }
@@ -69,7 +71,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
 					},
 				},
 				{
-					targets: 9,
+					targets: 11,
 					render: function (data, type, full, meta) {
 						if (data)
 							return '<i class="flaticon2-checkmark text-success"></i>';
@@ -77,7 +79,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
 					},
 				},
 				{
-					targets: 10,
+					targets: 12,
 					render: function (data, type, full, meta) {
 						return dilne(data);
 					},
@@ -168,6 +170,8 @@ function updateSlider(pid) {
 	$("#Name").val(secilenDeger.Name);
 	$("#Link").val(secilenDeger.Link);
 	$("#TargetId").val(secilenDeger.Target).trigger('change');
+	$("#Header").val(secilenDeger.Header);
+	$("#SText").val(secilenDeger.Text);
 	$("#RowNum").val(secilenDeger.RowNum);
 	$("#Type").val(secilenDeger.Type);
 
@@ -203,6 +207,8 @@ function sliderKaydet(pid) {
 		'Link': $("#Link").val(),
 		'Target': $("#TargetId").val(),
 		'Type': $("#Type").val(),
+		'Header': $("#Header").val(),
+		'Text': $("#SText").val(),
 		'RowNum': $("#RowNum").val(),
 		'Status': $('#status').is(':checked') == true ? 1 : 0,
 	};
@@ -215,6 +221,8 @@ function sliderKaydet(pid) {
 		secilenDeger.Image1 = slider.Image1;
 		secilenDeger.Image2 = slider.Image2;
 		secilenDeger.Type = slider.Type;
+		secilenDeger.Header = slider.Header;
+		secilenDeger.Text = slider.Text;
 		secilenDeger.RowNum = slider.RowNum;
 		secilenDeger.Status = slider.Status;
 	
